@@ -27,6 +27,8 @@
 		8A3F409E2BD9000400A11001 /* BirdDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F409D2BD9000400A11001 /* BirdDetection.swift */; };
 		8A3F40AD2BD9000800A11001 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40AC2BD9000800A11001 /* AppError.swift */; };
 		8A3F40AF2BD9000800A11001 /* DiagnosticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40AE2BD9000800A11001 /* DiagnosticsService.swift */; };
+		8A3F40B12BD9000900A11001 /* StationSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40B02BD9000900A11001 /* StationSpecies.swift */; };
+		8A3F40B32BD9000900A11001 /* SpeciesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40B22BD9000900A11001 /* SpeciesViewModel.swift */; };
 		8A3F40A02BD9000400A11001 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F409F2BD9000400A11001 /* FeedViewModel.swift */; };
 		8A3F40A22BD9000500A11001 /* BirdDetectionStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A12BD9000500A11001 /* BirdDetectionStream.swift */; };
 		8A3F40A42BD9000600A11001 /* DetectionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A32BD9000600A11001 /* DetectionDetailView.swift */; };
@@ -63,6 +65,8 @@
 		8A3F409D2BD9000400A11001 /* BirdDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetection.swift; sourceTree = "<group>"; };
 		8A3F40AC2BD9000800A11001 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		8A3F40AE2BD9000800A11001 /* DiagnosticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsService.swift; sourceTree = "<group>"; };
+		8A3F40B02BD9000900A11001 /* StationSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationSpecies.swift; sourceTree = "<group>"; };
+		8A3F40B22BD9000900A11001 /* SpeciesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesViewModel.swift; sourceTree = "<group>"; };
 		8A3F409F2BD9000400A11001 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		8A3F40A12BD9000500A11001 /* BirdDetectionStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetectionStream.swift; sourceTree = "<group>"; };
 		8A3F40A32BD9000600A11001 /* DetectionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionDetailView.swift; sourceTree = "<group>"; };
@@ -142,6 +146,7 @@
 				8A3F407A2BD9000100A11001 /* StationProfile.swift */,
 				8A3F407B2BD9000100A11001 /* StationConnectionStatus.swift */,
 				8A3F409D2BD9000400A11001 /* BirdDetection.swift */,
+				8A3F40B02BD9000900A11001 /* StationSpecies.swift */,
 				8A3F40AC2BD9000800A11001 /* AppError.swift */,
 			);
 			path = Models;
@@ -208,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				8A3F3F5E2BD8000100A11001 /* SpeciesView.swift */,
+				8A3F40B22BD9000900A11001 /* SpeciesViewModel.swift */,
 			);
 			path = Species;
 			sourceTree = "<group>";
@@ -315,6 +321,7 @@
 				8A3F40812BD9000100A11001 /* StationProfile.swift in Sources */,
 				8A3F40822BD9000100A11001 /* StationConnectionStatus.swift in Sources */,
 				8A3F409E2BD9000400A11001 /* BirdDetection.swift in Sources */,
+				8A3F40B12BD9000900A11001 /* StationSpecies.swift in Sources */,
 				8A3F40AD2BD9000800A11001 /* AppError.swift in Sources */,
 				8A3F40832BD9000100A11001 /* BirdNETGoAPIClient.swift in Sources */,
 				8A3F40842BD9000100A11001 /* URLSessionBirdNETGoAPIClient.swift in Sources */,
@@ -335,6 +342,7 @@
 				8A3F40A82BD9000600A11001 /* AudioClipPlayerView.swift in Sources */,
 				8A3F40AB2BD9000700A11001 /* SpectrogramView.swift in Sources */,
 				8A3F3F632BD8000100A11001 /* SpeciesView.swift in Sources */,
+				8A3F40B32BD9000900A11001 /* SpeciesViewModel.swift in Sources */,
 				8A3F3F692BD8000100A11001 /* StatsView.swift in Sources */,
 				8A3F3F6B2BD8000100A11001 /* StationView.swift in Sources */,
 			);

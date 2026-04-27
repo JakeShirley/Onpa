@@ -121,6 +121,8 @@ The iOS app keeps foundation code in separate source areas so feature work can g
 
 The Feed feature keeps recent-list refresh and live streaming separate: pull-to-refresh fetches `/api/v2/detections/recent?limit=10`, while the view model's live task listens to `/api/v2/detections/stream`, deduplicates incoming detections by ID, updates the same local cache, and reconnects with capped exponential backoff.
 
+The Species feature loads `/api/v2/species` for station catalog enrichment and augments the list with recent detection summaries from `/api/v2/detections/recent`. Because BirdNET-Go stations may reject the catalog endpoint depending on configuration or version, catalog failures are quiet when recent detections can still populate the detected-species list. The species response decoder accepts both bare arrays and common response envelopes so it can tolerate BirdNET-Go API shape changes, and the merged list is cached per station for stale offline fallback.
+
 Detection detail uses `/api/v2/detections/:id` for the canonical detail payload. Audio playback uses a station-relative `/api/v2/audio/:id` URL with `AVPlayer`; the auth-only clip extraction endpoint is intentionally left for later media editing work.
 
 Species images on detection detail use `/api/v2/media/species-image?name=<scientific-name>` and attribution metadata from `/api/v2/media/species-image/info?name=<scientific-name>`. Attribution is treated as non-critical: missing or unavailable metadata does not block the detail screen, while available author and license values are shown on the image.
