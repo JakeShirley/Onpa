@@ -4,6 +4,7 @@ struct AppConfiguration: Sendable {
     var stationURLOverride: URL?
     var localNetworkTestProfile: StationProfile?
     var debugDetectionID: Int?
+    var debugSpeciesName: String?
 
     static func current(
         arguments: [String] = ProcessInfo.processInfo.arguments,
@@ -12,14 +13,16 @@ struct AppConfiguration: Sendable {
         AppConfiguration(
             stationURLOverride: stationURLOverride(arguments: arguments, environment: environment),
             localNetworkTestProfile: localNetworkTestProfile(arguments: arguments, environment: environment),
-            debugDetectionID: debugDetectionID(arguments: arguments, environment: environment)
+            debugDetectionID: debugDetectionID(arguments: arguments, environment: environment),
+            debugSpeciesName: debugSpeciesName(arguments: arguments, environment: environment)
         )
     }
 
     static let preview = AppConfiguration(
         stationURLOverride: nil,
         localNetworkTestProfile: StationProfile(name: "Local BirdNET-Go", baseURL: URL(string: "http://localhost:8080")!),
-        debugDetectionID: nil
+        debugDetectionID: nil,
+        debugSpeciesName: nil
     )
 
     private static func stationURLOverride(arguments: [String], environment: [String: String]) -> URL? {
@@ -58,6 +61,12 @@ struct AppConfiguration: Sendable {
         return Int(value)
     }
 
+    private static func debugSpeciesName(arguments: [String], environment: [String: String]) -> String? {
+        (value(after: "-debugSpeciesName", in: arguments) ?? environment["BIRDNET_GO_DEBUG_SPECIES_NAME"])?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .nonEmptyString
+    }
+
     private static func value(after flag: String, in arguments: [String]) -> String? {
         guard let index = arguments.firstIndex(of: flag), arguments.indices.contains(index + 1) else {
             return nil
@@ -81,5 +90,11 @@ struct AppConfiguration: Sendable {
 
     private static func normalizedURL(from text: String) -> URL? {
         try? StationURLValidator.normalizedURL(from: text)
+    }
+}
+
+private extension String {
+    var nonEmptyString: String? {
+        isEmpty ? nil : self
     }
 }

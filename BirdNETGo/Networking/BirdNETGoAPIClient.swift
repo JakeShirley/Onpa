@@ -8,6 +8,7 @@ protocol BirdNETGoAPIClient: Sendable {
     func logout(station: StationProfile, csrfToken: String?) async throws -> StationAuthResponse
     func authStatus(station: StationProfile) async throws -> StationAuthStatus
     func recentDetections(station: StationProfile, limit: Int) async throws -> [BirdDetection]
+    func speciesDetections(station: StationProfile, species: String, limit: Int) async throws -> BirdDetectionPage
     func detection(station: StationProfile, id: Int) async throws -> BirdDetection
     func species(station: StationProfile) async throws -> [StationSpecies]
     func dailySpeciesSummary(station: StationProfile, date: String, limit: Int) async throws -> [DailySpeciesSummary]
@@ -20,6 +21,24 @@ protocol BirdNETGoAPIClient: Sendable {
     func spectrogramStatus(station: StationProfile, detectionID: Int, size: String, raw: Bool) async throws -> SpectrogramStatusEnvelope
     func requestSpectrogramGeneration(station: StationProfile, detectionID: Int, size: String, raw: Bool, csrfToken: String?) async throws -> SpectrogramStatusEnvelope
     func detectionEvents(station: StationProfile) -> AsyncThrowingStream<BirdDetectionStreamEvent, Error>
+}
+
+struct BirdDetectionPage: Decodable, Equatable, Sendable {
+    var data: [BirdDetection]
+    var total: Int
+    var limit: Int
+    var offset: Int
+    var currentPage: Int
+    var totalPages: Int
+
+    private enum CodingKeys: String, CodingKey {
+        case data
+        case total
+        case limit
+        case offset
+        case currentPage = "current_page"
+        case totalPages = "total_pages"
+    }
 }
 
 struct SpeciesImageAttribution: Decodable, Equatable, Sendable {

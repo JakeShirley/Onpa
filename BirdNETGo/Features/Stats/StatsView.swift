@@ -3,6 +3,7 @@ import SwiftUI
 struct StatsView: View {
     @Environment(\.appEnvironment) private var appEnvironment
     @StateObject private var viewModel = StatsViewModel()
+    @State private var debugSpeciesSummary: DailySpeciesSummary?
 
     var body: some View {
         Group {
@@ -26,9 +27,42 @@ struct StatsView: View {
         }
         .task {
             await viewModel.load(environment: appEnvironment)
+            openDebugSpeciesDetailIfNeeded()
         }
         .refreshable {
             await viewModel.refresh(environment: appEnvironment)
+            openDebugSpeciesDetailIfNeeded()
+        }
+        .onChange(of: viewModel.dailySummary) { _, _ in
+            openDebugSpeciesDetailIfNeeded()
+        }
+        .navigationDestination(isPresented: debugSpeciesDetailIsPresented) {
+            if let debugSpeciesSummary {
+                SpeciesDetailView(entry: debugSpeciesSummary.speciesDetailEntry)
+            }
+        }
+    }
+
+    private var debugSpeciesDetailIsPresented: Binding<Bool> {
+        Binding(
+            get: { debugSpeciesSummary != nil },
+            set: { isPresented in
+                if !isPresented {
+                    debugSpeciesSummary = nil
+                }
+            }
+        )
+    }
+
+    private func openDebugSpeciesDetailIfNeeded() {
+        guard debugSpeciesSummary == nil, let debugSpeciesName = appEnvironment.configuration.debugSpeciesName?.lowercased() else {
+            return
+        }
+
+        debugSpeciesSummary = viewModel.dailySummary.first { summary in
+            [summary.commonName, summary.scientificName, summary.speciesCode]
+                .compactMap { $0?.lowercased() }
+                .contains(debugSpeciesName)
         }
     }
 
@@ -292,15 +326,21 @@ private struct SpeciesHeatmap: View {
                 }
 
                 ForEach(summaries) { summary in
-                    HStack(spacing: cellSpacing) {
-                        SpeciesHeatmapLabel(summary: summary, station: station, apiClient: apiClient)
-                            .frame(width: labelWidth, alignment: .leading)
+                    NavigationLink {
+                        SpeciesDetailView(entry: summary.speciesDetailEntry)
+                    } label: {
+                        HStack(spacing: cellSpacing) {
+                            SpeciesHeatmapLabel(summary: summary, station: station, apiClient: apiClient)
+                                .frame(width: labelWidth, alignment: .leading)
 
-                        ForEach(Array(summary.normalizedHourlyCounts.enumerated()), id: \.offset) { _, count in
-                            HeatmapCell(count: count, maximum: max(maximum, 1))
-                                .frame(width: cellSize, height: cellSize)
+                            ForEach(Array(summary.normalizedHourlyCounts.enumerated()), id: \.offset) { _, count in
+                                HeatmapCell(count: count, maximum: max(maximum, 1))
+                                    .frame(width: cellSize, height: cellSize)
+                            }
                         }
                     }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Open details for \(summary.commonName)")
                 }
             }
             .padding(.vertical, 4)
@@ -328,6 +368,9 @@ private struct SpeciesHeatmapLabel: View {
                             .font(.caption2)
                             .foregroundStyle(.orange)
                     }
+                    Image(systemName: "chevron.right")
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(.tertiary)
                 }
 
                 Text("\(summary.count) detections")
@@ -564,6 +607,27 @@ private func activityColor(count: Int, maximum: Int) -> Color {
 private extension Array {
     subscript(safe index: Index) -> Element? {
         indices.contains(index) ? self[index] : nil
+    }
+}
+
+private extension DailySpeciesSummary {
+    var speciesDetailEntry: SpeciesListEntry {
+        SpeciesListEntry(
+            species: StationSpecies(
+                commonName: commonName,
+                scientificName: scientificName,
+                speciesCode: speciesCode,
+                detectionCount: count,
+                thumbnailURL: thumbnailURL
+            ),
+            summary: DetectionSummary(
+                key: id,
+                commonName: commonName,
+                scientificName: scientificName,
+                speciesCode: speciesCode,
+                count: count
+            )
+        )
     }
 }
 

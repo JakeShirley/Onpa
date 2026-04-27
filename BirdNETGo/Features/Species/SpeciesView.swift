@@ -3,6 +3,7 @@ import SwiftUI
 struct SpeciesView: View {
     @Environment(\.appEnvironment) private var appEnvironment
     @StateObject private var viewModel = SpeciesViewModel()
+    @State private var debugSpeciesEntry: SpeciesListEntry?
 
     var body: some View {
         List {
@@ -33,7 +34,11 @@ struct SpeciesView: View {
                 }
 
                 ForEach(viewModel.species) { entry in
-                    SpeciesRow(entry: entry, station: viewModel.stationProfile, apiClient: appEnvironment.apiClient)
+                    NavigationLink {
+                        SpeciesDetailView(entry: entry)
+                    } label: {
+                        SpeciesRow(entry: entry, station: viewModel.stationProfile, apiClient: appEnvironment.apiClient)
+                    }
                 }
             }
         }
@@ -51,9 +56,42 @@ struct SpeciesView: View {
         }
         .task {
             await viewModel.load(environment: appEnvironment)
+            openDebugSpeciesDetailIfNeeded()
         }
         .refreshable {
             await viewModel.refresh(environment: appEnvironment)
+            openDebugSpeciesDetailIfNeeded()
+        }
+        .onChange(of: viewModel.species) { _, _ in
+            openDebugSpeciesDetailIfNeeded()
+        }
+        .navigationDestination(isPresented: debugSpeciesDetailIsPresented) {
+            if let debugSpeciesEntry {
+                SpeciesDetailView(entry: debugSpeciesEntry)
+            }
+        }
+    }
+
+    private var debugSpeciesDetailIsPresented: Binding<Bool> {
+        Binding(
+            get: { debugSpeciesEntry != nil },
+            set: { isPresented in
+                if !isPresented {
+                    debugSpeciesEntry = nil
+                }
+            }
+        )
+    }
+
+    private func openDebugSpeciesDetailIfNeeded() {
+        guard debugSpeciesEntry == nil, let debugSpeciesName = appEnvironment.configuration.debugSpeciesName?.lowercased() else {
+            return
+        }
+
+        debugSpeciesEntry = viewModel.species.first { entry in
+            [entry.species.commonName, entry.species.scientificName, entry.species.speciesCode]
+                .compactMap { $0?.lowercased() }
+                .contains(debugSpeciesName)
         }
     }
 }

@@ -212,7 +212,7 @@ Status values: `not-started`, `in-progress`, `done`, `blocked`, `deferred`.
 | ID | Status | Feature | Notes |
 | --- | --- | --- | --- |
 | SPC-001 | done | Detected species list | Species tab loads `/species`, augments rows with recent detection summaries, and caches per station for offline fallback. |
-| SPC-002 | not-started | Species detail | Recent detections, images, audio examples from station clips. |
+| SPC-002 | done | Species detail | Species and Dashboard rows open detail pages with station images, recent species detections, and playable clip samples. |
 | SPC-003 | not-started | Favorites | Local favorites first, sync or station rules later. |
 | SPC-004 | not-started | Taxonomy browsing | Use `/species/taxonomy`. |
 | SPC-005 | not-started | Rarity and range indicators | Use BirdNET-Go species and range filter endpoints. |
