@@ -14,6 +14,16 @@ This project is intentionally a companion app, not a standalone classifier: Bird
 - Cache recent detections/species for graceful offline fallback.
 - Generate redacted diagnostics bundles from the Station tab.
 
+## Screenshots
+
+| Dashboard | Feed |
+| --- | --- |
+| ![Dashboard tab showing daily detection activity](docs/screenshots/dashboard.png) | ![Feed tab showing recent detections](docs/screenshots/feed.png) |
+
+| Species | Station |
+| --- | --- |
+| ![Species tab showing detected species](docs/screenshots/species.png) | ![Station tab showing connection settings](docs/screenshots/station.png) |
+
 ## Tech Stack
 
 - Swift, SwiftUI, Swift Concurrency, and `URLSession`.
