@@ -79,6 +79,13 @@ struct StationView: View {
                 }
             }
 
+            Section("Media") {
+                Toggle("Auto Fetch Spectrograms", isOn: $viewModel.autoFetchSpectrograms)
+                    .onChange(of: viewModel.autoFetchSpectrograms) {
+                        Task { await viewModel.savePreferences(environment: appEnvironment) }
+                    }
+            }
+
             if let statusMessage = viewModel.statusMessage {
                 Section("Status") {
                     Label(statusMessage, systemImage: viewModel.statusKind.systemImage)

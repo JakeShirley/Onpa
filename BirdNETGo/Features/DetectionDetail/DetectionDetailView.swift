@@ -34,7 +34,14 @@ struct DetectionDetailView: View {
                 }
 
                 Section("Audio") {
-                    AudioClipPlayerView(audioURL: viewModel.audioURL, title: detection.commonName)
+                    SpectrogramView(
+                        station: viewModel.stationProfile,
+                        detectionID: detection.id,
+                        audioURL: viewModel.audioURL,
+                        title: detection.commonName,
+                        autoFetchSpectrograms: viewModel.autoFetchSpectrograms,
+                        apiClient: appEnvironment.apiClient
+                    )
                 }
 
                 Section("Details") {

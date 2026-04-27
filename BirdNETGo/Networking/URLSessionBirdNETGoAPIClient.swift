@@ -94,6 +94,25 @@ struct URLSessionBirdNETGoAPIClient: BirdNETGoAPIClient {
         station.baseURL.appending(path: "api/v2/audio/\(detectionID)")
     }
 
+    func spectrogramURL(station: StationProfile, detectionID: Int, size: String, raw: Bool) -> URL {
+        let url = station.baseURL.appending(path: "api/v2/spectrogram/\(detectionID)")
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        components?.queryItems = spectrogramQueryItems(size: size, raw: raw)
+        return components?.url ?? url
+    }
+
+    func spectrogramStatus(station: StationProfile, detectionID: Int, size: String, raw: Bool) async throws -> SpectrogramStatusEnvelope {
+        let (data, response) = try await perform(request(station: station, path: "api/v2/spectrogram/\(detectionID)/status", queryItems: spectrogramQueryItems(size: size, raw: raw)))
+        try validate(response: response, data: data)
+        return try decoder.decode(SpectrogramStatusEnvelope.self, from: data)
+    }
+
+    func requestSpectrogramGeneration(station: StationProfile, detectionID: Int, size: String, raw: Bool, csrfToken: String?) async throws -> SpectrogramStatusEnvelope {
+        let (data, response) = try await perform(request(station: station, path: "api/v2/spectrogram/\(detectionID)/generate", method: "POST", queryItems: spectrogramQueryItems(size: size, raw: raw), csrfToken: csrfToken))
+        try validate(response: response, data: data)
+        return try decoder.decode(SpectrogramStatusEnvelope.self, from: data)
+    }
+
     func detectionEvents(station: StationProfile) -> AsyncThrowingStream<BirdDetectionStreamEvent, Error> {
         AsyncThrowingStream { continuation in
             let task = Task {
@@ -198,6 +217,13 @@ struct URLSessionBirdNETGoAPIClient: BirdNETGoAPIClient {
             let message = try? decoder.decode(StationAuthResponse.self, from: data).message
             throw StationConnectionError.serverRejected(statusCode: response.statusCode, message: message)
         }
+    }
+
+    private func spectrogramQueryItems(size: String, raw: Bool) -> [URLQueryItem] {
+        [
+            URLQueryItem(name: "size", value: size),
+            URLQueryItem(name: "raw", value: raw ? "true" : "false")
+        ]
     }
 
     private func decodeStreamEvent(_ message: ServerSentEventMessage) throws -> BirdDetectionStreamEvent? {

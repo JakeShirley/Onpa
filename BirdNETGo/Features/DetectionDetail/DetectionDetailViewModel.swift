@@ -6,6 +6,7 @@ final class DetectionDetailViewModel: ObservableObject {
     @Published private(set) var detection: BirdDetection?
     @Published private(set) var stationProfile: StationProfile?
     @Published private(set) var audioURL: URL?
+    @Published private(set) var autoFetchSpectrograms = AppPreferences.defaults.autoFetchSpectrograms
     @Published private(set) var errorMessage: String?
     @Published private(set) var isLoading = false
 
@@ -21,6 +22,12 @@ final class DetectionDetailViewModel: ObservableObject {
     func load(environment: AppEnvironment) async {
         isLoading = true
         defer { isLoading = false }
+
+        do {
+            autoFetchSpectrograms = try await environment.preferenceStore.loadPreferences().autoFetchSpectrograms
+        } catch {
+            autoFetchSpectrograms = AppPreferences.defaults.autoFetchSpectrograms
+        }
 
         do {
             guard let profile = try await loadStationProfile(environment: environment) else {

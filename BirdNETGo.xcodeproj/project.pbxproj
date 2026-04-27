@@ -30,6 +30,7 @@
 		8A3F40A42BD9000600A11001 /* DetectionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A32BD9000600A11001 /* DetectionDetailView.swift */; };
 		8A3F40A62BD9000600A11001 /* DetectionDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A52BD9000600A11001 /* DetectionDetailViewModel.swift */; };
 		8A3F40A82BD9000600A11001 /* AudioClipPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A72BD9000600A11001 /* AudioClipPlayerView.swift */; };
+		8A3F40AB2BD9000700A11001 /* SpectrogramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40AA2BD9000700A11001 /* SpectrogramView.swift */; };
 		8A3F3F622BD8000100A11001 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5D2BD8000100A11001 /* FeedView.swift */; };
 		8A3F3F632BD8000100A11001 /* SpeciesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5E2BD8000100A11001 /* SpeciesView.swift */; };
 		8A3F3F692BD8000100A11001 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F682BD8000100A11001 /* StatsView.swift */; };
@@ -63,6 +64,7 @@
 		8A3F40A32BD9000600A11001 /* DetectionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionDetailView.swift; sourceTree = "<group>"; };
 		8A3F40A52BD9000600A11001 /* DetectionDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionDetailViewModel.swift; sourceTree = "<group>"; };
 		8A3F40A72BD9000600A11001 /* AudioClipPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioClipPlayerView.swift; sourceTree = "<group>"; };
+		8A3F40AA2BD9000700A11001 /* SpectrogramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrogramView.swift; sourceTree = "<group>"; };
 		8A3F3F5D2BD8000100A11001 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		8A3F3F5E2BD8000100A11001 /* SpeciesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesView.swift; sourceTree = "<group>"; };
 		8A3F3F682BD8000100A11001 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				8A3F40A32BD9000600A11001 /* DetectionDetailView.swift */,
 				8A3F40A52BD9000600A11001 /* DetectionDetailViewModel.swift */,
 				8A3F40A72BD9000600A11001 /* AudioClipPlayerView.swift */,
+				8A3F40AA2BD9000700A11001 /* SpectrogramView.swift */,
 			);
 			path = DetectionDetail;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				8A3F40A42BD9000600A11001 /* DetectionDetailView.swift in Sources */,
 				8A3F40A62BD9000600A11001 /* DetectionDetailViewModel.swift in Sources */,
 				8A3F40A82BD9000600A11001 /* AudioClipPlayerView.swift in Sources */,
+				8A3F40AB2BD9000700A11001 /* SpectrogramView.swift in Sources */,
 				8A3F3F632BD8000100A11001 /* SpeciesView.swift in Sources */,
 				8A3F3F692BD8000100A11001 /* StatsView.swift in Sources */,
 				8A3F3F6B2BD8000100A11001 /* StationView.swift in Sources */,

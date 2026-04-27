@@ -73,8 +73,10 @@ Key endpoints for the initial app:
 | Live detections | `GET /api/v2/detections/stream` | Public, rate-limited SSE. |
 | Sound levels | `GET /api/v2/soundlevels/stream` | Public, rate-limited SSE. |
 | Audio levels | `GET /api/v2/streams/audio-level` | Public SSE, connection-limited. |
-| Audio clip | `GET /api/v2/media/audio?id=:detectionID` | Public playback by detection ID. |
-| Spectrogram | `GET /api/v2/media/spectrogram/:filename` | Public spectrogram image. |
+| Audio clip | `GET /api/v2/audio/:id` | Public playback by detection ID. |
+| Spectrogram | `GET /api/v2/spectrogram/:id` | Public spectrogram image by detection ID. |
+| Spectrogram status | `GET /api/v2/spectrogram/:id/status` | Public generation status by detection ID. |
+| Spectrogram generate | `POST /api/v2/spectrogram/:id/generate` | Public async generation request by detection ID. |
 | Species image | `GET /api/v2/media/species-image` | Public thumbnail/metadata flow. |
 | Species list | `GET /api/v2/species` | Public species info. |
 | Species taxonomy | `GET /api/v2/species/taxonomy` | Public taxonomy hierarchy. |
@@ -196,7 +198,7 @@ Status values: `not-started`, `in-progress`, `done`, `blocked`, `deferred`.
 | --- | --- | --- | --- |
 | MED-001 | done | Detection detail screen | Feed rows open a detail screen backed by `/detections/:id`, with species, confidence, time, source, clip, and status fields. |
 | MED-002 | done | Audio clip playback | Detail screen builds a station-relative `/audio/:id` URL and plays available clips with `AVPlayer`. |
-| MED-003 | not-started | Spectrogram display | Use spectrogram endpoint and status endpoint when generation is async. |
+| MED-003 | done | Spectrogram display | Detail screen checks `/spectrogram/:id/status`, auto-generates missing spectrograms when the default-on setting is enabled, and overlays audio playback position on the station-relative `/spectrogram/:id` PNG. |
 | MED-004 | not-started | Species image and attribution | Use species image endpoints and show attribution where required. |
 | MED-005 | not-started | Weather context | Use `/weather/detection/:id` when available. |
 | MED-006 | not-started | Time-of-day context | Use `/detections/:id/time-of-day`. |

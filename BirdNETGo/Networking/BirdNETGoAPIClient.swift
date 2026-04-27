@@ -10,7 +10,32 @@ protocol BirdNETGoAPIClient: Sendable {
     func recentDetections(station: StationProfile, limit: Int) async throws -> [BirdDetection]
     func detection(station: StationProfile, id: Int) async throws -> BirdDetection
     func audioClipURL(station: StationProfile, detectionID: Int) -> URL
+    func spectrogramURL(station: StationProfile, detectionID: Int, size: String, raw: Bool) -> URL
+    func spectrogramStatus(station: StationProfile, detectionID: Int, size: String, raw: Bool) async throws -> SpectrogramStatusEnvelope
+    func requestSpectrogramGeneration(station: StationProfile, detectionID: Int, size: String, raw: Bool, csrfToken: String?) async throws -> SpectrogramStatusEnvelope
     func detectionEvents(station: StationProfile) -> AsyncThrowingStream<BirdDetectionStreamEvent, Error>
+}
+
+struct SpectrogramStatusEnvelope: Decodable, Equatable, Sendable {
+    var data: SpectrogramStatusData
+    var error: String
+    var message: String
+}
+
+struct SpectrogramStatusData: Decodable, Equatable, Sendable {
+    var status: Status
+    var queuePosition: Int?
+    var message: String?
+    var path: String?
+
+    enum Status: String, Decodable, Sendable {
+        case notStarted = "not_started"
+        case queued
+        case generating
+        case generated
+        case failed
+        case exists
+    }
 }
 
 struct StationAppConfig: Decodable, Equatable, Sendable {
