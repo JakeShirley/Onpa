@@ -113,6 +113,27 @@ The active station profile and app preferences are persisted with `UserDefaults`
 
 User-facing errors should flow through `AppError` so offline, authentication, TLS, rate limit, server, URL, and invalid station responses use consistent language across features. The Station tab can generate a local diagnostics bundle for troubleshooting; diagnostics redact station hosts, usernames, tokens, cookies, and passwords before writing a shareable text file under the app caches directory.
 
+## Screenshot Tooling
+
+Use the tracked screenshot runner to refresh README images after visible UI changes:
+
+```sh
+npm run screenshots
+```
+
+The runner builds the Debug simulator app, starts [scripts/mock_birdnet_go_server.js](../scripts/mock_birdnet_go_server.js), installs the app on the simulator, launches the Dashboard, Feed, Species, and Station tabs, and writes PNGs to [docs/screenshots](screenshots). The mock station can also be run on its own for manual checks:
+
+```sh
+npm run mock-station
+```
+
+Useful overrides:
+
+- `DEVICE_NAME="iPhone 17"` and `IOS_VERSION=26.1` choose the simulator destination.
+- `SCREENSHOT_DIR=path/to/output` writes screenshots somewhere else.
+- `SKIP_BUILD=1` reuses the existing app in `build/DerivedData`.
+- `MOCK_PORT=18082` avoids a port conflict with another local fixture.
+
 ## App Structure
 
 The iOS app keeps foundation code in separate source areas so feature work can grow without mixing concerns:

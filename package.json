@@ -4,6 +4,8 @@
   "private": true,
   "description": "Native iOS companion app for BirdNET-Go.",
   "scripts": {
+    "mock-station": "node scripts/mock_birdnet_go_server.js",
+    "screenshots": "scripts/generate_screenshots.sh",
     "release": "semantic-release"
   },
   "overrides": {
