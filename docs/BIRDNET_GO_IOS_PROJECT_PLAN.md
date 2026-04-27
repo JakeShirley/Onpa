@@ -154,8 +154,8 @@ Status values: `not-started`, `in-progress`, `done`, `blocked`, `deferred`.
 | FND-002 | done | App architecture | Added App, Domain, Networking, Storage, and Features boundaries with environment-injected API and profile store protocols. |
 | FND-003 | done | Environment configuration | Added launch/environment station URL overrides and an opt-in local network test profile. |
 | FND-004 | done | Local persistence | Persists active station profile and preferences locally; adds a file-backed cache foundation for future detection/species payloads. |
-| FND-005 | not-started | Error model | User-friendly offline, auth, TLS, rate limit, and server errors. |
-| FND-006 | not-started | Logging and diagnostics | Local diagnostic bundle with redacted station URLs and secrets. |
+| FND-005 | done | Error model | Shared `AppError` maps offline, auth, TLS, rate limit, server, URL, and invalid station responses to user-friendly recovery messages. |
+| FND-006 | done | Logging and diagnostics | Station tab generates a local diagnostics text bundle with station hosts, usernames, tokens, cookies, and passwords redacted. |
 | FND-007 | not-started | Accessibility baseline | Dynamic Type, VoiceOver labels, contrast, reduced motion. |
 | FND-008 | not-started | Localization foundation | Prepare app strings for BirdNET-Go's multilingual audience. |
 | FND-009 | not-started | Liquid Glass-ready design system | Prefer standard SwiftUI components, system colors, SF Symbols, and minimal custom chrome. |

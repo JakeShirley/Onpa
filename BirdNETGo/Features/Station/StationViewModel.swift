@@ -12,6 +12,7 @@ final class StationViewModel: ObservableObject {
     @Published private(set) var authStatus: StationAuthStatus?
     @Published private(set) var statusMessage: String?
     @Published private(set) var statusKind: StatusKind = .neutral
+    @Published private(set) var diagnosticsBundleURL: URL?
     @Published private(set) var isBusy = false
 
     private var didLoad = false
@@ -53,7 +54,7 @@ final class StationViewModel: ObservableObject {
                 setMessage("Loaded local test station profile.", kind: .neutral)
             }
         } catch {
-            setMessage(error.localizedDescription, kind: .warning)
+            setMessage(error.userFacingMessage, kind: .warning)
         }
     }
 
@@ -119,7 +120,25 @@ final class StationViewModel: ObservableObject {
         do {
             try await saveCurrentPreferences(environment: environment)
         } catch {
-            setMessage(error.localizedDescription, kind: .warning)
+            setMessage(error.userFacingMessage, kind: .warning)
+        }
+    }
+
+    func generateDiagnostics(environment: AppEnvironment) async {
+        await performBusyOperation {
+            let preferences = try? await environment.preferenceStore.loadPreferences()
+            let activeProfile = try? await environment.stationProfileStore.loadActiveProfile()
+            diagnosticsBundleURL = try await environment.diagnosticsService.makeDiagnosticsBundle(
+                snapshot: DiagnosticsSnapshot(
+                    configuration: environment.configuration,
+                    activeProfile: activeProfile,
+                    preferences: preferences,
+                    connectionReport: connectionReport,
+                    authStatus: authStatus,
+                    statusMessage: statusMessage
+                )
+            )
+            setMessage("Diagnostics bundle ready to share.", kind: .success)
         }
     }
 
@@ -156,7 +175,7 @@ final class StationViewModel: ObservableObject {
         do {
             try await operation()
         } catch {
-            setMessage(error.localizedDescription, kind: .error)
+            setMessage(error.userFacingMessage, kind: .error)
         }
     }
 

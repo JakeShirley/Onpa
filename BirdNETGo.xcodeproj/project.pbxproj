@@ -25,6 +25,8 @@
 		8A3F409A2BD9000300A11001 /* UserDefaultsAppPreferenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40992BD9000300A11001 /* UserDefaultsAppPreferenceStore.swift */; };
 		8A3F409C2BD9000300A11001 /* LocalCacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F409B2BD9000300A11001 /* LocalCacheStore.swift */; };
 		8A3F409E2BD9000400A11001 /* BirdDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F409D2BD9000400A11001 /* BirdDetection.swift */; };
+		8A3F40AD2BD9000800A11001 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40AC2BD9000800A11001 /* AppError.swift */; };
+		8A3F40AF2BD9000800A11001 /* DiagnosticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40AE2BD9000800A11001 /* DiagnosticsService.swift */; };
 		8A3F40A02BD9000400A11001 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F409F2BD9000400A11001 /* FeedViewModel.swift */; };
 		8A3F40A22BD9000500A11001 /* BirdDetectionStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A12BD9000500A11001 /* BirdDetectionStream.swift */; };
 		8A3F40A42BD9000600A11001 /* DetectionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A32BD9000600A11001 /* DetectionDetailView.swift */; };
@@ -59,6 +61,8 @@
 		8A3F40992BD9000300A11001 /* UserDefaultsAppPreferenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsAppPreferenceStore.swift; sourceTree = "<group>"; };
 		8A3F409B2BD9000300A11001 /* LocalCacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCacheStore.swift; sourceTree = "<group>"; };
 		8A3F409D2BD9000400A11001 /* BirdDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetection.swift; sourceTree = "<group>"; };
+		8A3F40AC2BD9000800A11001 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		8A3F40AE2BD9000800A11001 /* DiagnosticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsService.swift; sourceTree = "<group>"; };
 		8A3F409F2BD9000400A11001 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		8A3F40A12BD9000500A11001 /* BirdDetectionStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetectionStream.swift; sourceTree = "<group>"; };
 		8A3F40A32BD9000600A11001 /* DetectionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionDetailView.swift; sourceTree = "<group>"; };
@@ -138,6 +142,7 @@
 				8A3F407A2BD9000100A11001 /* StationProfile.swift */,
 				8A3F407B2BD9000100A11001 /* StationConnectionStatus.swift */,
 				8A3F409D2BD9000400A11001 /* BirdDetection.swift */,
+				8A3F40AC2BD9000800A11001 /* AppError.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -162,6 +167,7 @@
 				8A3F40972BD9000300A11001 /* AppPreferenceStore.swift */,
 				8A3F40992BD9000300A11001 /* UserDefaultsAppPreferenceStore.swift */,
 				8A3F409B2BD9000300A11001 /* LocalCacheStore.swift */,
+				8A3F40AE2BD9000800A11001 /* DiagnosticsService.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -309,6 +315,7 @@
 				8A3F40812BD9000100A11001 /* StationProfile.swift in Sources */,
 				8A3F40822BD9000100A11001 /* StationConnectionStatus.swift in Sources */,
 				8A3F409E2BD9000400A11001 /* BirdDetection.swift in Sources */,
+				8A3F40AD2BD9000800A11001 /* AppError.swift in Sources */,
 				8A3F40832BD9000100A11001 /* BirdNETGoAPIClient.swift in Sources */,
 				8A3F40842BD9000100A11001 /* URLSessionBirdNETGoAPIClient.swift in Sources */,
 				8A3F40A22BD9000500A11001 /* BirdDetectionStream.swift in Sources */,
@@ -319,6 +326,7 @@
 				8A3F40982BD9000300A11001 /* AppPreferenceStore.swift in Sources */,
 				8A3F409A2BD9000300A11001 /* UserDefaultsAppPreferenceStore.swift in Sources */,
 				8A3F409C2BD9000300A11001 /* LocalCacheStore.swift in Sources */,
+				8A3F40AF2BD9000800A11001 /* DiagnosticsService.swift in Sources */,
 				8A3F40912BD9000200A11001 /* StationViewModel.swift in Sources */,
 				8A3F3F622BD8000100A11001 /* FeedView.swift in Sources */,
 				8A3F40A02BD9000400A11001 /* FeedViewModel.swift in Sources */,

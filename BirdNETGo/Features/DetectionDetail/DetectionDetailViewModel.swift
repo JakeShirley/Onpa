@@ -48,7 +48,7 @@ final class DetectionDetailViewModel: ObservableObject {
             errorMessage = nil
         } catch {
             if detection == nil {
-                errorMessage = error.localizedDescription
+                errorMessage = error.userFacingMessage
             }
         }
     }

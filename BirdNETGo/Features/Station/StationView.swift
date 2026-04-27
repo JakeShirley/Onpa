@@ -86,6 +86,25 @@ struct StationView: View {
                     }
             }
 
+            Section {
+                Button {
+                    Task { await viewModel.generateDiagnostics(environment: appEnvironment) }
+                } label: {
+                    Label("Generate Diagnostics", systemImage: "doc.badge.gearshape")
+                }
+                .disabled(viewModel.isBusy)
+
+                if let diagnosticsBundleURL = viewModel.diagnosticsBundleURL {
+                    ShareLink(item: diagnosticsBundleURL) {
+                        Label("Share Diagnostics", systemImage: "square.and.arrow.up")
+                    }
+                }
+            } header: {
+                Text("Diagnostics")
+            } footer: {
+                Text("Redacts station hosts and secrets.")
+            }
+
             if let statusMessage = viewModel.statusMessage {
                 Section("Status") {
                     Label(statusMessage, systemImage: viewModel.statusKind.systemImage)

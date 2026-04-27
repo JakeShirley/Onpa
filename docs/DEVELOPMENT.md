@@ -107,6 +107,8 @@ Supported debug inputs:
 
 The active station profile and app preferences are persisted with `UserDefaults`. Station credentials remain Keychain-only, and session cookies remain ephemeral.
 
+User-facing errors should flow through `AppError` so offline, authentication, TLS, rate limit, server, URL, and invalid station responses use consistent language across features. The Station tab can generate a local diagnostics bundle for troubleshooting; diagnostics redact station hosts, usernames, tokens, cookies, and passwords before writing a shareable text file under the app caches directory.
+
 ## App Structure
 
 The iOS app keeps foundation code in separate source areas so feature work can grow without mixing concerns:

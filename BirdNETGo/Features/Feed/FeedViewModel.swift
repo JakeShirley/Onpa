@@ -127,7 +127,7 @@ final class FeedViewModel: ObservableObject {
     private func loadCachedDetectionsAfterError(_ error: Error, environment: AppEnvironment) async {
         guard let profile = stationProfile else {
             detections = []
-            setMessage(error.localizedDescription, kind: .error)
+            setMessage(error.userFacingMessage, kind: .error)
             return
         }
 
@@ -137,11 +137,11 @@ final class FeedViewModel: ObservableObject {
                 setMessage("Showing cached detections.", kind: .warning)
             } else {
                 detections = []
-                setMessage(error.localizedDescription, kind: .error)
+                setMessage(error.userFacingMessage, kind: .error)
             }
         } catch {
             detections = []
-            setMessage(error.localizedDescription, kind: .error)
+            setMessage(error.userFacingMessage, kind: .error)
         }
     }
 

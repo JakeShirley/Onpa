@@ -7,6 +7,7 @@ struct AppEnvironment {
     let credentialStore: any StationCredentialStore
     let preferenceStore: any AppPreferenceStore
     let localCacheStore: any LocalCacheStore
+    let diagnosticsService: any DiagnosticsService
 
     static let live = AppEnvironment(
         configuration: .current(),
@@ -14,7 +15,8 @@ struct AppEnvironment {
         stationProfileStore: UserDefaultsStationProfileStore(),
         credentialStore: KeychainStationCredentialStore(),
         preferenceStore: UserDefaultsAppPreferenceStore(),
-        localCacheStore: FileSystemLocalCacheStore()
+        localCacheStore: FileSystemLocalCacheStore(),
+        diagnosticsService: FileDiagnosticsService()
     )
 
     static let preview = AppEnvironment(
@@ -23,7 +25,8 @@ struct AppEnvironment {
         stationProfileStore: InMemoryStationProfileStore(),
         credentialStore: KeychainStationCredentialStore(),
         preferenceStore: UserDefaultsAppPreferenceStore(key: "preview.preferences", userDefaults: .standard),
-        localCacheStore: FileSystemLocalCacheStore()
+        localCacheStore: FileSystemLocalCacheStore(),
+        diagnosticsService: FileDiagnosticsService()
     )
 }
 
