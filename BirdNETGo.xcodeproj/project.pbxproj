@@ -27,6 +27,9 @@
 		8A3F409E2BD9000400A11001 /* BirdDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F409D2BD9000400A11001 /* BirdDetection.swift */; };
 		8A3F40A02BD9000400A11001 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F409F2BD9000400A11001 /* FeedViewModel.swift */; };
 		8A3F40A22BD9000500A11001 /* BirdDetectionStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A12BD9000500A11001 /* BirdDetectionStream.swift */; };
+		8A3F40A42BD9000600A11001 /* DetectionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A32BD9000600A11001 /* DetectionDetailView.swift */; };
+		8A3F40A62BD9000600A11001 /* DetectionDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A52BD9000600A11001 /* DetectionDetailViewModel.swift */; };
+		8A3F40A82BD9000600A11001 /* AudioClipPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A72BD9000600A11001 /* AudioClipPlayerView.swift */; };
 		8A3F3F622BD8000100A11001 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5D2BD8000100A11001 /* FeedView.swift */; };
 		8A3F3F632BD8000100A11001 /* SpeciesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5E2BD8000100A11001 /* SpeciesView.swift */; };
 		8A3F3F692BD8000100A11001 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F682BD8000100A11001 /* StatsView.swift */; };
@@ -57,6 +60,9 @@
 		8A3F409D2BD9000400A11001 /* BirdDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetection.swift; sourceTree = "<group>"; };
 		8A3F409F2BD9000400A11001 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		8A3F40A12BD9000500A11001 /* BirdDetectionStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetectionStream.swift; sourceTree = "<group>"; };
+		8A3F40A32BD9000600A11001 /* DetectionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionDetailView.swift; sourceTree = "<group>"; };
+		8A3F40A52BD9000600A11001 /* DetectionDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionDetailViewModel.swift; sourceTree = "<group>"; };
+		8A3F40A72BD9000600A11001 /* AudioClipPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioClipPlayerView.swift; sourceTree = "<group>"; };
 		8A3F3F5D2BD8000100A11001 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		8A3F3F5E2BD8000100A11001 /* SpeciesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesView.swift; sourceTree = "<group>"; };
 		8A3F3F682BD8000100A11001 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
@@ -162,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				8A3F3F552BD8000100A11001 /* Feed */,
+				8A3F40A92BD9000600A11001 /* DetectionDetail */,
 				8A3F3F562BD8000100A11001 /* Species */,
 				8A3F3F572BD8000100A11001 /* Stats */,
 				8A3F3F582BD8000100A11001 /* Station */,
@@ -176,6 +183,16 @@
 				8A3F409F2BD9000400A11001 /* FeedViewModel.swift */,
 			);
 			path = Feed;
+			sourceTree = "<group>";
+		};
+		8A3F40A92BD9000600A11001 /* DetectionDetail */ = {
+			isa = PBXGroup;
+			children = (
+				8A3F40A32BD9000600A11001 /* DetectionDetailView.swift */,
+				8A3F40A52BD9000600A11001 /* DetectionDetailViewModel.swift */,
+				8A3F40A72BD9000600A11001 /* AudioClipPlayerView.swift */,
+			);
+			path = DetectionDetail;
 			sourceTree = "<group>";
 		};
 		8A3F3F562BD8000100A11001 /* Species */ = {
@@ -302,6 +319,9 @@
 				8A3F40912BD9000200A11001 /* StationViewModel.swift in Sources */,
 				8A3F3F622BD8000100A11001 /* FeedView.swift in Sources */,
 				8A3F40A02BD9000400A11001 /* FeedViewModel.swift in Sources */,
+				8A3F40A42BD9000600A11001 /* DetectionDetailView.swift in Sources */,
+				8A3F40A62BD9000600A11001 /* DetectionDetailViewModel.swift in Sources */,
+				8A3F40A82BD9000600A11001 /* AudioClipPlayerView.swift in Sources */,
 				8A3F3F632BD8000100A11001 /* SpeciesView.swift in Sources */,
 				8A3F3F692BD8000100A11001 /* StatsView.swift in Sources */,
 				8A3F3F6B2BD8000100A11001 /* StationView.swift in Sources */,

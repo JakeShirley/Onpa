@@ -3,6 +3,7 @@ import Foundation
 struct AppConfiguration: Sendable {
     var stationURLOverride: URL?
     var localNetworkTestProfile: StationProfile?
+    var debugDetectionID: Int?
 
     static func current(
         arguments: [String] = ProcessInfo.processInfo.arguments,
@@ -10,13 +11,15 @@ struct AppConfiguration: Sendable {
     ) -> AppConfiguration {
         AppConfiguration(
             stationURLOverride: stationURLOverride(arguments: arguments, environment: environment),
-            localNetworkTestProfile: localNetworkTestProfile(arguments: arguments, environment: environment)
+            localNetworkTestProfile: localNetworkTestProfile(arguments: arguments, environment: environment),
+            debugDetectionID: debugDetectionID(arguments: arguments, environment: environment)
         )
     }
 
     static let preview = AppConfiguration(
         stationURLOverride: nil,
-        localNetworkTestProfile: StationProfile(name: "Local BirdNET-Go", baseURL: URL(string: "http://localhost:8080")!)
+        localNetworkTestProfile: StationProfile(name: "Local BirdNET-Go", baseURL: URL(string: "http://localhost:8080")!),
+        debugDetectionID: nil
     )
 
     private static func stationURLOverride(arguments: [String], environment: [String: String]) -> URL? {
@@ -44,6 +47,15 @@ struct AppConfiguration: Sendable {
         }
 
         return StationProfile(name: "Local BirdNET-Go", baseURL: url)
+    }
+
+    private static func debugDetectionID(arguments: [String], environment: [String: String]) -> Int? {
+        let value = value(after: "-debugDetectionID", in: arguments) ?? environment["BIRDNET_GO_DEBUG_DETECTION_ID"]
+        guard let value else {
+            return nil
+        }
+
+        return Int(value)
     }
 
     private static func value(after flag: String, in arguments: [String]) -> String? {

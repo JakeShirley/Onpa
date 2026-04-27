@@ -194,8 +194,8 @@ Status values: `not-started`, `in-progress`, `done`, `blocked`, `deferred`.
 
 | ID | Status | Feature | Notes |
 | --- | --- | --- | --- |
-| MED-001 | not-started | Detection detail screen | Use `/detections/:id`. |
-| MED-002 | not-started | Audio clip playback | Use `/media/audio?id=:detectionID` or filename endpoint. |
+| MED-001 | done | Detection detail screen | Feed rows open a detail screen backed by `/detections/:id`, with species, confidence, time, source, clip, and status fields. |
+| MED-002 | done | Audio clip playback | Detail screen builds a station-relative `/audio/:id` URL and plays available clips with `AVPlayer`. |
 | MED-003 | not-started | Spectrogram display | Use spectrogram endpoint and status endpoint when generation is async. |
 | MED-004 | not-started | Species image and attribution | Use species image endpoints and show attribution where required. |
 | MED-005 | not-started | Weather context | Use `/weather/detection/:id` when available. |

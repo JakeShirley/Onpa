@@ -84,6 +84,16 @@ struct URLSessionBirdNETGoAPIClient: BirdNETGoAPIClient {
         return try decoder.decode([BirdDetection].self, from: data)
     }
 
+    func detection(station: StationProfile, id: Int) async throws -> BirdDetection {
+        let (data, response) = try await perform(request(station: station, path: "api/v2/detections/\(id)"))
+        try validate(response: response, data: data)
+        return try decoder.decode(BirdDetection.self, from: data)
+    }
+
+    func audioClipURL(station: StationProfile, detectionID: Int) -> URL {
+        station.baseURL.appending(path: "api/v2/audio/\(detectionID)")
+    }
+
     func detectionEvents(station: StationProfile) -> AsyncThrowingStream<BirdDetectionStreamEvent, Error> {
         AsyncThrowingStream { continuation in
             let task = Task {

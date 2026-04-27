@@ -100,8 +100,10 @@ Supported debug inputs:
 - `BIRDNET_GO_STATION_URL=<url>`: environment equivalent of `-stationURL`.
 - `-useLocalStationProfile`: prefill a local test station profile when no station profile is saved.
 - `-localStationURL <url>`: override the local test profile URL. Defaults to `http://localhost:8080`.
+- `-debugDetectionID <id>`: open a detection detail screen on launch for visual simulator checks.
 - `BIRDNET_GO_USE_LOCAL_STATION_PROFILE=1`: environment equivalent of `-useLocalStationProfile`.
 - `BIRDNET_GO_LOCAL_STATION_URL=<url>`: environment equivalent of `-localStationURL`.
+- `BIRDNET_GO_DEBUG_DETECTION_ID=<id>`: environment equivalent of `-debugDetectionID`.
 
 The active station profile and app preferences are persisted with `UserDefaults`. Station credentials remain Keychain-only, and session cookies remain ephemeral.
 
@@ -113,6 +115,8 @@ The iOS app keeps foundation code in separate source areas so feature work can g
 - `BirdNETGo/Domain`: shared app models, detection DTOs, and domain state.
 - `BirdNETGo/Networking`: BirdNET-Go API client protocols, URLSession implementations, and SSE stream parsing.
 - `BirdNETGo/Storage`: storage protocols, UserDefaults-backed profile/preference persistence, local cache storage, and Keychain-backed credential storage.
-- `BirdNETGo/Features`: user-facing SwiftUI feature modules such as Feed, Species, Stats, and Station. Feature view models own screen state and call dependencies through `AppEnvironment`.
+- `BirdNETGo/Features`: user-facing SwiftUI feature modules such as Feed, DetectionDetail, Species, Stats, and Station. Feature view models own screen state and call dependencies through `AppEnvironment`.
 
 The Feed feature keeps recent-list refresh and live streaming separate: pull-to-refresh fetches `/api/v2/detections/recent?limit=10`, while the view model's live task listens to `/api/v2/detections/stream`, deduplicates incoming detections by ID, updates the same local cache, and reconnects with capped exponential backoff.
+
+Detection detail uses `/api/v2/detections/:id` for the canonical detail payload. Audio playback uses a station-relative `/api/v2/audio/:id` URL with `AVPlayer`; the auth-only clip extraction endpoint is intentionally left for later media editing work.

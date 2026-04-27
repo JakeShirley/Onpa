@@ -9,6 +9,9 @@ struct BirdDetection: Codable, Equatable, Identifiable, Sendable {
     var beginTime: String?
     var endTime: String?
     var speciesCode: String?
+    var clipName: String?
+    var latitude: Double?
+    var longitude: Double?
     var scientificName: String
     var commonName: String
     var confidence: Double
@@ -37,13 +40,36 @@ struct BirdDetection: Codable, Equatable, Identifiable, Sendable {
         source?.displayName ?? source?.id
     }
 
+    var recordedIntervalLabel: String? {
+        guard let beginTime, let endTime else {
+            return nil
+        }
+
+        return "\(Self.shortTimeLabel(for: beginTime)) - \(Self.shortTimeLabel(for: endTime))"
+    }
+
     private static let dateFormatter = ISO8601DateFormatter()
+
+    private static let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .medium
+        formatter.dateStyle = .none
+        return formatter
+    }()
 
     private static let relativeFormatter: RelativeDateTimeFormatter = {
         let formatter = RelativeDateTimeFormatter()
         formatter.unitsStyle = .abbreviated
         return formatter
     }()
+
+    private static func shortTimeLabel(for value: String) -> String {
+        guard let date = dateFormatter.date(from: value) else {
+            return value
+        }
+
+        return timeFormatter.string(from: date)
+    }
 }
 
 

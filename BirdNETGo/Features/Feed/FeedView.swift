@@ -3,6 +3,7 @@ import SwiftUI
 struct FeedView: View {
     @Environment(\.appEnvironment) private var appEnvironment
     @StateObject private var viewModel = FeedViewModel()
+    @State private var debugDetectionID: Int?
 
     var body: some View {
         List {
@@ -39,8 +40,12 @@ struct FeedView: View {
                 }
 
                 ForEach(viewModel.detections) { detection in
-                    DetectionRow(detection: detection, isLiveInserted: detection.id == viewModel.liveInsertedDetectionID)
-                        .transition(.asymmetric(insertion: .move(edge: .top).combined(with: .opacity), removal: .opacity))
+                    NavigationLink {
+                        DetectionDetailView(detectionID: detection.id, initialDetection: detection)
+                    } label: {
+                        DetectionRow(detection: detection, isLiveInserted: detection.id == viewModel.liveInsertedDetectionID)
+                            .transition(.asymmetric(insertion: .move(edge: .top).combined(with: .opacity), removal: .opacity))
+                    }
                 }
             }
         }
@@ -57,8 +62,25 @@ struct FeedView: View {
             }
         }
         .task {
+            if let detectionID = appEnvironment.configuration.debugDetectionID {
+                debugDetectionID = detectionID
+            }
             await viewModel.load(environment: appEnvironment)
             await viewModel.runLiveStream(environment: appEnvironment)
+        }
+        .navigationDestination(
+            isPresented: Binding(
+                get: { debugDetectionID != nil },
+                set: { isPresented in
+                    if !isPresented {
+                        debugDetectionID = nil
+                    }
+                }
+            )
+        ) {
+            if let debugDetectionID {
+                DetectionDetailView(detectionID: debugDetectionID)
+            }
         }
         .refreshable {
             await viewModel.refresh(environment: appEnvironment)
