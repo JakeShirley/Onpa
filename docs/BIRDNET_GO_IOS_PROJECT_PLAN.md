@@ -1,7 +1,7 @@
 # BirdNET-Go iOS Project Plan
 
 Last updated: 2026-04-26
-Status: Planning only. No implementation has started.
+Status: Implementation started. FND-001 has established the native SwiftUI app shell.
 
 ## Purpose
 
@@ -148,7 +148,7 @@ Status values: `not-started`, `in-progress`, `done`, `blocked`, `deferred`.
 
 | ID | Status | Feature | Notes |
 | --- | --- | --- | --- |
-| FND-001 | not-started | Native SwiftUI app shell | iPhone first, iPad-friendly layout later. |
+| FND-001 | done | Native SwiftUI app shell | Xcode project, shared scheme, SwiftUI app entry point, and Feed/Species/Stats/Station tab shell. |
 | FND-002 | not-started | App architecture | Separate networking, storage, domain models, and UI modules. |
 | FND-003 | not-started | Environment configuration | Debug station URL overrides, local network test profile. |
 | FND-004 | not-started | Local persistence | Cache detections, species, station profiles, and preferences. |
