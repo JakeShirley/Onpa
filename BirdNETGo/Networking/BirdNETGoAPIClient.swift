@@ -12,6 +12,8 @@ protocol BirdNETGoAPIClient: Sendable {
     func audioClipURL(station: StationProfile, detectionID: Int) -> URL
     func speciesImageURL(station: StationProfile, scientificName: String) -> URL
     func speciesImageAttribution(station: StationProfile, scientificName: String) async throws -> SpeciesImageAttribution
+    func weatherForDetection(station: StationProfile, detectionID: Int) async throws -> DetectionWeatherContext
+    func detectionTimeOfDay(station: StationProfile, detectionID: Int) async throws -> DetectionTimeOfDayContext
     func spectrogramURL(station: StationProfile, detectionID: Int, size: String, raw: Bool) -> URL
     func spectrogramStatus(station: StationProfile, detectionID: Int, size: String, raw: Bool) async throws -> SpectrogramStatusEnvelope
     func requestSpectrogramGeneration(station: StationProfile, detectionID: Int, size: String, raw: Bool, csrfToken: String?) async throws -> SpectrogramStatusEnvelope
@@ -24,6 +26,70 @@ struct SpeciesImageAttribution: Decodable, Equatable, Sendable {
     var licenseName: String?
     var licenseURL: String?
     var sourceProvider: String?
+}
+
+struct DetectionTimeOfDayContext: Decodable, Equatable, Sendable {
+    var timeOfDay: String
+}
+
+struct DetectionWeatherContext: Decodable, Equatable, Sendable {
+    var daily: DailyWeatherContext?
+    var hourly: HourlyWeatherContext?
+    var timeOfDay: String?
+
+    private enum CodingKeys: String, CodingKey {
+        case daily
+        case hourly
+        case timeOfDay = "time_of_day"
+    }
+}
+
+struct DailyWeatherContext: Decodable, Equatable, Sendable {
+    var date: String?
+    var sunrise: String?
+    var sunset: String?
+    var country: String?
+    var cityName: String?
+
+    private enum CodingKeys: String, CodingKey {
+        case date
+        case sunrise
+        case sunset
+        case country
+        case cityName = "city_name"
+    }
+}
+
+struct HourlyWeatherContext: Decodable, Equatable, Sendable {
+    var time: String?
+    var temperature: Double?
+    var feelsLike: Double?
+    var pressure: Int?
+    var humidity: Int?
+    var visibility: Int?
+    var windSpeed: Double?
+    var windDeg: Int?
+    var windGust: Double?
+    var clouds: Int?
+    var weatherMain: String?
+    var weatherDescription: String?
+    var weatherIcon: String?
+
+    private enum CodingKeys: String, CodingKey {
+        case time
+        case temperature
+        case feelsLike = "feels_like"
+        case pressure
+        case humidity
+        case visibility
+        case windSpeed = "wind_speed"
+        case windDeg = "wind_deg"
+        case windGust = "wind_gust"
+        case clouds
+        case weatherMain = "weather_main"
+        case weatherDescription = "weather_desc"
+        case weatherIcon = "weather_icon"
+    }
 }
 
 struct SpectrogramStatusEnvelope: Decodable, Equatable, Sendable {

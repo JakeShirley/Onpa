@@ -107,6 +107,18 @@ struct URLSessionBirdNETGoAPIClient: BirdNETGoAPIClient {
         return try decoder.decode(SpeciesImageAttribution.self, from: data)
     }
 
+    func weatherForDetection(station: StationProfile, detectionID: Int) async throws -> DetectionWeatherContext {
+        let (data, response) = try await perform(request(station: station, path: "api/v2/weather/detection/\(detectionID)"))
+        try validate(response: response, data: data)
+        return try decoder.decode(DetectionWeatherContext.self, from: data)
+    }
+
+    func detectionTimeOfDay(station: StationProfile, detectionID: Int) async throws -> DetectionTimeOfDayContext {
+        let (data, response) = try await perform(request(station: station, path: "api/v2/detections/\(detectionID)/time-of-day"))
+        try validate(response: response, data: data)
+        return try decoder.decode(DetectionTimeOfDayContext.self, from: data)
+    }
+
     func spectrogramURL(station: StationProfile, detectionID: Int, size: String, raw: Bool) -> URL {
         let url = station.baseURL.appending(path: "api/v2/spectrogram/\(detectionID)")
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
