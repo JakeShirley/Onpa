@@ -14,6 +14,8 @@ final class StationViewModel: ObservableObject {
     @Published private(set) var statusKind: StatusKind = .neutral
     @Published private(set) var diagnosticsBundleURL: URL?
     @Published private(set) var isBusy = false
+    @Published private(set) var activeProfile: StationProfile?
+    @Published private(set) var canDeleteStation = false
 
     private var didLoad = false
 
@@ -38,10 +40,13 @@ final class StationViewModel: ObservableObject {
             autoFetchSpectrograms = preferences.autoFetchSpectrograms
 
             let storedProfile = try await environment.stationProfileStore.loadActiveProfile()
-            guard let profile = environment.configuration.stationURLOverride.map(StationProfile.manual(baseURL:)) ?? storedProfile ?? environment.configuration.localNetworkTestProfile else {
+            let overrideProfile = environment.configuration.stationURLOverride.map(StationProfile.manual(baseURL:))
+            guard let profile = overrideProfile ?? storedProfile ?? environment.configuration.localNetworkTestProfile else {
                 return
             }
 
+            activeProfile = profile
+            canDeleteStation = overrideProfile == nil && storedProfile != nil
             baseURLText = profile.baseURL.absoluteString
             if let credentials = try await environment.credentialStore.loadCredentials(for: profile) {
                 username = credentials.username ?? ""
@@ -69,6 +74,8 @@ final class StationViewModel: ObservableObject {
             let report = try await environment.apiClient.validateConnection(station: profile)
             try await environment.stationProfileStore.saveActiveProfile(profile)
 
+            activeProfile = profile
+            canDeleteStation = true
             connectionReport = report
             authStatus = nil
             baseURLText = baseURL.absoluteString
@@ -80,6 +87,26 @@ final class StationViewModel: ObservableObject {
 
             let message = report.requiresAuthentication ? "Station connected. Login required." : "Station connected."
             setMessage(message, kind: .success)
+        }
+    }
+
+    func deleteStation(environment: AppEnvironment) async {
+        await performBusyOperation {
+            let profile = try await currentProfile(environment: environment)
+
+            try await environment.credentialStore.deleteCredentials(for: profile)
+            try await environment.stationProfileStore.saveActiveProfile(nil)
+
+            activeProfile = nil
+            canDeleteStation = false
+            connectionReport = nil
+            authStatus = nil
+            diagnosticsBundleURL = nil
+            baseURLText = ""
+            username = ""
+            password = ""
+
+            setMessage("Station deleted.", kind: .success)
         }
     }
 
@@ -163,9 +190,27 @@ final class StationViewModel: ObservableObject {
         let profile = StationProfile.manual(baseURL: baseURL)
         let report = try await environment.apiClient.validateConnection(station: profile)
         try await environment.stationProfileStore.saveActiveProfile(profile)
+        activeProfile = profile
+        canDeleteStation = true
         connectionReport = report
         baseURLText = baseURL.absoluteString
         return report
+    }
+
+    private func currentProfile(environment: AppEnvironment) async throws -> StationProfile {
+        guard canDeleteStation else {
+            throw StationConnectionError.invalidURL
+        }
+
+        if let activeProfile {
+            return activeProfile
+        }
+
+        if let storedProfile = try await environment.stationProfileStore.loadActiveProfile() {
+            return storedProfile
+        }
+
+        throw StationConnectionError.invalidURL
     }
 
     private func performBusyOperation(_ operation: () async throws -> Void) async {

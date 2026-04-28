@@ -145,7 +145,7 @@ ci(release): [NO-PLAN] add semantic-release workflow
 The app supports debug station configuration through launch arguments and environment variables:
 
 ```sh
-xcrun simctl launch --terminate-running-process <device-id> org.odinseye.onpa --args -initialTab station -stationURL http://192.168.1.50:8080
+xcrun simctl launch --terminate-running-process <device-id> org.odinseye.onpa --args -initialTab dashboard -stationURL http://192.168.1.50:8080 -debugShowStationManagement
 ```
 
 Supported debug inputs:
@@ -156,15 +156,19 @@ Supported debug inputs:
 - `-localStationURL <url>`: override the local test profile URL. Defaults to `http://localhost:8080`.
 - `-debugDetectionID <id>`: open a detection detail screen on launch for visual simulator checks.
 - `-debugSpeciesName <name>`: open a species detail screen after the Species or Dashboard tab loads for visual simulator checks.
-- `-initialTab <dashboard|feed|species|station>`: choose the launch tab. `stats` remains accepted as a legacy alias for `dashboard`.
+- `-debugShowStationManagement`: open station management from the Dashboard navigation bar on launch for visual simulator checks.
+- `-debugShowDeleteStationConfirmation`: open the delete station confirmation after station management loads for visual simulator checks.
+- `-initialTab <dashboard|feed|species>`: choose the launch tab. `stats` and `station` remain accepted as legacy aliases for `dashboard`.
 - `BIRDNET_GO_USE_LOCAL_STATION_PROFILE=1`: environment equivalent of `-useLocalStationProfile`.
 - `BIRDNET_GO_LOCAL_STATION_URL=<url>`: environment equivalent of `-localStationURL`.
 - `BIRDNET_GO_DEBUG_DETECTION_ID=<id>`: environment equivalent of `-debugDetectionID`.
 - `BIRDNET_GO_DEBUG_SPECIES_NAME=<name>`: environment equivalent of `-debugSpeciesName`.
+- `BIRDNET_GO_DEBUG_SHOW_STATION_MANAGEMENT=1`: environment equivalent of `-debugShowStationManagement`.
+- `BIRDNET_GO_DEBUG_SHOW_DELETE_STATION_CONFIRMATION=1`: environment equivalent of `-debugShowDeleteStationConfirmation`.
 
 The active station profile and app preferences are persisted with `UserDefaults`. Station credentials remain Keychain-only, and session cookies remain ephemeral.
 
-User-facing errors should flow through `AppError` so offline, authentication, TLS, rate limit, server, URL, and invalid station responses use consistent language across features. The Station tab can generate a local diagnostics bundle for troubleshooting; diagnostics redact station hosts, usernames, tokens, cookies, and passwords before writing a shareable text file under the app caches directory.
+User-facing errors should flow through `AppError` so offline, authentication, TLS, rate limit, server, URL, and invalid station responses use consistent language across features. Station management opens from the Dashboard navigation bar and can generate a local diagnostics bundle for troubleshooting; diagnostics redact station hosts, usernames, tokens, cookies, and passwords before writing a shareable text file under the app caches directory.
 
 ## Screenshot Tooling
 
@@ -174,7 +178,7 @@ Use the tracked screenshot runner to refresh README images after visible UI chan
 npm run screenshots
 ```
 
-The runner builds the Debug simulator app, starts [scripts/mock_birdnet_go_server.js](../scripts/mock_birdnet_go_server.js), installs the app on the simulator, launches the Dashboard, Feed, Species, and Station tabs, and writes PNGs to [docs/screenshots](screenshots). The mock station can also be run on its own for manual checks:
+The runner builds the Debug simulator app, starts [scripts/mock_birdnet_go_server.js](../scripts/mock_birdnet_go_server.js), installs the app on the simulator, launches the Dashboard, Feed, Species, and Dashboard station management views, and writes PNGs to [docs/screenshots](screenshots). The mock station can also be run on its own for manual checks:
 
 ```sh
 npm run mock-station

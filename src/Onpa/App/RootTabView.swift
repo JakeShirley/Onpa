@@ -26,12 +26,6 @@ struct RootTabView: View {
             }
             .tabItem { Label(AppTab.species.title, systemImage: AppTab.species.systemImage) }
             .tag(AppTab.species)
-
-            NavigationStack {
-                StationView()
-            }
-            .tabItem { Label(AppTab.station.title, systemImage: AppTab.station.systemImage) }
-            .tag(AppTab.station)
         }
     }
 }

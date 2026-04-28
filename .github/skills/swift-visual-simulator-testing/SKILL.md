@@ -1,6 +1,6 @@
 ---
 name: swift-visual-simulator-testing
-description: "Use when: visually testing Swift, SwiftUI, iOS UI, Station tab, navigation, forms, layout, or simulator changes with xcodebuild, simctl, screenshots, and manual visual inspection in the Xcode Simulator."
+description: "Use when: visually testing Swift, SwiftUI, iOS UI, station management, navigation, forms, layout, or simulator changes with xcodebuild, simctl, screenshots, and manual visual inspection in the Xcode Simulator."
 argument-hint: "Swift/iOS UI change to verify"
 ---
 
@@ -27,10 +27,10 @@ Use this skill when a Swift or SwiftUI change affects visible iOS behavior, layo
 4. Launch the app. For a specific tab, use the debug launch argument supported by the app shell.
 
    ```sh
-   xcrun simctl launch --terminate-running-process 5F8AE900-844B-4FDF-8B63-368C7751A4FE org.odinseye.onpa --args -initialTab station
+   xcrun simctl launch --terminate-running-process 5F8AE900-844B-4FDF-8B63-368C7751A4FE org.odinseye.onpa --args -initialTab dashboard -debugShowStationManagement
    ```
 
-   Supported values are `dashboard`, `feed`, `species`, and `station`. `stats` remains accepted as a legacy alias.
+   Supported tab values are `dashboard`, `feed`, and `species`. `stats` and `station` remain accepted as legacy aliases for `dashboard`.
 
 5. Capture a screenshot into `build/screenshots/` with a filename that names the feature or task.
 

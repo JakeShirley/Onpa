@@ -91,6 +91,15 @@ capture_tab() {
   xcrun simctl io "$DEVICE_UDID" screenshot "$output_path" >/dev/null
 }
 
+capture_station_management() {
+  local output_path="$SCREENSHOT_DIR/station.png"
+
+  echo "Capturing station management -> $output_path"
+  xcrun simctl launch --terminate-running-process "$DEVICE_UDID" "$BUNDLE_ID" --args -initialTab dashboard -stationURL "$MOCK_URL" -debugShowStationManagement >/dev/null
+  pause_for_render
+  xcrun simctl io "$DEVICE_UDID" screenshot "$output_path" >/dev/null
+}
+
 mkdir -p "$ROOT_DIR/build" "$SCREENSHOT_DIR"
 
 echo "Starting mock BirdNET-Go station at $MOCK_URL"
@@ -123,6 +132,6 @@ xcrun simctl install "$DEVICE_UDID" "$APP_PATH"
 capture_tab dashboard dashboard.png
 capture_tab feed feed.png
 capture_tab species species.png
-capture_tab station station.png
+capture_station_management
 
 echo "Screenshots written to $SCREENSHOT_DIR"

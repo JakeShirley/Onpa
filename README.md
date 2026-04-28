@@ -12,7 +12,7 @@ This project is intentionally a companion app, not a standalone classifier: Bird
 - Open detection detail with audio playback, spectrogram generation/display, species image attribution, weather, and time-of-day context.
 - Browse detected species using station species data plus recent detection summaries.
 - Cache recent detections/species for graceful offline fallback.
-- Generate redacted diagnostics bundles from the Station tab.
+- Generate redacted diagnostics bundles from station management in the Dashboard navigation bar.
 
 ## Screenshots
 
@@ -20,9 +20,9 @@ This project is intentionally a companion app, not a standalone classifier: Bird
 | --- | --- |
 | ![Dashboard tab showing daily detection activity](docs/screenshots/dashboard.png) | ![Feed tab showing recent detections](docs/screenshots/feed.png) |
 
-| Species | Station |
+| Species | Station Management |
 | --- | --- |
-| ![Species tab showing detected species](docs/screenshots/species.png) | ![Station tab showing connection settings](docs/screenshots/station.png) |
+| ![Species tab showing detected species](docs/screenshots/species.png) | ![Station management showing connection settings](docs/screenshots/station.png) |
 
 ## Tech Stack
 

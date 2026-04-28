@@ -150,12 +150,12 @@ Status values: `not-started`, `in-progress`, `done`, `blocked`, `deferred`.
 
 | ID | Status | Feature | Notes |
 | --- | --- | --- | --- |
-| FND-001 | done | Native SwiftUI app shell | Xcode project, shared scheme, SwiftUI app entry point, and Dashboard/Feed/Species/Station tab shell. |
+| FND-001 | done | Native SwiftUI app shell | Xcode project, shared scheme, SwiftUI app entry point, Dashboard/Feed/Species tab shell, and Dashboard station management entry point. |
 | FND-002 | done | App architecture | Added App, Domain, Networking, Storage, and Features boundaries with environment-injected API and profile store protocols. |
 | FND-003 | done | Environment configuration | Added launch/environment station URL overrides and an opt-in local network test profile. |
 | FND-004 | done | Local persistence | Persists active station profile and preferences locally; adds a file-backed cache foundation for future detection/species payloads. |
 | FND-005 | done | Error model | Shared `AppError` maps offline, auth, TLS, rate limit, server, URL, and invalid station responses to user-friendly recovery messages. |
-| FND-006 | done | Logging and diagnostics | Station tab generates a local diagnostics text bundle with station hosts, usernames, tokens, cookies, and passwords redacted. |
+| FND-006 | done | Logging and diagnostics | Dashboard station management generates a local diagnostics text bundle with station hosts, usernames, tokens, cookies, and passwords redacted. |
 | FND-007 | not-started | Accessibility baseline | Dynamic Type, VoiceOver labels, contrast, reduced motion. |
 | FND-008 | not-started | Localization foundation | Prepare app strings for BirdNET-Go's multilingual audience. |
 | FND-009 | not-started | Liquid Glass-ready design system | Prefer standard SwiftUI components, system colors, SF Symbols, and minimal custom chrome. |
@@ -165,7 +165,7 @@ Status values: `not-started`, `in-progress`, `done`, `blocked`, `deferred`.
 
 | ID | Status | Feature | Notes |
 | --- | --- | --- | --- |
-| CON-001 | done | Manual station connection | Station tab accepts a base URL and validates `/ping` plus `/app/config`. |
+| CON-001 | done | Manual station connection | Dashboard station management accepts a base URL and validates `/ping` plus `/app/config`. |
 | CON-002 | done | Connection validation | Validates URL scheme, host, TLS state, BirdNET-Go app config identity, and version. |
 | CON-003 | done | Secure credential storage | Basic-auth credentials are saved only through Keychain; session cookies use an ephemeral URLSession. |
 | CON-004 | done | Login/logout | Supports password-only simple auth via BirdNET-Go's compatibility username, direct `/auth/login`, auth-code callback completion, `/auth/status`, and `/auth/logout`. |
@@ -252,7 +252,7 @@ Status values: `not-started`, `in-progress`, `done`, `blocked`, `deferred`.
 | AUD-007 | not-started | Stream health | Use `/streams/status`, `/streams/health`, and health SSE. |
 | AUD-008 | not-started | Quiet hours status | Use `/streams/quiet-hours/status`. |
 | AUD-009 | not-started | Background audio policy | Decide if live station audio should continue in background. |
-| AUD-010 | not-started | Clipping and silence warnings | Surface source health in Station tab. |
+| AUD-010 | not-started | Clipping and silence warnings | Surface source health in station management. |
 
 ### Notifications and Alerts
 
@@ -343,7 +343,7 @@ Status: not-started
 
 Deliverables:
 
-- SwiftUI app shell with Dashboard, Feed, Species, and Station tabs.
+- SwiftUI app shell with Dashboard, Feed, and Species tabs plus station management in the Dashboard navigation bar.
 - Standard SwiftUI navigation, forms, lists, sheets, and toolbars that adopt current iOS design automatically.
 - Manual station connection flow.
 - Connectivity check using `/ping`, `/health`, and `/app/config`.

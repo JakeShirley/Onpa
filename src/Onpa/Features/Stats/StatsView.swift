@@ -4,6 +4,8 @@ struct StatsView: View {
     @Environment(\.appEnvironment) private var appEnvironment
     @StateObject private var viewModel = StatsViewModel()
     @State private var debugSpeciesSummary: DailySpeciesSummary?
+    @State private var isStationManagementPresented = false
+    @State private var didOpenDebugStationManagement = false
 
     var body: some View {
         Group {
@@ -16,6 +18,26 @@ struct StatsView: View {
         .navigationTitle("Dashboard")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Menu {
+                    Button {
+                        isStationManagementPresented = true
+                    } label: {
+                        Label(stationMenuActionTitle, systemImage: "arrow.triangle.2.circlepath")
+                    }
+
+                    if let stationProfile = viewModel.stationProfile {
+                        Section("Current") {
+                            Label(stationProfile.name, systemImage: "checkmark.circle")
+                            Text(stationProfile.baseURL.absoluteString)
+                        }
+                    }
+                } label: {
+                    Label("Station", systemImage: "antenna.radiowaves.left.and.right")
+                }
+                .accessibilityLabel("Station menu")
+            }
+
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     Task { await viewModel.refresh(environment: appEnvironment) }
@@ -27,6 +49,7 @@ struct StatsView: View {
         }
         .task {
             await viewModel.load(environment: appEnvironment)
+            openDebugStationManagementIfNeeded()
             openDebugSpeciesDetailIfNeeded()
         }
         .refreshable {
@@ -36,11 +59,34 @@ struct StatsView: View {
         .onChange(of: viewModel.dailySummary) { _, _ in
             openDebugSpeciesDetailIfNeeded()
         }
+        .onChange(of: isStationManagementPresented) { _, isPresented in
+            guard !isPresented else {
+                return
+            }
+
+            Task { await viewModel.refresh(environment: appEnvironment) }
+        }
         .navigationDestination(isPresented: debugSpeciesDetailIsPresented) {
             if let debugSpeciesSummary {
                 SpeciesDetailView(entry: debugSpeciesSummary.speciesDetailEntry)
             }
         }
+        .navigationDestination(isPresented: $isStationManagementPresented) {
+            StationView()
+        }
+    }
+
+    private var stationMenuActionTitle: String {
+        viewModel.hasStation ? "Manage or Switch Station" : "Connect Station"
+    }
+
+    private func openDebugStationManagementIfNeeded() {
+        guard appEnvironment.configuration.debugShowsStationManagement, !didOpenDebugStationManagement else {
+            return
+        }
+
+        didOpenDebugStationManagement = true
+        isStationManagementPresented = true
     }
 
     private var debugSpeciesDetailIsPresented: Binding<Bool> {
@@ -100,11 +146,20 @@ struct StatsView: View {
 
     private var stationUnavailableView: some View {
         List {
-            ContentUnavailableView(
-                "No Station Connected",
-                systemImage: "antenna.radiowaves.left.and.right.slash",
-                description: Text("Connect a BirdNET-Go station to see daily activity.")
-            )
+            VStack(spacing: 16) {
+                ContentUnavailableView(
+                    "No Station Connected",
+                    systemImage: "antenna.radiowaves.left.and.right.slash",
+                    description: Text("Connect a BirdNET-Go station to see daily activity.")
+                )
+
+                Button {
+                    isStationManagementPresented = true
+                } label: {
+                    Label("Connect Station", systemImage: "antenna.radiowaves.left.and.right")
+                }
+                .buttonStyle(.borderedProminent)
+            }
             .frame(maxWidth: .infinity, minHeight: 280)
             .listRowBackground(Color.clear)
         }

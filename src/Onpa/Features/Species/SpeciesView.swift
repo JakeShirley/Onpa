@@ -11,7 +11,7 @@ struct SpeciesView: View {
                 ContentUnavailableView(
                     "No Station Connected",
                     systemImage: "antenna.radiowaves.left.and.right",
-                    description: Text("Connect a BirdNET-Go station from the Station tab to see detected species.")
+                    description: Text("Connect a BirdNET-Go station from the Dashboard station menu to see detected species.")
                 )
                 .frame(maxWidth: .infinity, minHeight: 280)
                 .listRowBackground(Color.clear)

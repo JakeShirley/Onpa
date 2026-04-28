@@ -5,6 +5,8 @@ struct AppConfiguration: Sendable {
     var localNetworkTestProfile: StationProfile?
     var debugDetectionID: Int?
     var debugSpeciesName: String?
+    var debugShowsStationManagement: Bool
+    var debugShowsDeleteStationConfirmation: Bool
 
     static func current(
         arguments: [String] = ProcessInfo.processInfo.arguments,
@@ -14,7 +16,9 @@ struct AppConfiguration: Sendable {
             stationURLOverride: stationURLOverride(arguments: arguments, environment: environment),
             localNetworkTestProfile: localNetworkTestProfile(arguments: arguments, environment: environment),
             debugDetectionID: debugDetectionID(arguments: arguments, environment: environment),
-            debugSpeciesName: debugSpeciesName(arguments: arguments, environment: environment)
+            debugSpeciesName: debugSpeciesName(arguments: arguments, environment: environment),
+            debugShowsStationManagement: debugShowsStationManagement(arguments: arguments, environment: environment),
+            debugShowsDeleteStationConfirmation: debugShowsDeleteStationConfirmation(arguments: arguments, environment: environment)
         )
     }
 
@@ -22,7 +26,9 @@ struct AppConfiguration: Sendable {
         stationURLOverride: nil,
         localNetworkTestProfile: StationProfile(name: "Local BirdNET-Go", baseURL: URL(string: "http://localhost:8080")!),
         debugDetectionID: nil,
-        debugSpeciesName: nil
+        debugSpeciesName: nil,
+        debugShowsStationManagement: false,
+        debugShowsDeleteStationConfirmation: false
     )
 
     private static func stationURLOverride(arguments: [String], environment: [String: String]) -> URL? {
@@ -65,6 +71,14 @@ struct AppConfiguration: Sendable {
         (value(after: "-debugSpeciesName", in: arguments) ?? environment["BIRDNET_GO_DEBUG_SPECIES_NAME"])?
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .nonEmptyString
+    }
+
+    private static func debugShowsStationManagement(arguments: [String], environment: [String: String]) -> Bool {
+        arguments.contains("-debugShowStationManagement") || isEnabled(environment["BIRDNET_GO_DEBUG_SHOW_STATION_MANAGEMENT"])
+    }
+
+    private static func debugShowsDeleteStationConfirmation(arguments: [String], environment: [String: String]) -> Bool {
+        arguments.contains("-debugShowDeleteStationConfirmation") || isEnabled(environment["BIRDNET_GO_DEBUG_SHOW_DELETE_STATION_CONFIRMATION"])
     }
 
     private static func value(after flag: String, in arguments: [String]) -> String? {

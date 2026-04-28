@@ -61,7 +61,7 @@ enum AppError: LocalizedError, Equatable, Sendable {
         case .offline:
             return "Confirm the station is running and reachable from this device."
         case .authenticationRequired:
-            return "Open the Station tab and log in with your BirdNET-Go password."
+            return "Open the Dashboard station menu and log in with your BirdNET-Go password."
         case .permissionDenied:
             return "Log out and back in, or check the station's security settings."
         case .tlsFailure:
@@ -69,7 +69,7 @@ enum AppError: LocalizedError, Equatable, Sendable {
         case .rateLimited:
             return "Wait briefly before refreshing or reconnecting."
         case .server, .invalidStationResponse:
-            return "Check the station logs or generate a diagnostics bundle from the Station tab."
+            return "Check the station logs or generate a diagnostics bundle from the Dashboard station menu."
         case .invalidStationURL:
             return "Include the scheme and host, for example http://birdnet.local:8080."
         case .insecurePlainHTTP:

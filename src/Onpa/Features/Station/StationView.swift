@@ -3,6 +3,7 @@ import SwiftUI
 struct StationView: View {
     @Environment(\.appEnvironment) private var appEnvironment
     @StateObject private var viewModel = StationViewModel()
+    @State private var isDeleteConfirmationPresented = false
 
     var body: some View {
         Form {
@@ -16,7 +17,7 @@ struct StationView: View {
                 Button {
                     Task { await viewModel.connect(environment: appEnvironment) }
                 } label: {
-                    Label("Connect", systemImage: "antenna.radiowaves.left.and.right")
+                    Label("Connect or Switch Station", systemImage: "arrow.triangle.2.circlepath")
                 }
                 .disabled(viewModel.isBusy)
 
@@ -87,6 +88,18 @@ struct StationView: View {
             }
 
             Section {
+                Button(role: .destructive) {
+                    isDeleteConfirmationPresented = true
+                } label: {
+                    Label("Delete Station", systemImage: "trash")
+                        .foregroundStyle(viewModel.canDeleteStation ? .red : .secondary)
+                }
+                .disabled(viewModel.isBusy || !viewModel.canDeleteStation)
+            } footer: {
+                Text("Removes the saved station and any stored credentials on this device.")
+            }
+
+            Section {
                 Button {
                     Task { await viewModel.generateDiagnostics(environment: appEnvironment) }
                 } label: {
@@ -115,12 +128,29 @@ struct StationView: View {
                 LabeledContent("Version", value: appVersion)
             }
         }
-        .navigationTitle("Station")
+        .navigationTitle("Station Management")
+        .toolbar(.hidden, for: .tabBar)
         .task {
             await viewModel.load(environment: appEnvironment)
+
+            if appEnvironment.configuration.debugShowsDeleteStationConfirmation, viewModel.canDeleteStation {
+                isDeleteConfirmationPresented = true
+            }
         }
         .refreshable {
             await viewModel.refreshAuthStatus(environment: appEnvironment)
+        }
+        .alert(
+            "Delete Station?",
+            isPresented: $isDeleteConfirmationPresented
+        ) {
+            Button("Delete Station", role: .destructive) {
+                Task { await viewModel.deleteStation(environment: appEnvironment) }
+            }
+
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This removes the saved station and any stored credentials from this device.")
         }
     }
 

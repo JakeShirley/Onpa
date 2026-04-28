@@ -4,7 +4,6 @@ enum AppTab: Hashable, CaseIterable, Identifiable {
     case dashboard
     case feed
     case species
-    case station
 
     var id: Self { self }
 
@@ -17,7 +16,7 @@ enum AppTab: Hashable, CaseIterable, Identifiable {
         case "species":
             self = .species
         case "station":
-            self = .station
+            self = .dashboard
         default:
             return nil
         }
@@ -31,8 +30,6 @@ enum AppTab: Hashable, CaseIterable, Identifiable {
             "Feed"
         case .species:
             "Species"
-        case .station:
-            "Station"
         }
     }
 
@@ -44,8 +41,6 @@ enum AppTab: Hashable, CaseIterable, Identifiable {
             "list.bullet"
         case .species:
             "leaf"
-        case .station:
-            "antenna.radiowaves.left.and.right"
         }
     }
 
