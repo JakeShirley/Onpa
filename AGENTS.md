@@ -68,3 +68,28 @@ this as a hard requirement, not a polish pass.
 When implementing a new view, include the accessibility hooks in the same
 change rather than as a follow-up.
 
+## Localization (FND-008)
+
+Onpa ships English (`en`), Spanish (`es`), German (`de`), and Japanese (`ja`).
+Translations live in `src/Onpa/Resources/Localizable.xcstrings` (an Xcode
+String Catalog). The development language is English.
+
+When adding or changing user-facing copy:
+
+- Use string literals in SwiftUI initializers that accept
+  `LocalizedStringKey`: `Text("Settings")`, `Label("Settings", systemImage:)`,
+  `Section("Details")`, `Toggle("Auto Fetch Spectrograms", ...)`, and so on.
+  These are extracted automatically.
+- For non-`Text` consumers (alerts, sheets, dynamic strings), use
+  `String(localized: "Cancel")` so xcstringstool can pick them up too.
+- Add the new string to `Localizable.xcstrings` with translations for all
+  four languages. If a quality translation isn't available, leave the entry
+  with `state: needs_review` rather than shipping an obvious machine-grade
+  rendering as `translated`.
+- Avoid concatenating translated fragments. Use a single localized string
+  with positional substitutions instead so translators can reorder.
+- Keep brand names ("Onpa", "BirdNET-Go", "Wikipedia"), SF Symbol names, and
+  developer-facing diagnostics in English regardless of locale.
+- When adding a new locale, also add it to the project's `knownRegions` in
+  `src/Onpa.xcodeproj/project.pbxproj`.
+

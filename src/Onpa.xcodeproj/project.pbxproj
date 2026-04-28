@@ -17,6 +17,7 @@
 		8A3F3F6B2BD8000100A11001 /* StationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F6A2BD8000100A11001 /* StationView.swift */; };
 		8A3F3F702BD8000100A11001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A3F3F6F2BD8000100A11001 /* Assets.xcassets */; };
 		8A3F40C22BD9000D00A11001 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 8A3F40C12BD9000D00A11001 /* CHANGELOG.md */; };
+		8A3F41021100A11001 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8A3F41031100A11001 /* Localizable.xcstrings */; };
 		8A3F40802BD9000100A11001 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40792BD9000100A11001 /* AppEnvironment.swift */; };
 		8A3F40812BD9000100A11001 /* StationProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F407A2BD9000100A11001 /* StationProfile.swift */; };
 		8A3F40822BD9000100A11001 /* StationConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F407B2BD9000100A11001 /* StationConnectionStatus.swift */; };
@@ -74,6 +75,7 @@
 		8A3F408F2BD9000200A11001 /* StationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationViewModel.swift; sourceTree = "<group>"; };
 		8A3F40922BD9000200A11001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A3F40C12BD9000D00A11001 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		8A3F41031100A11001 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		8A3F40932BD9000300A11001 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		8A3F40952BD9000300A11001 /* UserDefaultsStationProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStationProfileStore.swift; sourceTree = "<group>"; };
 		8A3F40972BD9000300A11001 /* AppPreferenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferenceStore.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				8A3F40922BD9000200A11001 /* Info.plist */,
 				8A3F3F6F2BD8000100A11001 /* Assets.xcassets */,
 				8A3F40C12BD9000D00A11001 /* CHANGELOG.md */,
+				8A3F41031100A11001 /* Localizable.xcstrings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -331,6 +334,9 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				es,
+				de,
+				ja,
 				Base,
 			);
 			mainGroup = 8A3F3F442BD8000100A11001;
@@ -350,6 +356,7 @@
 			files = (
 				8A3F3F702BD8000100A11001 /* Assets.xcassets in Resources */,
 				8A3F40C22BD9000D00A11001 /* CHANGELOG.md in Resources */,
+				8A3F41021100A11001 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
