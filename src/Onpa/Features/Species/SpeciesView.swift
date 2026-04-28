@@ -59,16 +59,6 @@ struct SpeciesView: View {
                 }
                 .accessibilityLabel("Sort species")
             }
-
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    Task { await viewModel.refresh(environment: appEnvironment) }
-                } label: {
-                    Image(systemName: "arrow.clockwise")
-                }
-                .disabled(viewModel.isLoading)
-                .accessibilityLabel("Refresh species")
-            }
         }
         .task {
             await viewModel.load(environment: appEnvironment)

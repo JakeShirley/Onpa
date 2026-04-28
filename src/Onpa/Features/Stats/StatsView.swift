@@ -58,15 +58,6 @@ struct StatsView: View {
                 }
                 .accessibilityLabel("Station menu")
             }
-
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    Task { await viewModel.refresh(environment: appEnvironment) }
-                } label: {
-                    Label("Refresh", systemImage: "arrow.clockwise")
-                }
-                .disabled(viewModel.isLoading)
-            }
         }
         .task {
             await viewModel.load(environment: appEnvironment)

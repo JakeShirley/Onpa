@@ -68,17 +68,6 @@ struct SpeciesDetailView: View {
         }
         .navigationTitle(viewModel.species.commonName)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    Task { await viewModel.refresh(environment: appEnvironment) }
-                } label: {
-                    Image(systemName: "arrow.clockwise")
-                }
-                .disabled(viewModel.isLoading)
-                .accessibilityLabel("Refresh species detail")
-            }
-        }
         .task {
             await viewModel.load(environment: appEnvironment)
         }

@@ -50,17 +50,6 @@ struct FeedView: View {
             }
         }
         .navigationTitle("Feed")
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    Task { await viewModel.refresh(environment: appEnvironment) }
-                } label: {
-                    Image(systemName: "arrow.clockwise")
-                }
-                .disabled(viewModel.isLoading)
-                .accessibilityLabel("Refresh feed")
-            }
-        }
         .task {
             if let detectionID = appEnvironment.configuration.debugDetectionID {
                 debugDetectionID = detectionID
