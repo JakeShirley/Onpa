@@ -22,6 +22,14 @@ final class StatsViewModel: ObservableObject {
         stationProfile != nil
     }
 
+    /// True when the active station profile most recently responded
+    /// successfully (i.e., we have live data and no error status).
+    var isActiveStationConnected: Bool {
+        guard stationProfile != nil else { return false }
+        guard statusKind != .error else { return false }
+        return !dailySummary.isEmpty || !recentDetections.isEmpty
+    }
+
     /// Switches the active station profile (without re-validating) and
     /// triggers a refresh against the new profile.
     func switchProfile(to profile: StationProfile, environment: AppEnvironment) async {

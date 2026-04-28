@@ -37,17 +37,20 @@ struct StatsView: View {
                     if viewModel.availableProfiles.count > 1 {
                         Section("Switch Station") {
                             ForEach(viewModel.availableProfiles) { profile in
+                                let isActive = profile.id == viewModel.stationProfile?.id
+                                let isConnected = isActive && viewModel.isActiveStationConnected
                                 Button {
                                     Task { await viewModel.switchProfile(to: profile, environment: appEnvironment) }
                                 } label: {
-                                    Label(profile.name, systemImage: profile.id == viewModel.stationProfile?.id ? "checkmark.circle.fill" : "circle")
+                                    Label(profile.name, systemImage: isActive ? "checkmark.circle.fill" : "circle")
                                 }
+                                .tint(isConnected ? .green : .accentColor)
                             }
                         }
                     } else if let stationProfile = viewModel.stationProfile {
                         Section("Current") {
                             Label(stationProfile.name, systemImage: "checkmark.circle")
-                            Text(stationProfile.baseURL.absoluteString)
+                                .tint(viewModel.isActiveStationConnected ? .green : .accentColor)
                         }
                     }
                 } label: {
