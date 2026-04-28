@@ -21,14 +21,20 @@ BUILD_DIR="$ROOT_DIR/build/TestFlight"
 ARCHIVE_PATH="$BUILD_DIR/Onpa.xcarchive"
 EXPORT_PATH="$BUILD_DIR/export"
 EXPORT_OPTIONS_PLIST="$BUILD_DIR/ExportOptions.plist"
-PROFILE_PLIST="$BUILD_DIR/app_store_profile.plist"
+PROFILE_PLIST="$BUILD_DIR/profile.plist"
 PROFILES_DIR="$HOME/Library/MobileDevice/Provisioning Profiles"
 BUNDLE_IDENTIFIER="${IOS_BUNDLE_IDENTIFIER:-org.odinseye.onpa}"
+WIDGET_BUNDLE_IDENTIFIER="${IOS_WIDGET_BUNDLE_IDENTIFIER:-org.odinseye.onpa.OnpaWidget}"
 IPA_PATH="$EXPORT_PATH/Onpa.ipa"
 
-find_profile() {
+# Resolves the installed App Store provisioning profile for the given bundle id
+# and prints "PROFILE_NAME|TEAM_ID" on stdout.
+find_profile_for_bundle() {
+  local target_bundle="$1"
   local profile
   local app_identifier
+  local profile_name
+  local team_id
 
   if [[ ! -d "$PROFILES_DIR" ]]; then
     return 1
@@ -41,7 +47,10 @@ find_profile() {
 
     app_identifier="$(/usr/libexec/PlistBuddy -c 'Print Entitlements:application-identifier' "$PROFILE_PLIST" 2>/dev/null || true)"
 
-    if [[ "$app_identifier" == *."$BUNDLE_IDENTIFIER" ]]; then
+    if [[ "$app_identifier" == *."$target_bundle" ]]; then
+      profile_name="$(/usr/libexec/PlistBuddy -c 'Print Name' "$PROFILE_PLIST")"
+      team_id="$(/usr/libexec/PlistBuddy -c 'Print TeamIdentifier:0' "$PROFILE_PLIST")"
+      echo "$profile_name|$team_id"
       return 0
     fi
   done < <(find "$PROFILES_DIR" -name '*.mobileprovision' -print)
@@ -69,14 +78,21 @@ else
   echo "No root CHANGELOG.md found; keeping bundled dev changelog placeholder."
 fi
 
-if ! find_profile; then
+if ! app_profile_info="$(find_profile_for_bundle "$BUNDLE_IDENTIFIER")"; then
   echo "No installed App Store provisioning profile found for $BUNDLE_IDENTIFIER." >&2
   echo "Run apple-actions/download-provisioning-profiles before this script." >&2
   exit 65
 fi
 
-PROFILE_NAME="$(/usr/libexec/PlistBuddy -c 'Print Name' "$PROFILE_PLIST")"
-TEAM_ID="$(/usr/libexec/PlistBuddy -c 'Print TeamIdentifier:0' "$PROFILE_PLIST")"
+if ! widget_profile_info="$(find_profile_for_bundle "$WIDGET_BUNDLE_IDENTIFIER")"; then
+  echo "No installed App Store provisioning profile found for $WIDGET_BUNDLE_IDENTIFIER." >&2
+  echo "Run apple-actions/download-provisioning-profiles before this script." >&2
+  exit 65
+fi
+
+PROFILE_NAME="${app_profile_info%%|*}"
+TEAM_ID="${app_profile_info##*|}"
+WIDGET_PROFILE_NAME="${widget_profile_info%%|*}"
 
 cat >"$EXPORT_OPTIONS_PLIST" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
@@ -91,6 +107,8 @@ cat >"$EXPORT_OPTIONS_PLIST" <<PLIST
   <dict>
     <key>$BUNDLE_IDENTIFIER</key>
     <string>$PROFILE_NAME</string>
+    <key>$WIDGET_BUNDLE_IDENTIFIER</key>
+    <string>$WIDGET_PROFILE_NAME</string>
   </dict>
   <key>signingCertificate</key>
   <string>Apple Distribution</string>
@@ -105,6 +123,8 @@ cat >"$EXPORT_OPTIONS_PLIST" <<PLIST
 PLIST
 
 echo "Archiving Onpa $APP_VERSION ($IOS_BUILD_NUMBER) for App Store Connect..."
+echo "  App profile:    $PROFILE_NAME"
+echo "  Widget profile: $WIDGET_PROFILE_NAME"
 xcodebuild \
   -project "$ROOT_DIR/src/Onpa.xcodeproj" \
   -scheme Onpa \
@@ -115,9 +135,6 @@ xcodebuild \
   MARKETING_VERSION="$APP_VERSION" \
   CURRENT_PROJECT_VERSION="$IOS_BUILD_NUMBER" \
   DEVELOPMENT_TEAM="$TEAM_ID" \
-  CODE_SIGN_IDENTITY="Apple Distribution" \
-  CODE_SIGN_STYLE=Manual \
-  PROVISIONING_PROFILE_SPECIFIER="$PROFILE_NAME" \
   archive
 
 echo "Exporting signed IPA..."
