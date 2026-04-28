@@ -17,7 +17,14 @@ struct StationView: View {
                 Button {
                     Task { await viewModel.connect(environment: appEnvironment) }
                 } label: {
-                    Label("Connect or Switch Station", systemImage: "arrow.triangle.2.circlepath")
+                    HStack(spacing: 10) {
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                        Text("Connect or Switch Station")
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                            .hidden()
+                    }
+                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .center)
+                    .contentShape(Rectangle())
                 }
                 .disabled(viewModel.isBusy)
 
