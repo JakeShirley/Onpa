@@ -1,8 +1,10 @@
+import SafariServices
 import SwiftUI
 
 struct SpeciesDetailView: View {
     @Environment(\.appEnvironment) private var appEnvironment
     @StateObject private var viewModel: SpeciesDetailViewModel
+    @State private var inAppBrowserURL: IdentifiedURL?
 
     init(entry: SpeciesListEntry) {
         _viewModel = StateObject(wrappedValue: SpeciesDetailViewModel(entry: entry))
@@ -83,6 +85,10 @@ struct SpeciesDetailView: View {
         .refreshable {
             await viewModel.refresh(environment: appEnvironment)
         }
+        .sheet(item: $inAppBrowserURL) { item in
+            SafariBrowserView(url: item.url)
+                .ignoresSafeArea()
+        }
     }
 
     private var heroSection: some View {
@@ -104,6 +110,12 @@ struct SpeciesDetailView: View {
                         .italic()
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
+                }
+
+                if let wikipediaURL {
+                    WikipediaLinkChip(url: wikipediaURL, commonName: viewModel.species.commonName) {
+                        inAppBrowserURL = IdentifiedURL(url: wikipediaURL)
+                    }
                 }
 
                 HStack(spacing: 10) {
@@ -134,6 +146,19 @@ struct SpeciesDetailView: View {
         }
 
         return viewModel.species.thumbnailURL
+    }
+
+    private var wikipediaURL: URL? {
+        let trimmedScientific = viewModel.species.scientificName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedCommon = viewModel.species.commonName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let title = trimmedScientific.isEmpty ? trimmedCommon : trimmedScientific
+        guard !title.isEmpty,
+              let encoded = title.replacingOccurrences(of: " ", with: "_")
+                  .addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else {
+            return nil
+        }
+
+        return URL(string: "https://en.wikipedia.org/wiki/\(encoded)")
     }
 }
 
@@ -295,6 +320,66 @@ private struct DetailRow: View {
                 .multilineTextAlignment(.trailing)
         }
     }
+}
+
+private struct WikipediaLinkChip: View {
+    let url: URL
+    let commonName: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 8) {
+                Image(systemName: "book.pages")
+                    .font(.subheadline.weight(.semibold))
+                Text("Read on Wikipedia")
+                    .font(.subheadline.weight(.medium))
+                Spacer(minLength: 4)
+                Image(systemName: "arrow.up.right")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+            }
+            .foregroundStyle(.teal)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                LinearGradient(
+                    colors: [Color.teal.opacity(0.18), Color.teal.opacity(0.08)],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ),
+                in: RoundedRectangle(cornerRadius: 12, style: .continuous)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .stroke(Color.teal.opacity(0.25), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Read about \(commonName) on Wikipedia")
+        .accessibilityHint("Opens an in-app browser")
+    }
+}
+
+private struct SafariBrowserView: UIViewControllerRepresentable {
+    let url: URL
+
+    func makeUIViewController(context: Context) -> SFSafariViewController {
+        let configuration = SFSafariViewController.Configuration()
+        configuration.entersReaderIfAvailable = false
+        let controller = SFSafariViewController(url: url, configuration: configuration)
+        controller.preferredControlTintColor = UIColor.systemTeal
+        controller.dismissButtonStyle = .done
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {}
+}
+
+private struct IdentifiedURL: Identifiable {
+    let url: URL
+    var id: String { url.absoluteString }
 }
 
 private extension SpeciesImageAttribution {
