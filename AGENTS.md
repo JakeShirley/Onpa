@@ -93,3 +93,21 @@ When adding or changing user-facing copy:
 - When adding a new locale, also add it to the project's `knownRegions` in
   `src/Onpa.xcodeproj/project.pbxproj`.
 
+## Driving the iOS Simulator
+
+For visual verification, exploratory checks, and any task that requires
+interacting with the running app, use the bundled
+[`agent-device`](https://github.com/callstackincubator/agent-device) skill at
+`.opencode/skills/agent-device/`. Load it via the `skill` tool when you need
+to drive the simulator. Do not fall back to synthetic taps via
+`osascript`/`CGEventPost`: those need Accessibility entitlements and are
+brittle. Prefer accessibility-ref targeting (`agent-device snapshot -i` then
+`agent-device click @e6`) over screen coordinates.
+
+The `dogfood` and `react-devtools` skills in the same directory are
+companion bundles for QA loops and React Native debugging respectively;
+load them only when the task matches their description.
+
+`docs/DEVELOPMENT.md` carries the full simulator workflow (mock station
+boot, build/install, and the standard inspect/act/verify loop).
+

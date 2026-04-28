@@ -195,6 +195,55 @@ Useful overrides:
 - `SKIP_BUILD=1` reuses the existing app in `build/DerivedData`.
 - `MOCK_PORT=18082` avoids a port conflict with another local fixture.
 
+## Driving the Simulator
+
+For ad-hoc visual checks, manual exploration, and AI-agent-driven QA, use
+[`agent-device`](https://github.com/callstackincubator/agent-device). It wraps
+`simctl`, the iOS accessibility tree, and screenshot/video capture in a
+single CLI that lets you target UI by accessibility ref (`@e6`) or selector
+instead of fragile screen coordinates. The repo ships its skill bundle at
+`.opencode/skills/agent-device/` so OpenCode (and other skill-aware agents)
+load the official usage guide on demand. The `dogfood` and `react-devtools`
+companion skills are bundled alongside it.
+
+Typical loop:
+
+```sh
+# Boot the mock station so the app has data to render.
+npm run mock-station &
+
+# Build + install the Debug app on the booted simulator.
+xcodebuild -project src/Onpa.xcodeproj -scheme Onpa -configuration Debug \
+  -destination "platform=iOS Simulator,name=iPhone 17,OS=26.1" \
+  -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO build
+xcrun simctl install booted build/DerivedData/Build/Products/Debug-iphonesimulator/Onpa.app
+
+# Open Onpa, point it at the mock station, and inspect the UI.
+xcrun simctl launch --terminate-running-process booted org.odinseye.onpa \
+  --args -initialTab dashboard -stationURL http://127.0.0.1:18081
+npx -y agent-device snapshot -i        # list interactive refs (@e1, @e2, ...)
+npx -y agent-device click @e6          # tap by ref
+npx -y agent-device snapshot           # verify state after the tap
+npx -y agent-device screenshot build/menu-open.png
+npx -y agent-device close
+```
+
+Pin a specific simulator with `npx agent-device devices` to find UDIDs, and
+prefer `agent-device click @ref` over `xcrun simctl io ... screenshot` plus
+synthetic mouse events. Synthetic clicks via `osascript` or `CGEventPost`
+require Accessibility entitlements and are fragile; the agent-device
+accessibility-ref path is the supported way to drive the app from the host.
+
+For agents working through OpenCode, the `agent-device` skill is loaded via
+the `skill` tool. Agents should always:
+
+1. Confirm the target with `agent-device devices` and `agent-device open ...`.
+2. Use plain `agent-device snapshot` for read-only verification.
+3. Escalate to `agent-device snapshot -i` only when an interactive ref is
+   needed.
+4. Re-snapshot after mutations rather than reusing stale `@ref`s.
+5. End with `agent-device close` to release the session.
+
 ## App Structure
 
 The iOS app keeps foundation code in separate source areas so feature work can grow without mixing concerns:
