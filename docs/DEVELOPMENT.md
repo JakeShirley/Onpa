@@ -17,6 +17,56 @@ Expected release model:
 
 The release workflow intentionally does not use `@semantic-release/git`, `@semantic-release/changelog`, or any other plugin that commits generated version or changelog changes back to the repository.
 
+### TestFlight Uploads
+
+When semantic-release creates a new release on `main`, the GitHub Actions release workflow uses Apple Actions to import the Apple Distribution certificate, download the App Store provisioning profile, and upload the exported IPA to TestFlight. The local release script only archives and exports the signed IPA so the marketing version can come from the semantic-release version. The build number defaults to `<GITHUB_RUN_NUMBER>.<GITHUB_RUN_ATTEMPT>` so reruns produce a distinct App Store Connect build.
+
+Configure these secrets in the GitHub Actions `AppStore` environment before enabling release uploads:
+
+- `APP_STORE_CONNECT_API_KEY_ID`: App Store Connect API key ID.
+- `APP_STORE_CONNECT_API_ISSUER_ID`: App Store Connect issuer ID.
+- `APP_STORE_CONNECT_API_PRIVATE_KEY`: full `.p8` private key contents. Escaped `\n` line breaks are accepted.
+- `IOS_DISTRIBUTION_CERTIFICATE_BASE64`: base64-encoded Apple Distribution `.p12` certificate.
+- `IOS_DISTRIBUTION_CERTIFICATE_PASSWORD`: password for the `.p12` certificate.
+
+The App Store Connect app record for `org.odinseye.onpa` must already exist. The App Store provisioning profile for that bundle ID must exist in Apple Developer and must include the Apple Distribution certificate imported by the workflow. Set `IOS_BUILD_NUMBER` in the release workflow environment only if a manual build-number override is needed.
+
+To create the signing assets:
+
+1. Generate a certificate signing request on a trusted Mac:
+
+	- Open Keychain Access.
+	- Choose Keychain Access > Certificate Assistant > Request a Certificate From a Certificate Authority.
+	- Enter an email address and common name, choose Saved to disk, and save the `.certSigningRequest` file.
+
+2. Create the Apple Distribution certificate:
+
+	- Go to Apple Developer > Certificates, Identifiers & Profiles > Certificates.
+	- Add a new `Apple Distribution` certificate and upload the `.certSigningRequest` file.
+	- Download the generated `.cer` file and open it on the same Mac that created the request.
+	- In Keychain Access, find the `Apple Distribution` certificate under My Certificates. It must have a private key nested under it.
+	- Export the certificate plus private key as a `.p12` file and set a strong export password.
+
+3. Create the App Store provisioning profile:
+
+	- Go to Apple Developer > Certificates, Identifiers & Profiles > Profiles.
+	- Add a new profile using the `App Store` distribution type.
+	- Select the app ID for `org.odinseye.onpa`.
+	- Select the Apple Distribution certificate from the previous step.
+	- Save the profile. The release workflow downloads it automatically with `apple-actions/download-provisioning-profiles`.
+
+4. Add the credentials as GitHub Actions secrets in the `AppStore` environment. This command keeps the `.p12` binary base64-encoded and avoids writing secret values into shell history:
+
+	```sh
+	base64 < /path/to/OnpaDistribution.p12 | tr -d '\n' | gh secret set IOS_DISTRIBUTION_CERTIFICATE_BASE64 --env AppStore
+	printf '%s' 'your-p12-export-password' | gh secret set IOS_DISTRIBUTION_CERTIFICATE_PASSWORD --env AppStore
+	gh secret set APP_STORE_CONNECT_API_PRIVATE_KEY --env AppStore < /path/to/AuthKey_YOUR_KEY_ID.p8
+	printf '%s' 'YOUR_KEY_ID' | gh secret set APP_STORE_CONNECT_API_KEY_ID --env AppStore
+	printf '%s' 'YOUR_ISSUER_ID' | gh secret set APP_STORE_CONNECT_API_ISSUER_ID --env AppStore
+	```
+
+Keep the `.p8`, `.p12`, and any downloaded `.mobileprovision` files outside the repository after creating the secrets. The repository `.gitignore` excludes common local copies, but these files are production credentials and should be treated like passwords.
+
 ## Commit Message Format
 
 All feature, bug fix, maintenance, documentation, test, and CI commits should use semantic-release-compatible Conventional Commits:

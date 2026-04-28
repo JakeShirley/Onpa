@@ -58,7 +58,7 @@ For debug simulator launches, the app supports flags such as `-initialTab`, `-st
 
 Releases are managed by semantic-release through GitHub Actions. Conventional Commits determine release notes, tags, and published GitHub releases.
 
-The checked-in app and package versions intentionally remain `0.0.0-development`; release workflows pass the semantic-release version to `xcodebuild` at build time and do not commit version bumps back to the repository.
+The checked-in app and package versions intentionally remain `0.0.0-development`; release workflows pass the semantic-release version to `xcodebuild` at build time and do not commit version bumps back to the repository. When a new release is created on `main`, the release workflow also exports a signed App Store Connect IPA and uploads it to TestFlight. See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for the required GitHub secrets.
 
 ## Roadmap
 

@@ -11,5 +11,10 @@ xcuserdata/
 # Node release tooling
 node_modules/
 
+# Apple signing and App Store Connect credentials
+AuthKey_*.p8
+*.p12
+*.mobileprovision
+
 # macOS
 .DS_Store

@@ -17,6 +17,7 @@ jobs:
   release:
     name: semantic-release
     runs-on: macos-latest
+    environment: AppStore
 
     steps:
       - name: Checkout
@@ -33,7 +34,33 @@ jobs:
       - name: Install release dependencies
         run: npm ci
 
+      - name: Import Apple Distribution certificate
+        uses: apple-actions/import-codesign-certs@v7
+        with:
+          p12-file-base64: ${{ secrets.IOS_DISTRIBUTION_CERTIFICATE_BASE64 }}
+          p12-password: ${{ secrets.IOS_DISTRIBUTION_CERTIFICATE_PASSWORD }}
+
+      - name: Download App Store provisioning profile
+        uses: apple-actions/download-provisioning-profiles@v6
+        with:
+          bundle-id: org.odinseye.onpa
+          profile-type: IOS_APP_STORE
+          issuer-id: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          api-key-id: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          api-private-key: ${{ secrets.APP_STORE_CONNECT_API_PRIVATE_KEY }}
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run release
+
+      - name: Upload app to TestFlight
+        if: ${{ hashFiles('build/TestFlight/export/Onpa.ipa') != '' }}
+        uses: apple-actions/upload-testflight-build@v5
+        with:
+          app-path: build/TestFlight/export/Onpa.ipa
+          issuer-id: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          api-key-id: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          api-private-key: ${{ secrets.APP_STORE_CONNECT_API_PRIVATE_KEY }}
+          uses-non-exempt-encryption: "false"
+          wait-for-processing: "true"
