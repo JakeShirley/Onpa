@@ -93,6 +93,33 @@ When adding or changing user-facing copy:
 - When adding a new locale, also add it to the project's `knownRegions` in
   `src/Onpa.xcodeproj/project.pbxproj`.
 
+## Verifying Swift Changes
+
+Any change that touches a `.swift` file is not "done" until it has been
+exercised in the running app. After editing Swift sources you MUST:
+
+1. Build the app for the iOS Simulator and resolve every compiler error and
+   warning you introduce. Treat new warnings as failures unless the user
+   explicitly says otherwise.
+2. Install and launch the freshly built binary on the simulator (boot the
+   mock-station configuration described in `docs/DEVELOPMENT.md` when the
+   change touches anything that depends on a station connection).
+3. Drive the affected UI with the `agent-device` skill
+   (`.opencode/skills/agent-device/`). Use `agent-device snapshot -i` to
+   locate accessibility refs, then click/type/scroll to reach the screens
+   your change affects.
+4. Visually confirm the new behavior — capture a snapshot or screenshot of
+   the relevant state and verify it matches the intended outcome (layout,
+   copy, accessibility labels, dynamic-type sizing, dark mode if relevant).
+   If something looks wrong, iterate until it matches before reporting the
+   task complete.
+
+Do not rely solely on "it compiles" or unit tests for Swift work. Skipping
+the simulator + `agent-device` verification loop is a regression risk and
+is not acceptable. If the simulator or `agent-device` is genuinely
+unavailable in the current environment, say so explicitly in your final
+response instead of silently omitting the verification.
+
 ## Driving the iOS Simulator
 
 For visual verification, exploratory checks, and any task that requires
