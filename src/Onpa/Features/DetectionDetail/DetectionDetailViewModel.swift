@@ -36,7 +36,7 @@ final class DetectionDetailViewModel: ObservableObject {
             guard let profile = try await loadStationProfile(environment: environment) else {
                 stationProfile = nil
                 audioURL = nil
-                errorMessage = "Connect a BirdNET-Go station to load detection details."
+                errorMessage = String(localized: "Connect a BirdNET-Go station to load detection details.")
                 return
             }
 

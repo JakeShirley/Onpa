@@ -8,11 +8,11 @@ enum StationConnectionStatus: Equatable, Sendable {
     var displayName: String {
         switch self {
         case .unknown:
-            return "Unknown"
+            return String(localized: "Unknown")
         case .reachable:
-            return "Reachable"
+            return String(localized: "Reachable")
         case .unreachable:
-            return "Unreachable"
+            return String(localized: "Unreachable")
         }
     }
 }
@@ -27,7 +27,7 @@ enum StationTLSState: Equatable, Sendable {
         case .secureHTTPS:
             return "HTTPS"
         case .localPlainHTTP:
-            return "Local HTTP"
+            return String(localized: "Local HTTP")
         case .insecurePlainHTTP:
             return "HTTP"
         }

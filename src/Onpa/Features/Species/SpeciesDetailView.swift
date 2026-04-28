@@ -187,7 +187,7 @@ private struct SpeciesDetailImageView: View {
         .frame(maxWidth: .infinity)
         .aspectRatio(4 / 3, contentMode: .fit)
         .clipShape(DS.Shape.card)
-        .accessibilityLabel("Image of \(commonName)")
+        .accessibilityLabel(String(localized: "Image of \(commonName)"))
     }
 
     private var imageUnavailableLabel: some View {
@@ -274,7 +274,7 @@ private struct SpeciesMetricTile: View {
         .padding(10)
         .background(DS.Surface.card, in: DS.Shape.card)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(title): \(value)")
+        .accessibilityLabel(String(localized: "\(title): \(value)"))
     }
 }
 
@@ -308,7 +308,7 @@ private struct SpeciesDetectionRow: View {
         }
         .padding(.vertical, 3)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(detection.timeLabel), \(detection.confidencePercent) percent confidence\(detection.sourceLabel.map { ", \($0)" } ?? "")")
+        .accessibilityLabel(String(localized: "\(detection.timeLabel), \(detection.confidencePercent) percent confidence\(detection.sourceLabel.map { ", \($0)" } ?? "")"))
     }
 }
 
@@ -362,7 +362,7 @@ private struct WikipediaLinkChip: View {
             )
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("Read about \(commonName) on Wikipedia")
+        .accessibilityLabel(String(localized: "Read about \(commonName) on Wikipedia"))
         .accessibilityHint("Opens an in-app browser")
     }
 }
@@ -399,7 +399,7 @@ private extension SpeciesImageAttribution {
 
     var accessibilityLabel: String {
         let parts = [authorName.nonEmptyString, licenseName.nonEmptyString, sourceProvider.nonEmptyString].compactMap { $0 }
-        return "Image credit: \(parts.joined(separator: ", "))"
+        return String(localized: "Image credit: \(parts.joined(separator: ", "))")
     }
 }
 

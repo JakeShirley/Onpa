@@ -47,12 +47,12 @@ struct AudioClipPlayerView: View {
 
         guard let audioURL else {
             player = nil
-            statusMessage = "No audio clip URL available."
+            statusMessage = String(localized: "No audio clip URL available.")
             return
         }
 
         player = AVPlayer(url: audioURL)
-        statusMessage = "Ready to play"
+        statusMessage = String(localized: "Ready to play")
     }
 
     private func togglePlayback() {
@@ -62,10 +62,10 @@ struct AudioClipPlayerView: View {
 
         if isPlaying {
             player.pause()
-            statusMessage = "Paused"
+            statusMessage = String(localized: "Paused")
         } else {
             player.play()
-            statusMessage = "Playing"
+            statusMessage = String(localized: "Playing")
         }
 
         isPlaying.toggle()

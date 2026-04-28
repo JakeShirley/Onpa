@@ -161,11 +161,11 @@ private struct DetectionRow: View {
     private var accessibilityLabel: String {
         var parts: [String] = [
             detection.commonName,
-            "\(detection.confidencePercent) percent confidence",
-            "at \(detection.timeLabel)"
+            String(localized: "\(detection.confidencePercent) percent confidence"),
+            String(localized: "at \(detection.timeLabel)")
         ]
-        if detection.isNewSpecies == true { parts.append("new species") }
-        if detection.locked { parts.append("locked") }
+        if detection.isNewSpecies == true { parts.append(String(localized: "new species")) }
+        if detection.locked { parts.append(String(localized: "locked")) }
         if let source = detection.sourceLabel, !source.isEmpty { parts.append(source) }
         return parts.joined(separator: ", ")
     }

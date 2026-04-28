@@ -34,23 +34,26 @@ enum AppError: LocalizedError, Equatable, Sendable {
     var errorDescription: String? {
         switch self {
         case .offline:
-            return "The station appears to be offline or unreachable."
+            return String(localized: "The station appears to be offline or unreachable.")
         case .authenticationRequired:
-            return "Log in to the station to continue."
+            return String(localized: "Log in to the station to continue.")
         case .permissionDenied:
-            return "The station denied this request. Check your account permissions."
+            return String(localized: "The station denied this request. Check your account permissions.")
         case .tlsFailure:
-            return "The station's secure connection could not be trusted."
+            return String(localized: "The station's secure connection could not be trusted.")
         case .rateLimited:
-            return "The station is receiving too many requests. Try again in a moment."
+            return String(localized: "The station is receiving too many requests. Try again in a moment.")
         case let .server(statusCode, message):
-            return message ?? "The station returned HTTP \(statusCode)."
+            if let message {
+                return message
+            }
+            return String(localized: "The station returned HTTP \(statusCode).")
         case .invalidStationResponse:
-            return "The station returned an unexpected response."
+            return String(localized: "The station returned an unexpected response.")
         case .invalidStationURL:
-            return "Enter a valid BirdNET-Go station URL."
+            return String(localized: "Enter a valid BirdNET-Go station URL.")
         case .insecurePlainHTTP:
-            return "Use HTTPS for remote stations. Plain HTTP is only supported for localhost, private IPs, and .local stations."
+            return String(localized: "Use HTTPS for remote stations. Plain HTTP is only supported for localhost, private IPs, and .local stations.")
         case let .unknown(message):
             return message
         }
@@ -59,21 +62,21 @@ enum AppError: LocalizedError, Equatable, Sendable {
     var recoverySuggestion: String? {
         switch self {
         case .offline:
-            return "Confirm the station is running and reachable from this device."
+            return String(localized: "Confirm the station is running and reachable from this device.")
         case .authenticationRequired:
-            return "Open the Dashboard station menu and log in with your BirdNET-Go password."
+            return String(localized: "Open the Dashboard station menu and log in with your BirdNET-Go password.")
         case .permissionDenied:
-            return "Log out and back in, or check the station's security settings."
+            return String(localized: "Log out and back in, or check the station's security settings.")
         case .tlsFailure:
-            return "Use a valid HTTPS certificate, or connect over local HTTP for trusted local stations."
+            return String(localized: "Use a valid HTTPS certificate, or connect over local HTTP for trusted local stations.")
         case .rateLimited:
-            return "Wait briefly before refreshing or reconnecting."
+            return String(localized: "Wait briefly before refreshing or reconnecting.")
         case .server, .invalidStationResponse:
-            return "Check the station logs or generate a diagnostics bundle from the Dashboard station menu."
+            return String(localized: "Check the station logs or generate a diagnostics bundle from the Dashboard station menu.")
         case .invalidStationURL:
-            return "Include the scheme and host, for example http://birdnet.local:8080."
+            return String(localized: "Include the scheme and host, for example http://birdnet.local:8080.")
         case .insecurePlainHTTP:
-            return "Use HTTPS for remote hosts, or connect to a localhost, private IP, or .local address."
+            return String(localized: "Use HTTPS for remote hosts, or connect to a localhost, private IP, or .local address.")
         case .unknown:
             return nil
         }

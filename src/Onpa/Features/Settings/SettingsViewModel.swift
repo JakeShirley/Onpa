@@ -41,7 +41,7 @@ final class SettingsViewModel: ObservableObject {
                 )
             )
             UserDefaults.standard.set(appearance.rawValue, forKey: AppearancePreference.storageKey)
-            setMessage("Settings saved.", systemImage: "checkmark.circle")
+            setMessage(String(localized: "Settings saved."), systemImage: "checkmark.circle")
         } catch {
             setMessage(error.userFacingMessage, systemImage: "exclamationmark.triangle")
         }

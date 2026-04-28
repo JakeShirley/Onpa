@@ -52,9 +52,9 @@ final class StationViewModel: ObservableObject {
             }
 
             if environment.configuration.stationURLOverride != nil {
-                setMessage("Using debug station URL override.", kind: .neutral)
+                setMessage(String(localized: "Using debug station URL override."), kind: .neutral)
             } else if storedProfile == nil, environment.configuration.localNetworkTestProfile != nil {
-                setMessage("Loaded local test station profile.", kind: .neutral)
+                setMessage(String(localized: "Loaded local test station profile."), kind: .neutral)
             }
         } catch {
             setMessage(error.userFacingMessage, kind: .warning)
@@ -104,7 +104,7 @@ final class StationViewModel: ObservableObject {
             username = ""
             password = ""
 
-            setMessage("Station deleted.", kind: .success)
+            setMessage(String(localized: "Station deleted."), kind: .success)
         }
     }
 
@@ -137,7 +137,7 @@ final class StationViewModel: ObservableObject {
             try await environment.credentialStore.deleteCredentials(for: report.profile)
             password = ""
             authStatus = StationAuthStatus(authenticated: false, username: nil, method: nil)
-            setMessage("Logged out.", kind: .success)
+            setMessage(String(localized: "Logged out."), kind: .success)
         }
     }
 
@@ -163,7 +163,7 @@ final class StationViewModel: ObservableObject {
                     statusMessage: statusMessage
                 )
             )
-            setMessage("Diagnostics bundle ready to share.", kind: .success)
+            setMessage(String(localized: "Diagnostics bundle ready to share."), kind: .success)
         }
     }
 

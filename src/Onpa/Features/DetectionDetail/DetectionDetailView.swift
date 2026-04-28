@@ -173,7 +173,7 @@ private struct WeatherMetricView: View {
                 .foregroundStyle(.secondary)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(title): \(value)")
+        .accessibilityLabel(String(localized: "\(title): \(value)"))
     }
 }
 
@@ -226,7 +226,7 @@ private struct SpeciesImageView: View {
                 .clipped()
         }
         .clipShape(DS.Shape.card)
-        .accessibilityLabel("Image of \(commonName)")
+        .accessibilityLabel(String(localized: "Image of \(commonName)"))
     }
 }
 
@@ -261,7 +261,7 @@ private extension SpeciesImageAttribution {
 
     var accessibilityLabel: String {
         let parts = [authorName.nonEmptyString, licenseName.nonEmptyString, sourceProvider.nonEmptyString].compactMap { $0 }
-        return "Image credit: \(parts.joined(separator: ", "))"
+        return String(localized: "Image credit: \(parts.joined(separator: ", "))")
     }
 }
 
@@ -276,10 +276,10 @@ private extension DetectionWeatherContext {
 
     func windLabel(speed: Double) -> String {
         if let gust = hourly?.windGust, gust > speed {
-            return "\(speed.oneDecimalLabel) m/s, gusts \(gust.oneDecimalLabel)"
+            return String(localized: "\(speed.oneDecimalLabel) m/s, gusts \(gust.oneDecimalLabel)")
         }
 
-        return "\(speed.oneDecimalLabel) m/s"
+        return String(localized: "\(speed.oneDecimalLabel) m/s")
     }
 
     func weatherSystemImage(timeOfDay: String?) -> String {
@@ -322,11 +322,11 @@ private extension DailyWeatherContext {
 
         switch (sunriseLabel, sunsetLabel) {
         case let (sunrise?, sunset?):
-            return "Sunrise \(sunrise) / Sunset \(sunset)"
+            return String(localized: "Sunrise \(sunrise) / Sunset \(sunset)")
         case let (sunrise?, nil):
-            return "Sunrise \(sunrise)"
+            return String(localized: "Sunrise \(sunrise)")
         case let (nil, sunset?):
-            return "Sunset \(sunset)"
+            return String(localized: "Sunset \(sunset)")
         case (nil, nil):
             return nil
         }
@@ -350,7 +350,7 @@ private extension DailyWeatherContext {
 
 private extension Double {
     var temperatureLabel: String {
-        "\(oneDecimalLabel) C"
+        String(localized: "\(oneDecimalLabel) °C")
     }
 
     var oneDecimalLabel: String {
@@ -360,10 +360,21 @@ private extension Double {
 
 private extension String {
     var displayTitle: String {
-        replacingOccurrences(of: "_", with: " ")
-            .split(separator: " ")
-            .map { $0.prefix(1).uppercased() + $0.dropFirst().lowercased() }
-            .joined(separator: " ")
+        switch lowercased() {
+        case "day": return String(localized: "Day")
+        case "night": return String(localized: "Night")
+        case "sunrise", "dawn": return String(localized: "Sunrise")
+        case "sunset", "dusk": return String(localized: "Sunset")
+        case "morning": return String(localized: "Morning")
+        case "afternoon": return String(localized: "Afternoon")
+        case "evening": return String(localized: "Evening")
+        case "twilight": return String(localized: "Twilight")
+        default:
+            return replacingOccurrences(of: "_", with: " ")
+                .split(separator: " ")
+                .map { $0.prefix(1).uppercased() + $0.dropFirst().lowercased() }
+                .joined(separator: " ")
+        }
     }
 
     var nonEmptyString: String? {

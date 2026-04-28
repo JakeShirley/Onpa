@@ -114,7 +114,7 @@ final class StatsViewModel: ObservableObject {
                 } else {
                     dailySummary = []
                     recentDetections = []
-                    setMessage("No activity for this day.", kind: .neutral)
+                    setMessage(String(localized: "No activity for this day."), kind: .neutral)
                 }
                 return
             }
@@ -123,11 +123,11 @@ final class StatsViewModel: ObservableObject {
             recentDetections = recent
 
             if analyticsError != nil, !analyticsSummary.isEmpty {
-                setMessage("Showing activity from recent detections.", kind: .warning)
+                setMessage(String(localized: "Showing activity from recent detections."), kind: .warning)
             } else if let recentError, recent.isEmpty {
-                setMessage("Daily activity loaded, but live hearing status is unavailable: \(recentError.userFacingMessage)", kind: .warning)
+                setMessage(String(localized: "Daily activity loaded, but live hearing status is unavailable: \(recentError.userFacingMessage)"), kind: .warning)
             } else {
-                statusMessage = analyticsSummary.isEmpty ? "No activity for this day." : nil
+                statusMessage = analyticsSummary.isEmpty ? String(localized: "No activity for this day.") : nil
                 statusKind = .neutral
             }
 
@@ -237,7 +237,7 @@ final class StatsViewModel: ObservableObject {
                 let dashboard = try decoder.decode(DailySpeciesDashboard.self, from: data)
                 dailySummary = dashboard.summaries
                 recentDetections = dashboard.recentDetections
-                setMessage("Showing cached dashboard.", kind: .warning)
+                setMessage(String(localized: "Showing cached dashboard."), kind: .warning)
             } else {
                 dailySummary = []
                 recentDetections = []

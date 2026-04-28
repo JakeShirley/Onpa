@@ -65,7 +65,7 @@ final class SpeciesViewModel: ObservableObject {
                     await loadCachedSpeciesAfterError(error, for: profile, environment: environment)
                 } else {
                     species = []
-                    statusMessage = "No detected species."
+                    statusMessage = String(localized: "No detected species.")
                     statusKind = .neutral
                 }
                 return
@@ -73,9 +73,9 @@ final class SpeciesViewModel: ObservableObject {
 
             species = makeEntries(catalog: catalog, detections: detections)
             if let detectionsError, detections.isEmpty {
-                setMessage("Showing station species catalog without recent detection summaries: \(detectionsError.userFacingMessage)", kind: .warning)
+                setMessage(String(localized: "Showing station species catalog without recent detection summaries: \(detectionsError.userFacingMessage)"), kind: .warning)
             } else {
-                statusMessage = species.isEmpty ? "No detected species." : nil
+                statusMessage = species.isEmpty ? String(localized: "No detected species.") : nil
                 statusKind = .neutral
             }
 
@@ -123,7 +123,7 @@ final class SpeciesViewModel: ObservableObject {
             if let data = try await environment.localCacheStore.loadData(for: cacheKey(for: profile)) {
                 let snapshot = try decoder.decode(SpeciesSnapshot.self, from: data)
                 species = makeEntries(catalog: snapshot.catalog, detections: snapshot.detections)
-                setMessage("Showing cached species.", kind: .warning)
+                setMessage(String(localized: "Showing cached species."), kind: .warning)
             } else {
                 species = []
                 setMessage(error.userFacingMessage, kind: .error)
@@ -230,7 +230,7 @@ struct SpeciesListEntry: Equatable, Identifiable, Sendable {
             return nil
         }
 
-        return displayCount == 1 ? "1 detection" : "\(displayCount) detections"
+        return displayCount == 1 ? String(localized: "1 detection") : String(localized: "\(displayCount) detections")
     }
 
     var latestDetectionDate: Date? {

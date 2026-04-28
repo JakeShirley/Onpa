@@ -285,7 +285,7 @@ private struct KPITile: View {
         .padding(12)
         .background(DS.Surface.card, in: DS.Shape.card)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(title): \(value)")
+        .accessibilityLabel(String(localized: "\(title): \(value)"))
     }
 }
 
@@ -350,7 +350,7 @@ private struct HourlyOverview: View {
                         .frame(height: CGFloat(max(5, min(42, count * 42 / maximum))))
                         .frame(maxWidth: .infinity)
                         .accessibilityLabel(String(format: "%02d:00", hour))
-                        .accessibilityValue(count == 1 ? "1 detection" : "\(count) detections")
+                        .accessibilityValue(count == 1 ? String(localized: "1 detection") : String(localized: "\(count) detections"))
                 }
             }
             .frame(height: 46)
@@ -428,7 +428,7 @@ private struct SpeciesHeatmap: View {
                     }
                     .buttonStyle(.plain)
                     .accessibilityElement(children: .ignore)
-                    .accessibilityLabel("\(summary.commonName), \(summary.count) detections today")
+                    .accessibilityLabel(String(localized: "\(summary.commonName), \(summary.count) detections today"))
                     .accessibilityHint("Opens species details")
                 }
             }
@@ -497,7 +497,7 @@ private struct HeatmapCell: View {
                     .padding(.horizontal, 1)
             }
         }
-        .accessibilityLabel("\(count) detections")
+        .accessibilityLabel(String(localized: "\(count) detections"))
     }
 }
 
@@ -571,7 +571,7 @@ private struct HearingRow: View {
         }
         .padding(.vertical, 2)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(detection.commonName), \(detection.confidencePercent) percent confidence at \(detection.timeLabel)")
+        .accessibilityLabel(String(localized: "\(detection.commonName), \(detection.confidencePercent) percent confidence at \(detection.timeLabel)"))
     }
 }
 

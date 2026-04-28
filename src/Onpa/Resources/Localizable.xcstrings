@@ -1,42 +1,153 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%@, %lld detections today" : {
+    "%@ °C" : {
+
+    },
+    "%@ m/s" : {
+
+    },
+    "%@ m/s, gusts %@" : {
+      "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ m/s, Böen %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ m/s, gusts %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ m/s, ráfagas %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ m/s、最大瞬間 %@"
+          }
+        }
+      }
+    },
+    "%@, %lld detections today" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %lld Erkennungen heute"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@, %2$lld detections today"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %lld detecciones hoy"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@、本日 %lld 件の検出"
+          }
         }
       }
     },
     "%@, %lld percent confidence at %@" : {
+      "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %lld Prozent Konfidenz um %@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@, %2$lld percent confidence at %3$@"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %lld por ciento de confianza a las %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@、信頼度 %lld パーセント、%@"
+          }
         }
       }
     },
     "%@, %lld percent confidence%@" : {
+      "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %lld Prozent Konfidenz%@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@, %2$lld percent confidence%3$@"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %lld por ciento de confianza%@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@、信頼度 %lld パーセント%@"
+          }
         }
       }
     },
     "%@: %@" : {
+      "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@: %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
           }
         }
       }
@@ -45,6 +156,9 @@
 
     },
     "%lld detections" : {
+
+    },
+    "%lld percent confidence" : {
 
     },
     "%lld%%" : {
@@ -87,6 +201,9 @@
           }
         }
       }
+    },
+    "Afternoon" : {
+
     },
     "App" : {
       "extractionState" : "manual",
@@ -145,6 +262,9 @@
           }
         }
       }
+    },
+    "at %@" : {
+
     },
     "Audio" : {
       "extractionState" : "manual",
@@ -326,7 +446,13 @@
     "Changelog Unavailable" : {
 
     },
+    "Check the station logs or generate a diagnostics bundle from the Dashboard station menu." : {
+
+    },
     "Commit %@" : {
+
+    },
+    "Confirm the station is running and reachable from this device." : {
 
     },
     "Connect a BirdNET-Go station from the Dashboard station menu to see detected species." : {
@@ -386,6 +512,12 @@
           }
         }
       }
+    },
+    "Connect a BirdNET-Go station to load detection details." : {
+
+    },
+    "Connect a BirdNET-Go station to load species details." : {
+
     },
     "Connect a BirdNET-Go station to see daily activity." : {
       "extractionState" : "manual",
@@ -619,6 +751,9 @@
         }
       }
     },
+    "Daily activity loaded, but live hearing status is unavailable: %@" : {
+
+    },
     "Dashboard" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -647,6 +782,9 @@
           }
         }
       }
+    },
+    "Day" : {
+
     },
     "Daylight" : {
       "extractionState" : "manual",
@@ -825,6 +963,21 @@
         }
       }
     },
+    "Diagnostics bundle ready to share." : {
+
+    },
+    "Disabled" : {
+
+    },
+    "Enabled" : {
+
+    },
+    "Enter a valid BirdNET-Go station URL." : {
+
+    },
+    "Evening" : {
+
+    },
     "Feed" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -941,7 +1094,13 @@
         }
       }
     },
+    "Image credit: %@" : {
+
+    },
     "Image of %@" : {
+
+    },
+    "Include the scheme and host, for example http://birdnet.local:8080." : {
 
     },
     "Latest" : {
@@ -1031,6 +1190,9 @@
         }
       }
     },
+    "Loaded local test station profile." : {
+
+    },
     "Loading changelog" : {
 
     },
@@ -1053,6 +1215,12 @@
 
     },
     "Loading spectrogram" : {
+
+    },
+    "Local HTTP" : {
+
+    },
+    "locked" : {
 
     },
     "Locked" : {
@@ -1113,6 +1281,9 @@
         }
       }
     },
+    "Log in to the station to continue." : {
+
+    },
     "Log Out" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1141,6 +1312,12 @@
           }
         }
       }
+    },
+    "Log out and back in, or check the station's security settings." : {
+
+    },
+    "Logged out." : {
+
     },
     "Media" : {
       "extractionState" : "manual",
@@ -1229,6 +1406,9 @@
         }
       }
     },
+    "Morning" : {
+
+    },
     "New" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1286,6 +1466,9 @@
           }
         }
       }
+    },
+    "new species" : {
+
     },
     "New species" : {
       "extractionState" : "manual",
@@ -1345,7 +1528,22 @@
         }
       }
     },
+    "Night" : {
+
+    },
+    "No" : {
+
+    },
     "No Activity" : {
+
+    },
+    "No activity for this day." : {
+
+    },
+    "No audio clip URL available." : {
+
+    },
+    "No detected species." : {
 
     },
     "No detections are available for this date." : {
@@ -1406,13 +1604,31 @@
         }
       }
     },
+    "No recent detections" : {
+
+    },
     "No Recent Detections" : {
+
+    },
+    "No recent detections found for this species." : {
+
+    },
+    "No recent detections." : {
 
     },
     "No Release Notes Yet" : {
 
     },
     "No Station Connected" : {
+
+    },
+    "Not connected" : {
+
+    },
+    "Offline" : {
+
+    },
+    "Open the Dashboard station menu and log in with your BirdNET-Go password." : {
 
     },
     "Opens an in-app browser" : {
@@ -1427,7 +1643,13 @@
     "Pause audio clip" : {
 
     },
+    "Paused" : {
+
+    },
     "Play audio clip" : {
+
+    },
+    "Playing" : {
 
     },
     "Previous day" : {
@@ -1462,6 +1684,9 @@
     "Quiet Right Now" : {
 
     },
+    "Reachable" : {
+
+    },
     "Read about %@ on Wikipedia" : {
 
     },
@@ -1493,6 +1718,9 @@
           }
         }
       }
+    },
+    "Ready to play" : {
+
     },
     "Recent Detections" : {
       "extractionState" : "manual",
@@ -1871,6 +2099,9 @@
         }
       }
     },
+    "Settings saved." : {
+
+    },
     "Share Diagnostics" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1899,6 +2130,24 @@
           }
         }
       }
+    },
+    "Showing activity from recent detections." : {
+
+    },
+    "Showing cached dashboard." : {
+
+    },
+    "Showing cached detections." : {
+
+    },
+    "Showing cached species." : {
+
+    },
+    "Showing matching recent detections because species search is unavailable." : {
+
+    },
+    "Showing station species catalog without recent detection summaries: %@" : {
+
     },
     "Species" : {
       "extractionState" : "manual",
@@ -2045,6 +2294,9 @@
         }
       }
     },
+    "Station deleted." : {
+
+    },
     "Station Management" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2131,6 +2383,117 @@
           }
         }
       }
+    },
+    "Sunrise" : {
+
+    },
+    "Sunrise %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonnenaufgang %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunrise %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amanecer %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日の出 %@"
+          }
+        }
+      }
+    },
+    "Sunrise %@ / Sunset %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonnenaufgang %@ / Sonnenuntergang %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunrise %@ / Sunset %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amanecer %@ / Atardecer %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日の出 %@ / 日の入り %@"
+          }
+        }
+      }
+    },
+    "Sunset" : {
+
+    },
+    "Sunset %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonnenuntergang %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunset %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atardecer %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日の入り %@"
+          }
+        }
+      }
+    },
+    "The station appears to be offline or unreachable." : {
+
+    },
+    "The station denied this request. Check your account permissions." : {
+
+    },
+    "The station is receiving too many requests. Try again in a moment." : {
+
+    },
+    "The station returned an unexpected response." : {
+
+    },
+    "The station returned HTTP %lld." : {
+
+    },
+    "The station's secure connection could not be trusted." : {
+
     },
     "Theme" : {
       "extractionState" : "manual",
@@ -2248,6 +2611,9 @@
         }
       }
     },
+    "top confidence %@" : {
+
+    },
     "Try again from the Feed tab." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2276,6 +2642,24 @@
           }
         }
       }
+    },
+    "Twilight" : {
+
+    },
+    "Unknown" : {
+
+    },
+    "Unreachable" : {
+
+    },
+    "Use a valid HTTPS certificate, or connect over local HTTP for trusted local stations." : {
+
+    },
+    "Use HTTPS for remote hosts, or connect to a localhost, private IP, or .local address." : {
+
+    },
+    "Use HTTPS for remote stations. Plain HTTP is only supported for localhost, private IPs, and .local stations." : {
+
     },
     "User" : {
       "extractionState" : "manual",
@@ -2307,6 +2691,9 @@
       }
     },
     "Username (optional)" : {
+
+    },
+    "Using debug station URL override." : {
 
     },
     "Version" : {
@@ -2341,6 +2728,9 @@
     "View release %@ on GitHub" : {
 
     },
+    "Wait briefly before refreshing or reconnecting." : {
+
+    },
     "Weather" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2369,6 +2759,9 @@
           }
         }
       }
+    },
+    "Yes" : {
+
     }
   },
   "version" : "1.0"

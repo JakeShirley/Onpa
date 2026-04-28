@@ -46,7 +46,7 @@ final class SpeciesDetailViewModel: ObservableObject {
             guard let profile = try await loadStationProfile(environment: environment) else {
                 stationProfile = nil
                 detections = []
-                setMessage("Connect a BirdNET-Go station to load species details.", kind: .neutral)
+                setMessage(String(localized: "Connect a BirdNET-Go station to load species details."), kind: .neutral)
                 return
             }
 
@@ -57,7 +57,7 @@ final class SpeciesDetailViewModel: ObservableObject {
                 let page = try await environment.apiClient.speciesDetections(station: profile, species: species.commonName, limit: detailLimit)
                 detections = page.data
                 totalDetections = max(page.total, entry.displayCount)
-                statusMessage = detections.isEmpty ? "No recent detections found for this species." : nil
+                statusMessage = detections.isEmpty ? String(localized: "No recent detections found for this species.") : nil
                 statusKind = .neutral
             } catch {
                 let recent = try await environment.apiClient.recentDetections(station: profile, limit: fallbackRecentLimit)
@@ -66,7 +66,7 @@ final class SpeciesDetailViewModel: ObservableObject {
                 if detections.isEmpty {
                     setMessage(error.userFacingMessage, kind: .error)
                 } else {
-                    setMessage("Showing matching recent detections because species search is unavailable.", kind: .warning)
+                    setMessage(String(localized: "Showing matching recent detections because species search is unavailable."), kind: .warning)
                 }
             }
 

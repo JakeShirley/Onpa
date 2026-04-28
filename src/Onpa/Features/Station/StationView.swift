@@ -33,10 +33,10 @@ struct StationView: View {
                     LabeledContent("Status", value: report.status.displayName)
                     LabeledContent("Identity", value: report.identity)
                     LabeledContent("TLS", value: report.tlsState.displayName)
-                    LabeledContent("Security", value: report.appConfig.security.enabled ? "Enabled" : "Disabled")
+                    LabeledContent("Security", value: report.appConfig.security.enabled ? String(localized: "Enabled") : String(localized: "Disabled"))
                 } else {
-                    LabeledContent("Station", value: "Not connected")
-                    LabeledContent("Status", value: "Offline")
+                    LabeledContent("Station", value: String(localized: "Not connected"))
+                    LabeledContent("Status", value: String(localized: "Offline"))
                 }
             }
 
@@ -77,7 +77,7 @@ struct StationView: View {
                 }
 
                 if let authStatus = viewModel.authStatus {
-                    LabeledContent("Authenticated", value: authStatus.authenticated ? "Yes" : "No")
+                    LabeledContent("Authenticated", value: authStatus.authenticated ? String(localized: "Yes") : String(localized: "No"))
                     if let username = authStatus.username, !username.isEmpty {
                         LabeledContent("User", value: username)
                     }

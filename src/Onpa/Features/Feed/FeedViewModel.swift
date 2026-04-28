@@ -13,6 +13,11 @@ final class FeedViewModel: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var didLoad = false
 
+    /// Tracks whether the current `statusMessage` is the localized
+    /// "No recent detections." message. Used so the live-insertion path
+    /// can clear that message without comparing localized strings.
+    private var showsNoRecentDetectionsMessage = false
+
     private let detectionLimit = 10
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
@@ -54,7 +59,13 @@ final class FeedViewModel: ObservableObject {
             stationProfile = profile
             let recentDetections = try await environment.apiClient.recentDetections(station: profile, limit: detectionLimit)
             applyRecentDetections(recentDetections)
-            statusMessage = recentDetections.isEmpty ? "No recent detections." : nil
+            if recentDetections.isEmpty {
+                statusMessage = String(localized: "No recent detections.")
+                showsNoRecentDetectionsMessage = true
+            } else {
+                statusMessage = nil
+                showsNoRecentDetectionsMessage = false
+            }
             await cacheIgnoringErrors(recentDetections, for: profile, environment: environment)
         } catch {
             if Self.isCancellation(error) { return }
@@ -149,7 +160,7 @@ final class FeedViewModel: ObservableObject {
         do {
             if let data = try await environment.localCacheStore.loadData(for: cacheKey(for: profile)) {
                 applyRecentDetections(try decoder.decode([BirdDetection].self, from: data))
-                setMessage("Showing cached detections.", kind: .warning)
+                setMessage(String(localized: "Showing cached detections."), kind: .warning)
             } else {
                 detections = []
                 setMessage(error.userFacingMessage, kind: .error)
@@ -184,14 +195,16 @@ final class FeedViewModel: ObservableObject {
             liveInsertedDetectionID = detection.id
         }
 
-        if statusMessage == "No recent detections." {
+        if showsNoRecentDetectionsMessage {
             statusMessage = nil
+            showsNoRecentDetectionsMessage = false
         }
     }
 
     private func setMessage(_ message: String, kind: StatusKind) {
         statusMessage = message
         statusKind = kind
+        showsNoRecentDetectionsMessage = false
     }
 }
 

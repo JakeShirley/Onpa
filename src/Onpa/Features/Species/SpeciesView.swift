@@ -141,7 +141,7 @@ private struct SpeciesRow: View {
     private var accessibilityLabel: String {
         var parts: [String] = [entry.species.commonName]
         if let topConfidenceLabel = entry.topConfidenceLabel {
-            parts.append("top confidence \(topConfidenceLabel)")
+            parts.append(String(localized: "top confidence \(topConfidenceLabel)"))
         }
         parts.append(entry.metadataLabel)
         return parts.joined(separator: ", ")
@@ -195,7 +195,7 @@ private struct SpeciesThumbnail: View {
         }
         .frame(width: 56, height: 56)
         .clipShape(DS.Shape.card)
-        .accessibilityLabel("Image of \(commonName)")
+        .accessibilityLabel(String(localized: "Image of \(commonName)"))
     }
 }
 
@@ -203,7 +203,7 @@ private extension SpeciesListEntry {
     var metadataLabel: String {
         let rarityOrCode = species.rarity ?? species.speciesCode?.uppercased()
         let parts = [countLabel, latestDetectionLabel, rarityOrCode].compactMap { $0 }
-        return parts.isEmpty ? "No recent detections" : parts.joined(separator: " / ")
+        return parts.isEmpty ? String(localized: "No recent detections") : parts.joined(separator: " / ")
     }
 }
 
