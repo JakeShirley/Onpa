@@ -55,10 +55,17 @@ final class FeedViewModel: ObservableObject {
             let recentDetections = try await environment.apiClient.recentDetections(station: profile, limit: detectionLimit)
             applyRecentDetections(recentDetections)
             statusMessage = recentDetections.isEmpty ? "No recent detections." : nil
-            try await cache(recentDetections, for: profile, environment: environment)
+            await cacheIgnoringErrors(recentDetections, for: profile, environment: environment)
         } catch {
+            if Self.isCancellation(error) { return }
             await loadCachedDetectionsAfterError(error, environment: environment)
         }
+    }
+
+    private static func isCancellation(_ error: Error) -> Bool {
+        if error is CancellationError { return true }
+        if let urlError = error as? URLError, urlError.code == .cancelled { return true }
+        return false
     }
 
     func runLiveStream(environment: AppEnvironment) async {
@@ -122,6 +129,14 @@ final class FeedViewModel: ObservableObject {
     private func cache(_ detections: [BirdDetection], for profile: StationProfile, environment: AppEnvironment) async throws {
         let data = try encoder.encode(detections)
         try await environment.localCacheStore.saveData(data, for: cacheKey(for: profile))
+    }
+
+    private func cacheIgnoringErrors(_ detections: [BirdDetection], for profile: StationProfile, environment: AppEnvironment) async {
+        do {
+            try await cache(detections, for: profile, environment: environment)
+        } catch {
+            // Caching failures should not surface to the user or trigger the cached-fallback path.
+        }
     }
 
     private func loadCachedDetectionsAfterError(_ error: Error, environment: AppEnvironment) async {

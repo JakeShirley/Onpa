@@ -49,12 +49,14 @@ final class SpeciesViewModel: ObservableObject {
             do {
                 catalog = try await environment.apiClient.species(station: profile)
             } catch {
+                if Self.isCancellation(error) { return }
                 catalogError = error
             }
 
             do {
                 detections = try await environment.apiClient.recentDetections(station: profile, limit: detectionSummaryLimit)
             } catch {
+                if Self.isCancellation(error) { return }
                 detectionsError = error
             }
 
@@ -77,8 +79,9 @@ final class SpeciesViewModel: ObservableObject {
                 statusKind = .neutral
             }
 
-            try await cache(SpeciesSnapshot(catalog: catalog, detections: detections), for: profile, environment: environment)
+            await cacheIgnoringErrors(SpeciesSnapshot(catalog: catalog, detections: detections), for: profile, environment: environment)
         } catch {
+            if Self.isCancellation(error) { return }
             if let profile = stationProfile {
                 await loadCachedSpeciesAfterError(error, for: profile, environment: environment)
             } else {
@@ -86,6 +89,12 @@ final class SpeciesViewModel: ObservableObject {
                 setMessage(error.userFacingMessage, kind: .error)
             }
         }
+    }
+
+    private static func isCancellation(_ error: Error) -> Bool {
+        if error is CancellationError { return true }
+        if let urlError = error as? URLError, urlError.code == .cancelled { return true }
+        return false
     }
 
     private func loadStationProfile(environment: AppEnvironment) async throws -> StationProfile? {
@@ -99,6 +108,14 @@ final class SpeciesViewModel: ObservableObject {
     private func cache(_ snapshot: SpeciesSnapshot, for profile: StationProfile, environment: AppEnvironment) async throws {
         let data = try encoder.encode(snapshot)
         try await environment.localCacheStore.saveData(data, for: cacheKey(for: profile))
+    }
+
+    private func cacheIgnoringErrors(_ snapshot: SpeciesSnapshot, for profile: StationProfile, environment: AppEnvironment) async {
+        do {
+            try await cache(snapshot, for: profile, environment: environment)
+        } catch {
+            // Caching failures should not surface to the user or trigger the cached-fallback path.
+        }
     }
 
     private func loadCachedSpeciesAfterError(_ error: Error, for profile: StationProfile, environment: AppEnvironment) async {

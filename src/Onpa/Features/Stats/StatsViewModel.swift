@@ -87,12 +87,14 @@ final class StatsViewModel: ObservableObject {
             do {
                 analyticsSummary = try await environment.apiClient.dailySpeciesSummary(station: profile, date: selectedDateValue, limit: summaryLimit)
             } catch {
+                if Self.isCancellation(error) { return }
                 analyticsError = error
             }
 
             do {
                 recent = try await environment.apiClient.recentDetections(station: profile, limit: recentLimit)
             } catch {
+                if Self.isCancellation(error) { return }
                 recentError = error
             }
 
@@ -123,8 +125,9 @@ final class StatsViewModel: ObservableObject {
                 statusKind = .neutral
             }
 
-            try await cache(DailySpeciesDashboard(date: selectedDateValue, summaries: analyticsSummary, recentDetections: recent), for: profile, environment: environment)
+            await cacheIgnoringErrors(DailySpeciesDashboard(date: selectedDateValue, summaries: analyticsSummary, recentDetections: recent), for: profile, environment: environment)
         } catch {
+            if Self.isCancellation(error) { return }
             if let profile = stationProfile {
                 await loadCachedDashboardAfterError(error, for: profile, environment: environment)
             } else {
@@ -133,6 +136,12 @@ final class StatsViewModel: ObservableObject {
                 setMessage(error.userFacingMessage, kind: .error)
             }
         }
+    }
+
+    private static func isCancellation(_ error: Error) -> Bool {
+        if error is CancellationError { return true }
+        if let urlError = error as? URLError, urlError.code == .cancelled { return true }
+        return false
     }
 
     func moveDate(by days: Int, environment: AppEnvironment) async {
@@ -199,6 +208,14 @@ final class StatsViewModel: ObservableObject {
     private func cache(_ dashboard: DailySpeciesDashboard, for profile: StationProfile, environment: AppEnvironment) async throws {
         let data = try encoder.encode(dashboard)
         try await environment.localCacheStore.saveData(data, for: cacheKey(for: profile))
+    }
+
+    private func cacheIgnoringErrors(_ dashboard: DailySpeciesDashboard, for profile: StationProfile, environment: AppEnvironment) async {
+        do {
+            try await cache(dashboard, for: profile, environment: environment)
+        } catch {
+            // Caching failures should not surface to the user or trigger the cached-fallback path.
+        }
     }
 
     private func loadCachedDashboardAfterError(_ error: Error, for profile: StationProfile, environment: AppEnvironment) async {
