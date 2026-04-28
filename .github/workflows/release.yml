@@ -56,7 +56,9 @@ jobs:
       - name: Download App Store provisioning profile
         uses: apple-actions/download-provisioning-profiles@v6
         with:
-          bundle-id: org.odinseye.onpa
+          bundle-id: |
+            org.odinseye.onpa
+            org.odinseye.onpa.OnpaWidget
           profile-type: IOS_APP_STORE
           issuer-id: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
           api-key-id: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
