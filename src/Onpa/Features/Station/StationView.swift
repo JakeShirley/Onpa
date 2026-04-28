@@ -87,13 +87,6 @@ struct StationView: View {
                 }
             }
 
-            Section("Media") {
-                Toggle("Auto Fetch Spectrograms", isOn: $viewModel.autoFetchSpectrograms)
-                    .onChange(of: viewModel.autoFetchSpectrograms) {
-                        Task { await viewModel.savePreferences(environment: appEnvironment) }
-                    }
-            }
-
             Section {
                 Button(role: .destructive) {
                     isDeleteConfirmationPresented = true
@@ -130,10 +123,6 @@ struct StationView: View {
                     Label(statusMessage, systemImage: viewModel.statusKind.systemImage)
                 }
             }
-
-            Section("App") {
-                LabeledContent("Version", value: appVersion)
-            }
         }
         .navigationTitle("Station Management")
         .toolbar(.hidden, for: .tabBar)
@@ -161,21 +150,6 @@ struct StationView: View {
         }
     }
 
-    private var appVersion: String {
-        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
-        let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
-
-        switch (version, build) {
-        case let (version?, build?):
-            return "\(version) (\(build))"
-        case let (version?, nil):
-            return version
-        case let (nil, build?):
-            return build
-        case (nil, nil):
-            return "Unknown"
-        }
-    }
 }
 
 #Preview {

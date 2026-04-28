@@ -5,7 +5,9 @@ struct StatsView: View {
     @StateObject private var viewModel = StatsViewModel()
     @State private var debugSpeciesSummary: DailySpeciesSummary?
     @State private var isStationManagementPresented = false
+    @State private var isSettingsPresented = false
     @State private var didOpenDebugStationManagement = false
+    @State private var didOpenDebugSettings = false
 
     var body: some View {
         Group {
@@ -24,6 +26,12 @@ struct StatsView: View {
                         isStationManagementPresented = true
                     } label: {
                         Label(stationMenuActionTitle, systemImage: "arrow.triangle.2.circlepath")
+                    }
+
+                    Button {
+                        isSettingsPresented = true
+                    } label: {
+                        Label("Settings", systemImage: "gearshape")
                     }
 
                     if let stationProfile = viewModel.stationProfile {
@@ -49,7 +57,7 @@ struct StatsView: View {
         }
         .task {
             await viewModel.load(environment: appEnvironment)
-            openDebugStationManagementIfNeeded()
+            openDebugDestinationIfNeeded()
             openDebugSpeciesDetailIfNeeded()
         }
         .refreshable {
@@ -74,13 +82,22 @@ struct StatsView: View {
         .navigationDestination(isPresented: $isStationManagementPresented) {
             StationView()
         }
+        .navigationDestination(isPresented: $isSettingsPresented) {
+            SettingsView()
+        }
     }
 
     private var stationMenuActionTitle: String {
         viewModel.hasStation ? "Manage or Switch Station" : "Connect Station"
     }
 
-    private func openDebugStationManagementIfNeeded() {
+    private func openDebugDestinationIfNeeded() {
+        if appEnvironment.configuration.debugShowsSettings, !didOpenDebugSettings {
+            didOpenDebugSettings = true
+            isSettingsPresented = true
+            return
+        }
+
         guard appEnvironment.configuration.debugShowsStationManagement, !didOpenDebugStationManagement else {
             return
         }

@@ -44,6 +44,8 @@
 		8A3F40B72BD9000A00A11001 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40B62BD9000A00A11001 /* StatsViewModel.swift */; };
 		8A3F40B92BD9000B00A11001 /* SpeciesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40B82BD9000B00A11001 /* SpeciesDetailView.swift */; };
 		8A3F40BB2BD9000B00A11001 /* SpeciesDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40BA2BD9000B00A11001 /* SpeciesDetailViewModel.swift */; };
+		8A3F40BD2BD9000C00A11001 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40BC2BD9000C00A11001 /* SettingsView.swift */; };
+		8A3F40BF2BD9000C00A11001 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40BE2BD9000C00A11001 /* SettingsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +88,8 @@
 		8A3F40B62BD9000A00A11001 /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		8A3F40B82BD9000B00A11001 /* SpeciesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesDetailView.swift; sourceTree = "<group>"; };
 		8A3F40BA2BD9000B00A11001 /* SpeciesDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesDetailViewModel.swift; sourceTree = "<group>"; };
+		8A3F40BC2BD9000C00A11001 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		8A3F40BE2BD9000C00A11001 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +152,7 @@
 				8A3F3F562BD8000100A11001 /* Species */,
 				8A3F3F572BD8000100A11001 /* Stats */,
 				8A3F3F582BD8000100A11001 /* Station */,
+				8A3F40C02BD9000C00A11001 /* Settings */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -188,6 +193,15 @@
 				8A3F408F2BD9000200A11001 /* StationViewModel.swift */,
 			);
 			path = Station;
+			sourceTree = "<group>";
+		};
+		8A3F40C02BD9000C00A11001 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8A3F40BC2BD9000C00A11001 /* SettingsView.swift */,
+				8A3F40BE2BD9000C00A11001 /* SettingsViewModel.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		8A3F3F6E2BD8000100A11001 /* Resources */ = {
@@ -361,6 +375,8 @@
 				8A3F3F692BD8000100A11001 /* StatsView.swift in Sources */,
 				8A3F40B72BD9000A00A11001 /* StatsViewModel.swift in Sources */,
 				8A3F3F6B2BD8000100A11001 /* StationView.swift in Sources */,
+				8A3F40BD2BD9000C00A11001 /* SettingsView.swift in Sources */,
+				8A3F40BF2BD9000C00A11001 /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

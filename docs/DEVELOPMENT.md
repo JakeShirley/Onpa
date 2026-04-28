@@ -157,6 +157,7 @@ Supported debug inputs:
 - `-debugDetectionID <id>`: open a detection detail screen on launch for visual simulator checks.
 - `-debugSpeciesName <name>`: open a species detail screen after the Species or Dashboard tab loads for visual simulator checks.
 - `-debugShowStationManagement`: open station management from the Dashboard navigation bar on launch for visual simulator checks.
+- `-debugShowSettings`: open settings from the Dashboard station menu on launch for visual simulator checks.
 - `-debugShowDeleteStationConfirmation`: open the delete station confirmation after station management loads for visual simulator checks.
 - `-initialTab <dashboard|feed|species>`: choose the launch tab. `stats` and `station` remain accepted as legacy aliases for `dashboard`.
 - `BIRDNET_GO_USE_LOCAL_STATION_PROFILE=1`: environment equivalent of `-useLocalStationProfile`.
@@ -164,6 +165,7 @@ Supported debug inputs:
 - `BIRDNET_GO_DEBUG_DETECTION_ID=<id>`: environment equivalent of `-debugDetectionID`.
 - `BIRDNET_GO_DEBUG_SPECIES_NAME=<name>`: environment equivalent of `-debugSpeciesName`.
 - `BIRDNET_GO_DEBUG_SHOW_STATION_MANAGEMENT=1`: environment equivalent of `-debugShowStationManagement`.
+- `BIRDNET_GO_DEBUG_SHOW_SETTINGS=1`: environment equivalent of `-debugShowSettings`.
 - `BIRDNET_GO_DEBUG_SHOW_DELETE_STATION_CONFIRMATION=1`: environment equivalent of `-debugShowDeleteStationConfirmation`.
 
 The active station profile and app preferences are persisted with `UserDefaults`. Station credentials remain Keychain-only, and session cookies remain ephemeral.

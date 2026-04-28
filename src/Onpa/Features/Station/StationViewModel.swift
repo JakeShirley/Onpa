@@ -7,7 +7,6 @@ final class StationViewModel: ObservableObject {
     @Published var username = ""
     @Published var password = ""
     @Published var rememberCredentials = true
-    @Published var autoFetchSpectrograms = true
     @Published private(set) var connectionReport: StationConnectionReport?
     @Published private(set) var authStatus: StationAuthStatus?
     @Published private(set) var statusMessage: String?
@@ -37,7 +36,6 @@ final class StationViewModel: ObservableObject {
         do {
             let preferences = try await environment.preferenceStore.loadPreferences()
             rememberCredentials = preferences.rememberStationCredentials
-            autoFetchSpectrograms = preferences.autoFetchSpectrograms
 
             let storedProfile = try await environment.stationProfileStore.loadActiveProfile()
             let overrideProfile = environment.configuration.stationURLOverride.map(StationProfile.manual(baseURL:))
@@ -230,11 +228,10 @@ final class StationViewModel: ObservableObject {
     }
 
     private func saveCurrentPreferences(environment: AppEnvironment) async throws {
+        var preferences = try await environment.preferenceStore.loadPreferences()
+        preferences.rememberStationCredentials = rememberCredentials
         try await environment.preferenceStore.savePreferences(
-            AppPreferences(
-                rememberStationCredentials: rememberCredentials,
-                autoFetchSpectrograms: autoFetchSpectrograms
-            )
+            preferences
         )
     }
 }
