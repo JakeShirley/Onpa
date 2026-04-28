@@ -29,6 +29,12 @@ final class StatsViewModel: ObservableObject {
         Self.apiDateFormatter.string(from: selectedDate)
     }
 
+    var canAdvanceDate: Bool {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        return selectedDate < today
+    }
+
     var hourlyTotals: [Int] {
         dailySummary.reduce(into: Array(repeating: 0, count: 24)) { totals, summary in
             for (hour, count) in summary.normalizedHourlyCounts.enumerated() {
@@ -145,11 +151,18 @@ final class StatsViewModel: ObservableObject {
     }
 
     func moveDate(by days: Int, environment: AppEnvironment) async {
-        guard let date = Calendar.current.date(byAdding: .day, value: days, to: selectedDate) else {
+        let calendar = Calendar.current
+        guard let date = calendar.date(byAdding: .day, value: days, to: selectedDate) else {
             return
         }
 
-        selectedDate = Calendar.current.startOfDay(for: date)
+        let newDate = calendar.startOfDay(for: date)
+        let today = calendar.startOfDay(for: Date())
+        guard newDate <= today else {
+            return
+        }
+
+        selectedDate = newDate
         await refresh(environment: environment)
     }
 

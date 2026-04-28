@@ -227,11 +227,14 @@ private struct DateControlCard: View {
             } label: {
                 Image(systemName: "chevron.right")
                     .font(.headline.weight(.semibold))
-                    .foregroundStyle(.teal)
+                    .foregroundStyle(viewModel.canAdvanceDate ? .teal : Color.secondary)
                     .frame(width: 42, height: 42)
                     .background(Color(.tertiarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 8))
+                    .opacity(viewModel.canAdvanceDate ? 1.0 : 0.5)
             }
             .buttonStyle(.plain)
+            .disabled(!viewModel.canAdvanceDate)
+            .accessibilityLabel("Next day")
         }
         .padding(14)
         .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 8))
