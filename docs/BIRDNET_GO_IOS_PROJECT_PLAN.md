@@ -225,7 +225,7 @@ Status values: `not-started`, `in-progress`, `done`, `blocked`, `deferred`.
 | ID | Status | Feature | Notes |
 | --- | --- | --- | --- |
 | ANA-001 | done | Daily counts | Dashboard loads `/analytics/species/daily` and caches per station/date. |
-| ANA-002 | not-started | Species summary | Use `/analytics/species/summary`. |
+| ANA-002 | done | Species summary | Use `/analytics/species/summary`. |
 | ANA-003 | done | Hourly activity chart | Dashboard renders per-species hourly heatmap from daily analytics `hourly_counts`, with recent-detection fallback. |
 | ANA-004 | not-started | Daily trend chart | Use `/analytics/time/daily`. |
 | ANA-005 | not-started | New species timeline | Use `/analytics/species/detections/new`. |

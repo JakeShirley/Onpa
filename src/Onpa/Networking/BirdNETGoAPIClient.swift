@@ -11,6 +11,7 @@ protocol BirdNETGoAPIClient: Sendable {
     func speciesDetections(station: StationProfile, species: String, limit: Int) async throws -> BirdDetectionPage
     func detection(station: StationProfile, id: Int) async throws -> BirdDetection
     func species(station: StationProfile) async throws -> [StationSpecies]
+    func speciesSummary(station: StationProfile) async throws -> [SpeciesSummary]
     func dailySpeciesSummary(station: StationProfile, date: String, limit: Int) async throws -> [DailySpeciesSummary]
     func audioClipURL(station: StationProfile, detectionID: Int) -> URL
     func speciesImageURL(station: StationProfile, scientificName: String) -> URL

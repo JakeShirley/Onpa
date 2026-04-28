@@ -4644,6 +4644,9 @@
         }
       }
     },
+    "Showing partial species list without overall stats: %@" : {
+
+    },
     "Showing station species catalog without recent detection summaries: %@" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -5626,6 +5629,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最高信頼度 %@"
+          }
+        }
+      }
+    },
+    "average confidence %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "durchschnittliche Konfidenz %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "average confidence %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "confianza media %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平均信頼度 %@"
           }
         }
       }

@@ -108,6 +108,12 @@ struct URLSessionBirdNETGoAPIClient: BirdNETGoAPIClient {
         return try decoder.decode(StationSpeciesList.self, from: data).species
     }
 
+    func speciesSummary(station: StationProfile) async throws -> [SpeciesSummary] {
+        let (data, response) = try await perform(request(station: station, path: "api/v2/analytics/species/summary"))
+        try validate(response: response, data: data)
+        return try decoder.decode([SpeciesSummary].self, from: data)
+    }
+
     func dailySpeciesSummary(station: StationProfile, date: String, limit: Int) async throws -> [DailySpeciesSummary] {
         let queryItems = [
             URLQueryItem(name: "date", value: date),

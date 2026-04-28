@@ -10,7 +10,7 @@ final class SpeciesViewModel: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var didLoad = false
 
-    private let detectionSummaryLimit = 100
+    private let recentDetectionsLimit = 100
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
 
@@ -41,27 +41,37 @@ final class SpeciesViewModel: ObservableObject {
 
             stationProfile = profile
 
+            // Primary source: full historical species summary.
+            var summaries: [SpeciesSummary] = []
+            var summaryError: Error?
+            do {
+                summaries = try await environment.apiClient.speciesSummary(station: profile)
+            } catch {
+                if Self.isCancellation(error) { return }
+                summaryError = error
+            }
+
+            // Optional enrichment: station catalog (rarity / thumbnails) and very-recent detections
+            // (so newly-heard species appear immediately even if the analytics roll-up lags).
             var catalog: [StationSpecies] = []
-            var detections: [BirdDetection] = []
-            var catalogError: Error?
-            var detectionsError: Error?
+            var recent: [BirdDetection] = []
 
             do {
                 catalog = try await environment.apiClient.species(station: profile)
             } catch {
                 if Self.isCancellation(error) { return }
-                catalogError = error
+                // Catalog is optional; ignore.
             }
 
             do {
-                detections = try await environment.apiClient.recentDetections(station: profile, limit: detectionSummaryLimit)
+                recent = try await environment.apiClient.recentDetections(station: profile, limit: recentDetectionsLimit)
             } catch {
                 if Self.isCancellation(error) { return }
-                detectionsError = error
+                // Recent detections are optional; ignore.
             }
 
-            guard !catalog.isEmpty || !detections.isEmpty else {
-                if let error = detectionsError ?? catalogError {
+            guard !summaries.isEmpty || !catalog.isEmpty || !recent.isEmpty else {
+                if let error = summaryError {
                     await loadCachedSpeciesAfterError(error, for: profile, environment: environment)
                 } else {
                     species = []
@@ -71,15 +81,16 @@ final class SpeciesViewModel: ObservableObject {
                 return
             }
 
-            species = makeEntries(catalog: catalog, detections: detections)
-            if let detectionsError, detections.isEmpty {
-                setMessage(String(localized: "Showing station species catalog without recent detection summaries: \(detectionsError.userFacingMessage)"), kind: .warning)
+            species = makeEntries(summaries: summaries, catalog: catalog, recent: recent)
+
+            if let summaryError, summaries.isEmpty {
+                setMessage(String(localized: "Showing partial species list without overall stats: \(summaryError.userFacingMessage)"), kind: .warning)
             } else {
                 statusMessage = species.isEmpty ? String(localized: "No detected species.") : nil
                 statusKind = .neutral
             }
 
-            await cacheIgnoringErrors(SpeciesSnapshot(catalog: catalog, detections: detections), for: profile, environment: environment)
+            await cacheIgnoringErrors(SpeciesSnapshot(summaries: summaries, catalog: catalog, recent: recent), for: profile, environment: environment)
         } catch {
             if Self.isCancellation(error) { return }
             if let profile = stationProfile {
@@ -122,7 +133,7 @@ final class SpeciesViewModel: ObservableObject {
         do {
             if let data = try await environment.localCacheStore.loadData(for: cacheKey(for: profile)) {
                 let snapshot = try decoder.decode(SpeciesSnapshot.self, from: data)
-                species = makeEntries(catalog: snapshot.catalog, detections: snapshot.detections)
+                species = makeEntries(summaries: snapshot.summaries, catalog: snapshot.catalog, recent: snapshot.recent)
                 setMessage(String(localized: "Showing cached species."), kind: .warning)
             } else {
                 species = []
@@ -138,29 +149,83 @@ final class SpeciesViewModel: ObservableObject {
         LocalCacheKey(namespace: "species", identifier: "detected-\(profile.baseURL.absoluteString)")
     }
 
-    private func makeEntries(catalog: [StationSpecies], detections: [BirdDetection]) -> [SpeciesListEntry] {
-        let summaries = detectionSummaries(from: detections)
-        var seenKeys = Set<String>()
-        var entries = catalog.map { species in
-            let summary = summaries[summaryKey(scientificName: species.scientificName, commonName: species.commonName, speciesCode: species.speciesCode)]
-            seenKeys.insert(summaryKey(scientificName: species.scientificName, commonName: species.commonName, speciesCode: species.speciesCode))
-            return SpeciesListEntry(species: species, summary: summary)
+    private func makeEntries(summaries: [SpeciesSummary], catalog: [StationSpecies], recent: [BirdDetection]) -> [SpeciesListEntry] {
+        // Build catalog lookup keyed on summaryKey for enrichment.
+        var catalogByKey: [String: StationSpecies] = [:]
+        for entry in catalog {
+            catalogByKey[summaryKey(scientificName: entry.scientificName, commonName: entry.commonName, speciesCode: entry.speciesCode)] = entry
         }
 
-        for summary in summaries.values where !seenKeys.contains(summary.key) {
-            entries.append(
-                SpeciesListEntry(
-                    species: StationSpecies(
-                        commonName: summary.commonName,
-                        scientificName: summary.scientificName,
-                        speciesCode: summary.speciesCode
-                    ),
-                    summary: summary
+        // Build per-species rollup from recent detections so we can include species that
+        // the analytics endpoint hasn't aggregated yet (and refine top confidence / latest time).
+        let recentRollups = detectionRollups(from: recent)
+
+        var entriesByKey: [String: SpeciesListEntry] = [:]
+
+        // Primary pass: every species from the analytics summary.
+        for summary in summaries {
+            let key = summaryKey(scientificName: summary.scientificName, commonName: summary.commonName, speciesCode: summary.speciesCode)
+            let catalogEntry = catalogByKey[key]
+            let recentRollup = recentRollups[key]
+
+            let species = StationSpecies(
+                commonName: summary.commonName,
+                scientificName: summary.scientificName,
+                speciesCode: summary.speciesCode ?? catalogEntry?.speciesCode,
+                rarity: catalogEntry?.rarity,
+                detectionCount: summary.count,
+                latestDetectionTimestamp: summary.lastHeard,
+                // Note: BirdNET-Go's summary endpoint returns thumbnail_url as a relative
+                // path (often the SVG placeholder), which AsyncImage cannot resolve or
+                // decode. Prefer the catalog's absolute thumbnail and otherwise let the
+                // row fall back to apiClient.speciesImageURL(...).
+                thumbnailURL: catalogEntry?.thumbnailURL
+            )
+
+            let stats = SpeciesStats(
+                count: summary.count,
+                firstHeardDate: parseTimestamp(summary.firstHeard),
+                latestDetectionDate: latestDate(summary.lastHeard, recentRollup?.latestDetectionDate),
+                topConfidence: maxConfidence(summary.maxConfidence, recentRollup?.topConfidence),
+                avgConfidence: summary.avgConfidence
+            )
+
+            entriesByKey[key] = SpeciesListEntry(species: species, stats: stats)
+        }
+
+        // Enrichment pass: catalog entries the summary didn't include (e.g. configured but never detected).
+        for (key, catalogEntry) in catalogByKey where entriesByKey[key] == nil {
+            let recentRollup = recentRollups[key]
+            let count = catalogEntry.detectionCount ?? recentRollup?.count ?? 0
+            let stats = SpeciesStats(
+                count: count,
+                firstHeardDate: nil,
+                latestDetectionDate: parseTimestamp(catalogEntry.latestDetectionTimestamp) ?? recentRollup?.latestDetectionDate,
+                topConfidence: recentRollup?.topConfidence,
+                avgConfidence: nil
+            )
+            entriesByKey[key] = SpeciesListEntry(species: catalogEntry, stats: stats)
+        }
+
+        // Defensive pass: species seen in recent detections that nothing else knew about.
+        for (key, rollup) in recentRollups where entriesByKey[key] == nil {
+            entriesByKey[key] = SpeciesListEntry(
+                species: StationSpecies(
+                    commonName: rollup.commonName,
+                    scientificName: rollup.scientificName,
+                    speciesCode: rollup.speciesCode
+                ),
+                stats: SpeciesStats(
+                    count: rollup.count,
+                    firstHeardDate: nil,
+                    latestDetectionDate: rollup.latestDetectionDate,
+                    topConfidence: rollup.topConfidence,
+                    avgConfidence: nil
                 )
             )
         }
 
-        return entries.sorted { lhs, rhs in
+        return entriesByKey.values.sorted { lhs, rhs in
             switch (lhs.latestDetectionDate, rhs.latestDetectionDate) {
             case let (lhsDate?, rhsDate?) where lhsDate != rhsDate:
                 return lhsDate > rhsDate
@@ -180,28 +245,27 @@ final class SpeciesViewModel: ObservableObject {
         }
     }
 
-    private func detectionSummaries(from detections: [BirdDetection]) -> [String: DetectionSummary] {
-        var summaries: [String: DetectionSummary] = [:]
+    private func detectionRollups(from detections: [BirdDetection]) -> [String: DetectionRollup] {
+        var rollups: [String: DetectionRollup] = [:]
 
         for detection in detections {
             let key = summaryKey(scientificName: detection.scientificName, commonName: detection.commonName, speciesCode: detection.speciesCode)
-            var summary = summaries[key] ?? DetectionSummary(
-                key: key,
+            var rollup = rollups[key] ?? DetectionRollup(
                 commonName: detection.commonName,
                 scientificName: detection.scientificName,
                 speciesCode: detection.speciesCode
             )
 
-            summary.count += 1
-            summary.topConfidence = max(summary.topConfidence ?? detection.confidence, detection.confidence)
-            if let timestampDate = detection.timestampDate, summary.latestDetectionDate == nil || timestampDate > summary.latestDetectionDate! {
-                summary.latestDetectionDate = timestampDate
+            rollup.count += 1
+            rollup.topConfidence = max(rollup.topConfidence ?? detection.confidence, detection.confidence)
+            if let timestampDate = detection.timestampDate, rollup.latestDetectionDate == nil || timestampDate > rollup.latestDetectionDate! {
+                rollup.latestDetectionDate = timestampDate
             }
 
-            summaries[key] = summary
+            rollups[key] = rollup
         }
 
-        return summaries
+        return rollups
     }
 
     private func summaryKey(scientificName: String, commonName: String, speciesCode: String?) -> String {
@@ -209,20 +273,75 @@ final class SpeciesViewModel: ObservableObject {
             .lowercased()
     }
 
+    private func parseTimestamp(_ raw: String?) -> Date? {
+        guard let raw = raw?.trimmingCharacters(in: .whitespaces), !raw.isEmpty else {
+            return nil
+        }
+
+        // BirdNET-Go's species summary endpoint formats timestamps as "yyyy-MM-dd HH:mm:ss"
+        // (Go's time.DateTime). Catalog/detection timestamps tend to be ISO 8601.
+        if let date = Self.iso8601WithFractional.date(from: raw) ?? Self.iso8601.date(from: raw) {
+            return date
+        }
+
+        return Self.dateTimeFormatter.date(from: raw)
+    }
+
+    private func latestDate(_ raw: String?, _ other: Date?) -> Date? {
+        let parsed = parseTimestamp(raw)
+        switch (parsed, other) {
+        case let (lhs?, rhs?):
+            return max(lhs, rhs)
+        case let (lhs?, nil):
+            return lhs
+        case let (nil, rhs?):
+            return rhs
+        default:
+            return nil
+        }
+    }
+
+    private func maxConfidence(_ lhs: Double?, _ rhs: Double?) -> Double? {
+        switch (lhs, rhs) {
+        case let (a?, b?):
+            return Swift.max(a, b)
+        case let (a?, nil):
+            return a
+        case let (nil, b?):
+            return b
+        default:
+            return nil
+        }
+    }
+
     private func setMessage(_ message: String, kind: StatusKind) {
         statusMessage = message
         statusKind = kind
     }
+
+    private static let iso8601: ISO8601DateFormatter = ISO8601DateFormatter()
+    private static let iso8601WithFractional: ISO8601DateFormatter = {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return formatter
+    }()
+    private static let dateTimeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return formatter
+    }()
 }
 
 struct SpeciesListEntry: Equatable, Identifiable, Sendable {
     var species: StationSpecies
-    var summary: DetectionSummary?
+    var stats: SpeciesStats
 
     var id: String { species.id }
 
     var displayCount: Int {
-        species.detectionCount ?? summary?.count ?? 0
+        stats.count
     }
 
     var countLabel: String? {
@@ -234,7 +353,7 @@ struct SpeciesListEntry: Equatable, Identifiable, Sendable {
     }
 
     var latestDetectionDate: Date? {
-        summary?.latestDetectionDate ?? species.latestDetectionTimestamp.flatMap { ISO8601DateFormatter().date(from: $0) }
+        stats.latestDetectionDate
     }
 
     var latestDetectionLabel: String? {
@@ -245,8 +364,16 @@ struct SpeciesListEntry: Equatable, Identifiable, Sendable {
         return Self.relativeFormatter.localizedString(for: latestDetectionDate, relativeTo: Date())
     }
 
+    var averageConfidenceLabel: String? {
+        guard let avgConfidence = stats.avgConfidence else {
+            return nil
+        }
+
+        return "\(Int((avgConfidence * 100).rounded()))%"
+    }
+
     var topConfidenceLabel: String? {
-        guard let topConfidence = summary?.topConfidence else {
+        guard let topConfidence = stats.topConfidence else {
             return nil
         }
 
@@ -260,8 +387,15 @@ struct SpeciesListEntry: Equatable, Identifiable, Sendable {
     }()
 }
 
-struct DetectionSummary: Equatable, Sendable {
-    var key: String
+struct SpeciesStats: Equatable, Sendable {
+    var count: Int
+    var firstHeardDate: Date?
+    var latestDetectionDate: Date?
+    var topConfidence: Double?
+    var avgConfidence: Double?
+}
+
+private struct DetectionRollup {
     var commonName: String
     var scientificName: String
     var speciesCode: String?
@@ -271,8 +405,9 @@ struct DetectionSummary: Equatable, Sendable {
 }
 
 private struct SpeciesSnapshot: Codable {
+    var summaries: [SpeciesSummary]
     var catalog: [StationSpecies]
-    var detections: [BirdDetection]
+    var recent: [BirdDetection]
 }
 
 extension SpeciesViewModel {

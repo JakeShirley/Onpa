@@ -727,12 +727,12 @@ private extension DailySpeciesSummary {
                 detectionCount: count,
                 thumbnailURL: thumbnailURL
             ),
-            summary: DetectionSummary(
-                key: id,
-                commonName: commonName,
-                scientificName: scientificName,
-                speciesCode: speciesCode,
-                count: count
+            stats: SpeciesStats(
+                count: count,
+                firstHeardDate: nil,
+                latestDetectionDate: nil,
+                topConfidence: nil,
+                avgConfidence: nil
             )
         )
     }

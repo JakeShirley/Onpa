@@ -106,28 +106,18 @@ private struct SpeciesRow: View {
 
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
-            SpeciesThumbnail(imageURL: imageURL, commonName: entry.species.commonName)
+            SpeciesThumbnail(primaryURL: primaryImageURL, fallbackURL: fallbackImageURL, commonName: entry.species.commonName)
                 .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 6) {
-                HStack(alignment: .firstTextBaseline) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(entry.species.commonName)
-                            .font(.headline)
-                            .lineLimit(2)
-                        Text(entry.species.scientificName)
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                            .lineLimit(1)
-                    }
-
-                    Spacer(minLength: 8)
-
-                    if let topConfidenceLabel = entry.topConfidenceLabel {
-                        Text(topConfidenceLabel)
-                            .font(.subheadline.weight(.semibold))
-                            .foregroundStyle(.secondary)
-                    }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(entry.species.commonName)
+                        .font(.headline)
+                        .lineLimit(2)
+                    Text(entry.species.scientificName)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
                 }
 
                 Text(entry.metadataLabel)
@@ -142,51 +132,42 @@ private struct SpeciesRow: View {
     }
 
     private var accessibilityLabel: String {
-        var parts: [String] = [entry.species.commonName]
-        if let topConfidenceLabel = entry.topConfidenceLabel {
-            parts.append(String(localized: "top confidence \(topConfidenceLabel)"))
-        }
-        parts.append(entry.metadataLabel)
-        return parts.joined(separator: ", ")
+        [entry.species.commonName, entry.metadataLabel].joined(separator: ", ")
     }
 
-    private var imageURL: URL? {
-        if let thumbnailURL = entry.species.thumbnailURL {
-            return thumbnailURL
+    private var primaryImageURL: URL? {
+        // Prefer the station's media endpoint (returns a PNG we can decode) over
+        // any catalog-supplied thumbnail, which may be a relative path or SVG
+        // placeholder that AsyncImage cannot load.
+        if let station {
+            return apiClient.speciesImageURL(station: station, scientificName: entry.species.scientificName)
         }
 
-        guard let station else {
+        return entry.species.thumbnailURL
+    }
+
+    private var fallbackImageURL: URL? {
+        guard station != nil, let thumbnailURL = entry.species.thumbnailURL, thumbnailURL.scheme != nil else {
             return nil
         }
 
-        return apiClient.speciesImageURL(station: station, scientificName: entry.species.scientificName)
+        return thumbnailURL
     }
 }
 
 private struct SpeciesThumbnail: View {
-    var imageURL: URL?
+    var primaryURL: URL?
+    var fallbackURL: URL?
     var commonName: String
 
     var body: some View {
         ZStack {
             Color(.secondarySystemGroupedBackground)
 
-            if let imageURL {
-                AsyncImage(url: imageURL) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                    case .failure:
-                        Image(systemName: "photo")
-                            .foregroundStyle(.secondary)
-                    @unknown default:
-                        EmptyView()
-                    }
-                }
+            if let primaryURL {
+                thumbnailImage(url: primaryURL, fallbackURL: fallbackURL)
+            } else if let fallbackURL {
+                thumbnailImage(url: fallbackURL, fallbackURL: nil)
             } else {
                 Image(systemName: "leaf")
                     .foregroundStyle(.secondary)
@@ -199,6 +180,39 @@ private struct SpeciesThumbnail: View {
         .frame(width: 56, height: 56)
         .clipShape(DS.Shape.card)
         .accessibilityLabel(String(localized: "Image of \(commonName)"))
+    }
+
+    @ViewBuilder
+    private func thumbnailImage(url: URL, fallbackURL: URL?) -> some View {
+        AsyncImage(url: url) { phase in
+            switch phase {
+            case .empty:
+                ProgressView()
+            case .success(let image):
+                image
+                    .resizable()
+                    .scaledToFill()
+            case .failure:
+                if let fallbackURL {
+                    AsyncImage(url: fallbackURL) { fallbackPhase in
+                        switch fallbackPhase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFill()
+                        default:
+                            Image(systemName: "photo")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                } else {
+                    Image(systemName: "photo")
+                        .foregroundStyle(.secondary)
+                }
+            @unknown default:
+                EmptyView()
+            }
+        }
     }
 }
 

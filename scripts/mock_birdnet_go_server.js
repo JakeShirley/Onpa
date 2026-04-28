@@ -141,6 +141,172 @@ const SPECIES = [
   },
 ];
 
+// Full-history species roll-up returned by /api/v2/analytics/species/summary.
+// Includes species the station has heard at any point, not just today, so the
+// Species tab can show the complete known catalog with overall stats.
+const SPECIES_SUMMARY = [
+  {
+    scientific_name: "Turdus migratorius",
+    common_name: "American Robin",
+    species_code: "amerob",
+    count: 1284,
+    first_heard: "2025-03-12 06:42:18",
+    last_heard: "2026-04-26 18:11:03",
+    avg_confidence: 0.82,
+    max_confidence: 0.97,
+  },
+  {
+    scientific_name: "Cyanocitta cristata",
+    common_name: "Blue Jay",
+    species_code: "blujay",
+    count: 612,
+    first_heard: "2025-04-04 05:14:09",
+    last_heard: "2026-04-26 17:27:00",
+    avg_confidence: 0.79,
+    max_confidence: 0.93,
+  },
+  {
+    scientific_name: "Cardinalis cardinalis",
+    common_name: "Northern Cardinal",
+    species_code: "norcar",
+    count: 488,
+    first_heard: "2025-03-22 05:33:51",
+    last_heard: "2026-04-26 17:56:12",
+    avg_confidence: 0.81,
+    max_confidence: 0.94,
+  },
+  {
+    scientific_name: "Poecile atricapillus",
+    common_name: "Black-capped Chickadee",
+    species_code: "bkcchi",
+    count: 372,
+    first_heard: "2025-03-18 06:01:02",
+    last_heard: "2026-04-26 17:02:48",
+    avg_confidence: 0.74,
+    max_confidence: 0.9,
+  },
+  {
+    scientific_name: "Sialia sialis",
+    common_name: "Eastern Bluebird",
+    species_code: "easblu",
+    count: 245,
+    first_heard: "2025-04-19 06:48:11",
+    last_heard: "2026-04-22 16:40:09",
+    avg_confidence: 0.78,
+    max_confidence: 0.92,
+  },
+  {
+    scientific_name: "Spinus tristis",
+    common_name: "American Goldfinch",
+    species_code: "amegfi",
+    count: 198,
+    first_heard: "2025-05-02 07:11:55",
+    last_heard: "2026-04-25 14:08:33",
+    avg_confidence: 0.71,
+    max_confidence: 0.88,
+  },
+  {
+    scientific_name: "Zenaida macroura",
+    common_name: "Mourning Dove",
+    species_code: "moudov",
+    count: 176,
+    first_heard: "2025-03-29 05:45:22",
+    last_heard: "2026-04-26 09:31:14",
+    avg_confidence: 0.69,
+    max_confidence: 0.87,
+  },
+  {
+    scientific_name: "Melospiza melodia",
+    common_name: "Song Sparrow",
+    species_code: "sonspa",
+    count: 162,
+    first_heard: "2025-04-10 06:12:08",
+    last_heard: "2026-04-24 18:02:47",
+    avg_confidence: 0.7,
+    max_confidence: 0.89,
+  },
+  {
+    scientific_name: "Picoides pubescens",
+    common_name: "Downy Woodpecker",
+    species_code: "dowwoo",
+    count: 134,
+    first_heard: "2025-03-15 07:28:40",
+    last_heard: "2026-04-23 11:18:55",
+    avg_confidence: 0.72,
+    max_confidence: 0.9,
+  },
+  {
+    scientific_name: "Sitta carolinensis",
+    common_name: "White-breasted Nuthatch",
+    species_code: "whbnut",
+    count: 121,
+    first_heard: "2025-03-21 06:55:01",
+    last_heard: "2026-04-26 08:45:30",
+    avg_confidence: 0.74,
+    max_confidence: 0.89,
+  },
+  {
+    scientific_name: "Haemorhous mexicanus",
+    common_name: "House Finch",
+    species_code: "houfin",
+    count: 109,
+    first_heard: "2025-04-01 07:02:19",
+    last_heard: "2026-04-21 16:55:42",
+    avg_confidence: 0.68,
+    max_confidence: 0.86,
+  },
+  {
+    scientific_name: "Junco hyemalis",
+    common_name: "Dark-eyed Junco",
+    species_code: "daejun",
+    count: 92,
+    first_heard: "2025-11-04 07:38:14",
+    last_heard: "2026-03-22 09:14:50",
+    avg_confidence: 0.7,
+    max_confidence: 0.88,
+  },
+  {
+    scientific_name: "Bombycilla cedrorum",
+    common_name: "Cedar Waxwing",
+    species_code: "cedwax",
+    count: 64,
+    first_heard: "2025-06-11 12:18:44",
+    last_heard: "2026-04-18 13:22:09",
+    avg_confidence: 0.66,
+    max_confidence: 0.85,
+  },
+  {
+    scientific_name: "Dryocopus pileatus",
+    common_name: "Pileated Woodpecker",
+    species_code: "pilwoo",
+    count: 41,
+    first_heard: "2025-05-22 09:48:12",
+    last_heard: "2026-04-15 10:55:33",
+    avg_confidence: 0.73,
+    max_confidence: 0.91,
+  },
+  {
+    scientific_name: "Tyto alba",
+    common_name: "Barn Owl",
+    species_code: "brnowl",
+    count: 18,
+    first_heard: "2025-08-14 23:42:18",
+    last_heard: "2026-03-30 04:18:09",
+    avg_confidence: 0.64,
+    max_confidence: 0.82,
+  },
+  {
+    scientific_name: "Pandion haliaetus",
+    common_name: "Osprey",
+    species_code: "ospre",
+    count: 7,
+    first_heard: "2025-09-02 08:14:55",
+    last_heard: "2026-04-05 16:48:22",
+    avg_confidence: 0.61,
+    max_confidence: 0.78,
+  },
+];
+
 const SPECIES_DETECTIONS = [
   RECENT[0],
   {
@@ -301,6 +467,10 @@ function handleRequest(request, response) {
     sendJson(response, APP_CONFIG);
   } else if (path === "/api/v2/analytics/species/daily") {
     sendJson(response, DAILY.slice(0, Number(url.searchParams.get("limit") || DAILY.length)));
+  } else if (path === "/api/v2/analytics/species/summary") {
+    const limitParam = Number(url.searchParams.get("limit") || 0);
+    const limited = limitParam > 0 ? SPECIES_SUMMARY.slice(0, limitParam) : SPECIES_SUMMARY;
+    sendJson(response, limited);
   } else if (path === "/api/v2/detections/recent") {
     sendJson(response, RECENT.slice(0, Number(url.searchParams.get("limit") || RECENT.length)));
   } else if (path === "/api/v2/detections/stream") {
