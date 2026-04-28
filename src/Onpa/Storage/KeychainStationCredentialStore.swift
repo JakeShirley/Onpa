@@ -2,7 +2,7 @@ import Foundation
 import Security
 
 struct KeychainStationCredentialStore: StationCredentialStore {
-    private let service = "com.jakeshirley.birdnetgo.station-credentials"
+    private let service = "org.odinseye.onpa.station-credentials"
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
 

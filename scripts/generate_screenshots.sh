@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-PROJECT_PATH="${PROJECT_PATH:-$ROOT_DIR/BirdNETGo.xcodeproj}"
-SCHEME="${SCHEME:-BirdNETGo}"
+PROJECT_PATH="${PROJECT_PATH:-$ROOT_DIR/src/Onpa.xcodeproj}"
+SCHEME="${SCHEME:-Onpa}"
 CONFIGURATION="${CONFIGURATION:-Debug}"
 DEVICE_NAME="${DEVICE_NAME:-iPhone 17}"
 IOS_VERSION="${IOS_VERSION:-26.1}"
@@ -12,11 +12,11 @@ SCREENSHOT_DIR="${SCREENSHOT_DIR:-$ROOT_DIR/docs/screenshots}"
 MOCK_HOST="${MOCK_HOST:-127.0.0.1}"
 MOCK_PORT="${MOCK_PORT:-18081}"
 MOCK_URL="http://$MOCK_HOST:$MOCK_PORT"
-BUNDLE_ID="${BUNDLE_ID:-com.jakeshirley.birdnetgo}"
+BUNDLE_ID="${BUNDLE_ID:-org.odinseye.onpa}"
 SCREENSHOT_DELAY="${SCREENSHOT_DELAY:-3.0}"
 SKIP_BUILD="${SKIP_BUILD:-0}"
 
-APP_PATH="$DERIVED_DATA_PATH/Build/Products/$CONFIGURATION-iphonesimulator/BirdNETGo.app"
+APP_PATH="$DERIVED_DATA_PATH/Build/Products/$CONFIGURATION-iphonesimulator/Onpa.app"
 SERVER_LOG="$ROOT_DIR/build/mock-birdnet-go-server.log"
 SERVER_PID=""
 

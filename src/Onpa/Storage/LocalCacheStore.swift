@@ -73,9 +73,9 @@ actor FileSystemLocalCacheStore: LocalCacheStore {
 
     private static func defaultRootDirectory() -> URL {
         if let applicationSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
-            return applicationSupportURL.appending(path: "BirdNETGo/LocalCache", directoryHint: .isDirectory)
+            return applicationSupportURL.appending(path: "Onpa/LocalCache", directoryHint: .isDirectory)
         }
 
-        return FileManager.default.temporaryDirectory.appending(path: "BirdNETGo/LocalCache", directoryHint: .isDirectory)
+        return FileManager.default.temporaryDirectory.appending(path: "Onpa/LocalCache", directoryHint: .isDirectory)
     }
 }

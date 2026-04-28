@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct BirdNETGoApp: App {
+struct OnpaApp: App {
     private let environment = AppEnvironment.live
 
     var body: some Scene {

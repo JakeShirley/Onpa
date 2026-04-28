@@ -25,7 +25,7 @@ actor FileDiagnosticsService: DiagnosticsService {
 
         let generatedAt = Date()
         let timestamp = ISO8601DateFormatter().string(from: generatedAt).replacingOccurrences(of: ":", with: "-")
-        let fileURL = rootDirectory.appending(path: "birdnet-go-ios-diagnostics-\(timestamp).txt", directoryHint: .notDirectory)
+        let fileURL = rootDirectory.appending(path: "onpa-ios-diagnostics-\(timestamp).txt", directoryHint: .notDirectory)
         try diagnosticsText(snapshot: snapshot, generatedAt: generatedAt).write(to: fileURL, atomically: true, encoding: .utf8)
         return fileURL
     }
@@ -36,7 +36,7 @@ actor FileDiagnosticsService: DiagnosticsService {
         let appVersion = bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "Unknown"
         let build = bundle.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "Unknown"
 
-        lines.append("BirdNET-Go iOS Diagnostics")
+        lines.append("Onpa iOS Diagnostics")
         lines.append("Generated: \(ISO8601DateFormatter().string(from: generatedAt))")
         lines.append("App Version: \(appVersion) (\(build))")
         lines.append("OS: \(ProcessInfo.processInfo.operatingSystemVersionString)")
@@ -92,10 +92,10 @@ actor FileDiagnosticsService: DiagnosticsService {
 
     private static func defaultRootDirectory() -> URL {
         if let cachesURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
-            return cachesURL.appending(path: "BirdNETGo/Diagnostics", directoryHint: .isDirectory)
+            return cachesURL.appending(path: "Onpa/Diagnostics", directoryHint: .isDirectory)
         }
 
-        return FileManager.default.temporaryDirectory.appending(path: "BirdNETGo/Diagnostics", directoryHint: .isDirectory)
+        return FileManager.default.temporaryDirectory.appending(path: "Onpa/Diagnostics", directoryHint: .isDirectory)
     }
 }
 

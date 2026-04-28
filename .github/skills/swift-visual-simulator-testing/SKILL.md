@@ -13,7 +13,7 @@ Use this skill when a Swift or SwiftUI change affects visible iOS behavior, layo
 1. Build the app for the known simulator destination.
 
    ```sh
-   xcodebuild -project BirdNETGo.xcodeproj -scheme BirdNETGo -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.1' -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO build
+   xcodebuild -project src/Onpa.xcodeproj -scheme Onpa -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.1' -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO build
    ```
 
 2. Confirm the build succeeded by checking the tail of the build output for `** BUILD SUCCEEDED **`.
@@ -21,13 +21,13 @@ Use this skill when a Swift or SwiftUI change affects visible iOS behavior, layo
 3. Install the freshly built app on the booted simulator.
 
    ```sh
-   xcrun simctl install 5F8AE900-844B-4FDF-8B63-368C7751A4FE build/DerivedData/Build/Products/Debug-iphonesimulator/BirdNETGo.app
+   xcrun simctl install 5F8AE900-844B-4FDF-8B63-368C7751A4FE build/DerivedData/Build/Products/Debug-iphonesimulator/Onpa.app
    ```
 
 4. Launch the app. For a specific tab, use the debug launch argument supported by the app shell.
 
    ```sh
-   xcrun simctl launch --terminate-running-process 5F8AE900-844B-4FDF-8B63-368C7751A4FE com.jakeshirley.birdnetgo --args -initialTab station
+   xcrun simctl launch --terminate-running-process 5F8AE900-844B-4FDF-8B63-368C7751A4FE org.odinseye.onpa --args -initialTab station
    ```
 
    Supported values are `dashboard`, `feed`, `species`, and `station`. `stats` remains accepted as a legacy alias.

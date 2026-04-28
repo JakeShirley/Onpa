@@ -43,8 +43,8 @@ Build locally:
 
 ```sh
 xcodebuild \
-  -project BirdNETGo.xcodeproj \
-  -scheme BirdNETGo \
+  -project src/Onpa.xcodeproj \
+  -scheme Onpa \
   -configuration Debug \
   -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.1' \
   -derivedDataPath build/DerivedData \

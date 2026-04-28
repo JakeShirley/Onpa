@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8A3F3F5F2BD8000100A11001 /* BirdNETGoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5A2BD8000100A11001 /* BirdNETGoApp.swift */; };
+		8A3F3F5F2BD8000100A11001 /* OnpaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5A2BD8000100A11001 /* OnpaApp.swift */; };
 		8A3F3F602BD8000100A11001 /* AppTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5B2BD8000100A11001 /* AppTab.swift */; };
 		8A3F3F612BD8000100A11001 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5C2BD8000100A11001 /* RootTabView.swift */; };
 		8A3F3F622BD8000100A11001 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5D2BD8000100A11001 /* FeedView.swift */; };
@@ -47,8 +47,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8A3F3F4D2BD8000100A11001 /* BirdNETGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BirdNETGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8A3F3F5A2BD8000100A11001 /* BirdNETGoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdNETGoApp.swift; sourceTree = "<group>"; };
+		8A3F3F4D2BD8000100A11001 /* Onpa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Onpa.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A3F3F5A2BD8000100A11001 /* OnpaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnpaApp.swift; sourceTree = "<group>"; };
 		8A3F3F5B2BD8000100A11001 /* AppTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTab.swift; sourceTree = "<group>"; };
 		8A3F3F5C2BD8000100A11001 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		8A3F3F5D2BD8000100A11001 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 		8A3F3F442BD8000100A11001 = {
 			isa = PBXGroup;
 			children = (
-				8A3F3F4E2BD8000100A11001 /* BirdNETGo */,
+				8A3F3F4E2BD8000100A11001 /* Onpa */,
 				8A3F3F4C2BD8000100A11001 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -110,12 +110,12 @@
 		8A3F3F4C2BD8000100A11001 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8A3F3F4D2BD8000100A11001 /* BirdNETGo.app */,
+				8A3F3F4D2BD8000100A11001 /* Onpa.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8A3F3F4E2BD8000100A11001 /* BirdNETGo */ = {
+		8A3F3F4E2BD8000100A11001 /* Onpa */ = {
 			isa = PBXGroup;
 			children = (
 				8A3F3F532BD8000100A11001 /* App */,
@@ -125,13 +125,13 @@
 				8A3F3F542BD8000100A11001 /* Features */,
 				8A3F3F6E2BD8000100A11001 /* Resources */,
 			);
-			path = BirdNETGo;
+			path = Onpa;
 			sourceTree = "<group>";
 		};
 		8A3F3F532BD8000100A11001 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				8A3F3F5A2BD8000100A11001 /* BirdNETGoApp.swift */,
+				8A3F3F5A2BD8000100A11001 /* OnpaApp.swift */,
 				8A3F3F5B2BD8000100A11001 /* AppTab.swift */,
 				8A3F3F5C2BD8000100A11001 /* RootTabView.swift */,
 				8A3F40792BD9000100A11001 /* AppEnvironment.swift */,
@@ -259,9 +259,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8A3F3F4B2BD8000100A11001 /* BirdNETGo */ = {
+		8A3F3F4B2BD8000100A11001 /* Onpa */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8A3F3F752BD8000100A11001 /* Build configuration list for PBXNativeTarget "BirdNETGo" */;
+			buildConfigurationList = 8A3F3F752BD8000100A11001 /* Build configuration list for PBXNativeTarget "Onpa" */;
 			buildPhases = (
 				8A3F3F492BD8000100A11001 /* Sources */,
 				8A3F3F4A2BD8000100A11001 /* Frameworks */,
@@ -271,9 +271,9 @@
 			);
 			dependencies = (
 			);
-			name = BirdNETGo;
-			productName = BirdNETGo;
-			productReference = 8A3F3F4D2BD8000100A11001 /* BirdNETGo.app */;
+			name = Onpa;
+			productName = Onpa;
+			productReference = 8A3F3F4D2BD8000100A11001 /* Onpa.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -291,7 +291,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8A3F3F482BD8000100A11001 /* Build configuration list for PBXProject "BirdNETGo" */;
+			buildConfigurationList = 8A3F3F482BD8000100A11001 /* Build configuration list for PBXProject "Onpa" */;
 			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -304,7 +304,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8A3F3F4B2BD8000100A11001 /* BirdNETGo */,
+				8A3F3F4B2BD8000100A11001 /* Onpa */,
 			);
 		};
 /* End PBXProject section */
@@ -325,7 +325,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A3F3F5F2BD8000100A11001 /* BirdNETGoApp.swift in Sources */,
+				8A3F3F5F2BD8000100A11001 /* OnpaApp.swift in Sources */,
 				8A3F3F602BD8000100A11001 /* AppTab.swift in Sources */,
 				8A3F3F612BD8000100A11001 /* RootTabView.swift in Sources */,
 				8A3F40802BD9000100A11001 /* AppEnvironment.swift in Sources */,
@@ -495,7 +495,7 @@
 				DEVELOPMENT_TEAM = NV688MDJ78;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = BirdNETGo/Resources/Info.plist;
+				INFOPLIST_FILE = Onpa/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -524,7 +524,7 @@
 				DEVELOPMENT_TEAM = NV688MDJ78;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = BirdNETGo/Resources/Info.plist;
+				INFOPLIST_FILE = Onpa/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -546,7 +546,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8A3F3F482BD8000100A11001 /* Build configuration list for PBXProject "BirdNETGo" */ = {
+		8A3F3F482BD8000100A11001 /* Build configuration list for PBXProject "Onpa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A3F3F722BD8000100A11001 /* Debug */,
@@ -555,7 +555,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8A3F3F752BD8000100A11001 /* Build configuration list for PBXNativeTarget "BirdNETGo" */ = {
+		8A3F3F752BD8000100A11001 /* Build configuration list for PBXNativeTarget "Onpa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8A3F3F762BD8000100A11001 /* Debug */,

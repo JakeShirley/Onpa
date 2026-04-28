@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8A3F3F4B2BD8000100A11001"
-               BuildableName = "BirdNETGo.app"
-               BlueprintName = "BirdNETGo"
-               ReferencedContainer = "container:BirdNETGo.xcodeproj">
+               BuildableName = "Onpa.app"
+               BlueprintName = "Onpa"
+               ReferencedContainer = "container:Onpa.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8A3F3F4B2BD8000100A11001"
-            BuildableName = "BirdNETGo.app"
-            BlueprintName = "BirdNETGo"
-            ReferencedContainer = "container:BirdNETGo.xcodeproj">
+            BuildableName = "Onpa.app"
+            BlueprintName = "Onpa"
+            ReferencedContainer = "container:Onpa.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8A3F3F4B2BD8000100A11001"
-            BuildableName = "BirdNETGo.app"
-            BlueprintName = "BirdNETGo"
-            ReferencedContainer = "container:BirdNETGo.xcodeproj">
+            BuildableName = "Onpa.app"
+            BlueprintName = "Onpa"
+            ReferencedContainer = "container:Onpa.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
