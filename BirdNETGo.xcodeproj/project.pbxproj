@@ -10,6 +10,11 @@
 		8A3F3F5F2BD8000100A11001 /* BirdNETGoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5A2BD8000100A11001 /* BirdNETGoApp.swift */; };
 		8A3F3F602BD8000100A11001 /* AppTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5B2BD8000100A11001 /* AppTab.swift */; };
 		8A3F3F612BD8000100A11001 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5C2BD8000100A11001 /* RootTabView.swift */; };
+		8A3F3F622BD8000100A11001 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5D2BD8000100A11001 /* FeedView.swift */; };
+		8A3F3F632BD8000100A11001 /* SpeciesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5E2BD8000100A11001 /* SpeciesView.swift */; };
+		8A3F3F692BD8000100A11001 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F682BD8000100A11001 /* StatsView.swift */; };
+		8A3F3F6B2BD8000100A11001 /* StationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F6A2BD8000100A11001 /* StationView.swift */; };
+		8A3F3F702BD8000100A11001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A3F3F6F2BD8000100A11001 /* Assets.xcassets */; };
 		8A3F40802BD9000100A11001 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40792BD9000100A11001 /* AppEnvironment.swift */; };
 		8A3F40812BD9000100A11001 /* StationProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F407A2BD9000100A11001 /* StationProfile.swift */; };
 		8A3F40822BD9000100A11001 /* StationConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F407B2BD9000100A11001 /* StationConnectionStatus.swift */; };
@@ -25,6 +30,12 @@
 		8A3F409A2BD9000300A11001 /* UserDefaultsAppPreferenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40992BD9000300A11001 /* UserDefaultsAppPreferenceStore.swift */; };
 		8A3F409C2BD9000300A11001 /* LocalCacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F409B2BD9000300A11001 /* LocalCacheStore.swift */; };
 		8A3F409E2BD9000400A11001 /* BirdDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F409D2BD9000400A11001 /* BirdDetection.swift */; };
+		8A3F40A02BD9000400A11001 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F409F2BD9000400A11001 /* FeedViewModel.swift */; };
+		8A3F40A22BD9000500A11001 /* BirdDetectionStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A12BD9000500A11001 /* BirdDetectionStream.swift */; };
+		8A3F40A42BD9000600A11001 /* DetectionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A32BD9000600A11001 /* DetectionDetailView.swift */; };
+		8A3F40A62BD9000600A11001 /* DetectionDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A52BD9000600A11001 /* DetectionDetailViewModel.swift */; };
+		8A3F40A82BD9000600A11001 /* AudioClipPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A72BD9000600A11001 /* AudioClipPlayerView.swift */; };
+		8A3F40AB2BD9000700A11001 /* SpectrogramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40AA2BD9000700A11001 /* SpectrogramView.swift */; };
 		8A3F40AD2BD9000800A11001 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40AC2BD9000800A11001 /* AppError.swift */; };
 		8A3F40AF2BD9000800A11001 /* DiagnosticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40AE2BD9000800A11001 /* DiagnosticsService.swift */; };
 		8A3F40B12BD9000900A11001 /* StationSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40B02BD9000900A11001 /* StationSpecies.swift */; };
@@ -33,17 +44,6 @@
 		8A3F40B72BD9000A00A11001 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40B62BD9000A00A11001 /* StatsViewModel.swift */; };
 		8A3F40B92BD9000B00A11001 /* SpeciesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40B82BD9000B00A11001 /* SpeciesDetailView.swift */; };
 		8A3F40BB2BD9000B00A11001 /* SpeciesDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40BA2BD9000B00A11001 /* SpeciesDetailViewModel.swift */; };
-		8A3F40A02BD9000400A11001 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F409F2BD9000400A11001 /* FeedViewModel.swift */; };
-		8A3F40A22BD9000500A11001 /* BirdDetectionStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A12BD9000500A11001 /* BirdDetectionStream.swift */; };
-		8A3F40A42BD9000600A11001 /* DetectionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A32BD9000600A11001 /* DetectionDetailView.swift */; };
-		8A3F40A62BD9000600A11001 /* DetectionDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A52BD9000600A11001 /* DetectionDetailViewModel.swift */; };
-		8A3F40A82BD9000600A11001 /* AudioClipPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40A72BD9000600A11001 /* AudioClipPlayerView.swift */; };
-		8A3F40AB2BD9000700A11001 /* SpectrogramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F40AA2BD9000700A11001 /* SpectrogramView.swift */; };
-		8A3F3F622BD8000100A11001 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5D2BD8000100A11001 /* FeedView.swift */; };
-		8A3F3F632BD8000100A11001 /* SpeciesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F5E2BD8000100A11001 /* SpeciesView.swift */; };
-		8A3F3F692BD8000100A11001 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F682BD8000100A11001 /* StatsView.swift */; };
-		8A3F3F6B2BD8000100A11001 /* StationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3F3F6A2BD8000100A11001 /* StationView.swift */; };
-		8A3F3F702BD8000100A11001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A3F3F6F2BD8000100A11001 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +51,11 @@
 		8A3F3F5A2BD8000100A11001 /* BirdNETGoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdNETGoApp.swift; sourceTree = "<group>"; };
 		8A3F3F5B2BD8000100A11001 /* AppTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTab.swift; sourceTree = "<group>"; };
 		8A3F3F5C2BD8000100A11001 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		8A3F3F5D2BD8000100A11001 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		8A3F3F5E2BD8000100A11001 /* SpeciesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesView.swift; sourceTree = "<group>"; };
+		8A3F3F682BD8000100A11001 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		8A3F3F6A2BD8000100A11001 /* StationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationView.swift; sourceTree = "<group>"; };
+		8A3F3F6F2BD8000100A11001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A3F40792BD9000100A11001 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		8A3F407A2BD9000100A11001 /* StationProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationProfile.swift; sourceTree = "<group>"; };
 		8A3F407B2BD9000100A11001 /* StationConnectionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationConnectionStatus.swift; sourceTree = "<group>"; };
@@ -67,6 +72,12 @@
 		8A3F40992BD9000300A11001 /* UserDefaultsAppPreferenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsAppPreferenceStore.swift; sourceTree = "<group>"; };
 		8A3F409B2BD9000300A11001 /* LocalCacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCacheStore.swift; sourceTree = "<group>"; };
 		8A3F409D2BD9000400A11001 /* BirdDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetection.swift; sourceTree = "<group>"; };
+		8A3F409F2BD9000400A11001 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		8A3F40A12BD9000500A11001 /* BirdDetectionStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetectionStream.swift; sourceTree = "<group>"; };
+		8A3F40A32BD9000600A11001 /* DetectionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionDetailView.swift; sourceTree = "<group>"; };
+		8A3F40A52BD9000600A11001 /* DetectionDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionDetailViewModel.swift; sourceTree = "<group>"; };
+		8A3F40A72BD9000600A11001 /* AudioClipPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioClipPlayerView.swift; sourceTree = "<group>"; };
+		8A3F40AA2BD9000700A11001 /* SpectrogramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrogramView.swift; sourceTree = "<group>"; };
 		8A3F40AC2BD9000800A11001 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		8A3F40AE2BD9000800A11001 /* DiagnosticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsService.swift; sourceTree = "<group>"; };
 		8A3F40B02BD9000900A11001 /* StationSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationSpecies.swift; sourceTree = "<group>"; };
@@ -75,17 +86,6 @@
 		8A3F40B62BD9000A00A11001 /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		8A3F40B82BD9000B00A11001 /* SpeciesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesDetailView.swift; sourceTree = "<group>"; };
 		8A3F40BA2BD9000B00A11001 /* SpeciesDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesDetailViewModel.swift; sourceTree = "<group>"; };
-		8A3F409F2BD9000400A11001 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
-		8A3F40A12BD9000500A11001 /* BirdDetectionStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdDetectionStream.swift; sourceTree = "<group>"; };
-		8A3F40A32BD9000600A11001 /* DetectionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionDetailView.swift; sourceTree = "<group>"; };
-		8A3F40A52BD9000600A11001 /* DetectionDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionDetailViewModel.swift; sourceTree = "<group>"; };
-		8A3F40A72BD9000600A11001 /* AudioClipPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioClipPlayerView.swift; sourceTree = "<group>"; };
-		8A3F40AA2BD9000700A11001 /* SpectrogramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrogramView.swift; sourceTree = "<group>"; };
-		8A3F3F5D2BD8000100A11001 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
-		8A3F3F5E2BD8000100A11001 /* SpeciesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesView.swift; sourceTree = "<group>"; };
-		8A3F3F682BD8000100A11001 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
-		8A3F3F6A2BD8000100A11001 /* StationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationView.swift; sourceTree = "<group>"; };
-		8A3F3F6F2BD8000100A11001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +140,65 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		8A3F3F542BD8000100A11001 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				8A3F3F552BD8000100A11001 /* Feed */,
+				8A3F40A92BD9000600A11001 /* DetectionDetail */,
+				8A3F3F562BD8000100A11001 /* Species */,
+				8A3F3F572BD8000100A11001 /* Stats */,
+				8A3F3F582BD8000100A11001 /* Station */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		8A3F3F552BD8000100A11001 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				8A3F3F5D2BD8000100A11001 /* FeedView.swift */,
+				8A3F409F2BD9000400A11001 /* FeedViewModel.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		8A3F3F562BD8000100A11001 /* Species */ = {
+			isa = PBXGroup;
+			children = (
+				8A3F3F5E2BD8000100A11001 /* SpeciesView.swift */,
+				8A3F40B22BD9000900A11001 /* SpeciesViewModel.swift */,
+				8A3F40B82BD9000B00A11001 /* SpeciesDetailView.swift */,
+				8A3F40BA2BD9000B00A11001 /* SpeciesDetailViewModel.swift */,
+			);
+			path = Species;
+			sourceTree = "<group>";
+		};
+		8A3F3F572BD8000100A11001 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				8A3F3F682BD8000100A11001 /* StatsView.swift */,
+				8A3F40B62BD9000A00A11001 /* StatsViewModel.swift */,
+			);
+			path = Stats;
+			sourceTree = "<group>";
+		};
+		8A3F3F582BD8000100A11001 /* Station */ = {
+			isa = PBXGroup;
+			children = (
+				8A3F3F6A2BD8000100A11001 /* StationView.swift */,
+				8A3F408F2BD9000200A11001 /* StationViewModel.swift */,
+			);
+			path = Station;
+			sourceTree = "<group>";
+		};
+		8A3F3F6E2BD8000100A11001 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8A3F40922BD9000200A11001 /* Info.plist */,
+				8A3F3F6F2BD8000100A11001 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		8A3F40872BD9000100A11001 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,27 +245,6 @@
 			path = Storage;
 			sourceTree = "<group>";
 		};
-		8A3F3F542BD8000100A11001 /* Features */ = {
-			isa = PBXGroup;
-			children = (
-				8A3F3F552BD8000100A11001 /* Feed */,
-				8A3F40A92BD9000600A11001 /* DetectionDetail */,
-				8A3F3F562BD8000100A11001 /* Species */,
-				8A3F3F572BD8000100A11001 /* Stats */,
-				8A3F3F582BD8000100A11001 /* Station */,
-			);
-			path = Features;
-			sourceTree = "<group>";
-		};
-		8A3F3F552BD8000100A11001 /* Feed */ = {
-			isa = PBXGroup;
-			children = (
-				8A3F3F5D2BD8000100A11001 /* FeedView.swift */,
-				8A3F409F2BD9000400A11001 /* FeedViewModel.swift */,
-			);
-			path = Feed;
-			sourceTree = "<group>";
-		};
 		8A3F40A92BD9000600A11001 /* DetectionDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,44 +254,6 @@
 				8A3F40AA2BD9000700A11001 /* SpectrogramView.swift */,
 			);
 			path = DetectionDetail;
-			sourceTree = "<group>";
-		};
-		8A3F3F562BD8000100A11001 /* Species */ = {
-			isa = PBXGroup;
-			children = (
-				8A3F3F5E2BD8000100A11001 /* SpeciesView.swift */,
-				8A3F40B22BD9000900A11001 /* SpeciesViewModel.swift */,
-				8A3F40B82BD9000B00A11001 /* SpeciesDetailView.swift */,
-				8A3F40BA2BD9000B00A11001 /* SpeciesDetailViewModel.swift */,
-			);
-			path = Species;
-			sourceTree = "<group>";
-		};
-		8A3F3F572BD8000100A11001 /* Stats */ = {
-			isa = PBXGroup;
-			children = (
-				8A3F3F682BD8000100A11001 /* StatsView.swift */,
-				8A3F40B62BD9000A00A11001 /* StatsViewModel.swift */,
-			);
-			path = Stats;
-			sourceTree = "<group>";
-		};
-		8A3F3F582BD8000100A11001 /* Station */ = {
-			isa = PBXGroup;
-			children = (
-				8A3F3F6A2BD8000100A11001 /* StationView.swift */,
-				8A3F408F2BD9000200A11001 /* StationViewModel.swift */,
-			);
-			path = Station;
-			sourceTree = "<group>";
-		};
-		8A3F3F6E2BD8000100A11001 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				8A3F40922BD9000200A11001 /* Info.plist */,
-				8A3F3F6F2BD8000100A11001 /* Assets.xcassets */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -492,7 +492,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = F2KBRBAJF3;
+				DEVELOPMENT_TEAM = NV688MDJ78;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = BirdNETGo/Resources/Info.plist;
@@ -502,7 +502,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "0.0.0-development";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jakeshirley.birdnetgo;
+				PRODUCT_BUNDLE_IDENTIFIER = org.odinseye.onpa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -521,7 +521,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = F2KBRBAJF3;
+				DEVELOPMENT_TEAM = NV688MDJ78;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = BirdNETGo/Resources/Info.plist;
@@ -531,7 +531,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "0.0.0-development";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jakeshirley.birdnetgo;
+				PRODUCT_BUNDLE_IDENTIFIER = org.odinseye.onpa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

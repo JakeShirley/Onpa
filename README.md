@@ -1,6 +1,6 @@
-# BirdNET-Go iOS
+# Onpa (音波)
 
-Native SwiftUI companion app for [BirdNET-Go](https://github.com/tphakala/birdnet-go) stations. The app connects directly to a user-owned BirdNET-Go instance and gives iPhone/iPad users a pocket view of recent detections, live updates, species activity, media, and station status.
+Onpa (音波) is a native SwiftUI companion app for [BirdNET-Go](https://github.com/tphakala/birdnet-go) stations. The name is Japanese for "sound wave", reflecting the app's focus on turning station audio into a clear, mobile view of recent detections, live updates, species activity, media, and station status.
 
 This project is intentionally a companion app, not a standalone classifier: BirdNET-Go remains the station-side analyzer and source of truth.
 
