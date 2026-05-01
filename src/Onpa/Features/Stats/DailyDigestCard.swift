@@ -187,6 +187,7 @@ struct DailyDigestCard: View {
 
     @State private var generatedCopy: DigestCopy?
     @State private var isGenerating = false
+    @State private var generationDidFail = false
 
     init(
         stats: DailyDigestStats,
@@ -201,6 +202,10 @@ struct DailyDigestCard: View {
     }
 
     private var shouldAttemptGeneration: Bool {
+        intelligenceEnabled && intelligenceService.isAvailable && stats.hasData
+    }
+
+    private var shouldUseAIOnlyCopy: Bool {
         intelligenceEnabled && intelligenceService.isAvailable && stats.hasData
     }
 
@@ -268,7 +273,7 @@ struct DailyDigestCard: View {
                 ProgressView()
                     .controlSize(.small)
                     .accessibilityHidden(true)
-            } else if displayingGeneratedCopy {
+            } else if shouldUseAIOnlyCopy {
                 aiBadge
             }
         }
@@ -314,7 +319,17 @@ struct DailyDigestCard: View {
     /// Headline shown in the UI: prefer the validated, model-generated copy
     /// when present; fall back to the deterministic template otherwise.
     private var displayedHeadline: String {
-        generatedCopy?.headline ?? headlineText
+        if let generatedCopy {
+            return generatedCopy.headline
+        }
+
+        if shouldUseAIOnlyCopy {
+            return generationDidFail
+                ? String(localized: "AI summary unavailable right now.")
+                : String(localized: "Generating AI summary…")
+        }
+
+        return headlineText
     }
 
     /// Detail line shown in the UI: prefer the model's optional second
@@ -324,6 +339,11 @@ struct DailyDigestCard: View {
         if let detail = generatedCopy?.detail, !detail.isEmpty {
             return detail
         }
+
+        if shouldUseAIOnlyCopy {
+            return nil
+        }
+
         return detailText
     }
 
@@ -331,6 +351,7 @@ struct DailyDigestCard: View {
         // Always reset on any task-id change so a previously generated
         // string never lingers when the inputs change underneath us.
         generatedCopy = nil
+        generationDidFail = false
 
         guard shouldAttemptGeneration else {
             return
@@ -347,8 +368,14 @@ struct DailyDigestCard: View {
         // Only adopt the generation if the inputs haven't changed under us.
         // SwiftUI's `.task(id:)` already cancels and restarts on change, but
         // we still guard against a late delivery from a now-stale task.
-        if !Task.isCancelled, let copy {
+        if Task.isCancelled {
+            return
+        }
+
+        if let copy {
             generatedCopy = copy
+        } else {
+            generationDidFail = true
         }
     }
 
@@ -444,7 +471,7 @@ struct DailyDigestCard: View {
         guard stats.hasData else {
             return prefix + " " + String(localized: "No detections recorded for this day yet.")
         }
-        let aiPrefix = displayingGeneratedCopy ? String(localized: "AI generated summary.") + " " : ""
+        let aiPrefix = shouldUseAIOnlyCopy ? String(localized: "AI generated summary.") + " " : ""
         var text = prefix + " " + aiPrefix + displayedHeadline
         if let detail = displayedDetail {
             text += " " + detail
